@@ -1,0 +1,37 @@
+{
+    "profiles": {
+        "DevWebServer": {
+            "applicationUrl": "http://localhost:5001;https://localhost:7001",
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "environmentVariables": {
+                "ASPNETCORE_DETAILEDERRORS": "true",
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_SHUTDOWNTIMEOUTSECONDS": "5"
+            },
+            "launchBrowser": false
+        },
+        "ProWebServer": {
+            "applicationUrl": "http://localhost:5003;https://localhost:7003",
+            "commandName": "Project",
+            "dotnetRunMessages": false,
+            "environmentVariables": {
+                "ASPNETCORE_DETAILEDERRORS": "false",
+                "ASPNETCORE_ENVIRONMENT": "Production",
+                "ASPNETCORE_SHUTDOWNTIMEOUTSECONDS": "5"
+            },
+            "launchBrowser": false
+        },
+        "StaWebServer": {
+            "applicationUrl": "http://localhost:5002;https://localhost:7002",
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "environmentVariables": {
+                "ASPNETCORE_DETAILEDERRORS": "true",
+                "ASPNETCORE_ENVIRONMENT": "Staging",
+                "ASPNETCORE_SHUTDOWNTIMEOUTSECONDS": "5"
+            },
+            "launchBrowser": false
+        }
+    }
+}

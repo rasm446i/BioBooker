@@ -1,0 +1,8 @@
+USE master;
+GO
+
+DROP DATABASE IF EXISTS TsqlDb;
+GO
+
+CREATE DATABASE TsqlDb;
+GO

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
+        <ProjectReference Include="..\Bll\BioBooker.WinApp.Bll.csproj" />
+    </ItemGroup>
+    <PropertyGroup>
+        <ImplicitUsings>disable</ImplicitUsings>
+        <LangVersion>10.0</LangVersion>
+        <Nullable>enable</Nullable>
+        <TargetFramework>net6.0</TargetFramework>
+        <Version>0.0.0.0</Version>
+    </PropertyGroup>
+</Project>
