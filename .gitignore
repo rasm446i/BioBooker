@@ -1,0 +1,9 @@
+# Build Results
+bin/
+obj/
+
+# User-Specific Files
+*.user
+
+# Visual Studio Cache & Options
+.vs/

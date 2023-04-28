@@ -1,0 +1,52 @@
+root = true
+
+# All Files
+[*]
+charset = utf-8
+end_of_line = crlf
+indent_size = 4
+indent_style = space
+insert_final_newline = false
+
+# C# Files
+[*.cs]
+
+# CSS Files
+[*.css]
+
+# .editorconfig File
+[.editorconfig]
+
+# .gitattributes File
+[.gitattributes]
+
+# .gitignore File
+[.gitignore]
+
+# HTML Files
+[*.html]
+
+# JS Files
+[*.js]
+
+# JSON Files
+[*.json]
+
+# Markdown Files
+[*.{md,markdown}]
+trim_trailing_whitespace = false
+
+# .NET Solution Files
+[*.sln]
+charset = utf-8-bom
+indent_style = tab
+tab_width = 8
+
+# .NET XML Files
+[*.{config,csproj,pubxml,resx}]
+
+# Razor Files
+[*.cshtml]
+
+# XML Files
+[*.xml]
