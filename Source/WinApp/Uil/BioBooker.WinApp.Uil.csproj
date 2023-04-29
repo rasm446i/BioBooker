@@ -4,6 +4,9 @@
         <Folder Include="ViewModels\" />
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="IdentityModel" Version="6.1.0" />
+    </ItemGroup>
+    <ItemGroup>
         <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
         <ProjectReference Include="..\Bll\BioBooker.WinApp.Bll.csproj" />
     </ItemGroup>

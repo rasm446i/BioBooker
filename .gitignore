@@ -2,6 +2,9 @@
 bin/
 obj/
 
+# IdentityServer Token Signing Keys
+keys/
+
 # User-Specific Files
 *.user
 
