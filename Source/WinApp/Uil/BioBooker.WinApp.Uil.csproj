@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+        <Folder Include="Controllers\" />
+        <Folder Include="ViewModels\" />
+    </ItemGroup>
+    <ItemGroup>
         <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
         <ProjectReference Include="..\Bll\BioBooker.WinApp.Bll.csproj" />
     </ItemGroup>
