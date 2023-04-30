@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace Uil.Pages.Diagnostics;
+namespace IdentityServerHost.Pages.Diagnostics;
 
 [SecurityHeaders]
 [Authorize]

@@ -1,5 +1,5 @@
 
-namespace Uil.Pages.Logout;
+namespace IdentityServerHost.Pages.Logout;
 
 public class LogoutOptions
 {

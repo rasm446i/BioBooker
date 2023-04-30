@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Uil.Pages.Login;
+namespace IdentityServerHost.Pages.Login;
 
 public class ViewModel
 {

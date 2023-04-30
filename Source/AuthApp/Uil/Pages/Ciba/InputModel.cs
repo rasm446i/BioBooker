@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Uil.Pages.Ciba;
+namespace IdentityServerHost.Pages.Ciba;
 
 public class InputModel
 {

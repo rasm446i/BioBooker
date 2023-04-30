@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Uil.Pages.Consent;
+namespace IdentityServerHost.Pages.Consent;
 
 public class ViewModel
 {

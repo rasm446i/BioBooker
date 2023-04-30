@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Uil.Pages.Ciba;
+namespace IdentityServerHost.Pages.Ciba;
 
 [Authorize]
 [SecurityHeadersAttribute]

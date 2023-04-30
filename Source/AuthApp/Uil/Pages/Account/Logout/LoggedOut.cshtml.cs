@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Threading.Tasks;
 
-namespace Uil.Pages.Logout;
+namespace IdentityServerHost.Pages.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]

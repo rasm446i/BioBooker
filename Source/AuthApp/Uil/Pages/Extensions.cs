@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Uil.Pages;
+namespace IdentityServerHost.Pages;
 
 public static class Extensions
 {

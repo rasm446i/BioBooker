@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Uil.Pages.Grants;
+namespace IdentityServerHost.Pages.Grants;
 
 [SecurityHeaders]
 [Authorize]

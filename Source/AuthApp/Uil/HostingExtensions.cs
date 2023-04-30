@@ -7,7 +7,12 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using System.Linq;
 using System.Reflection;
-using Uil;
+using BioBooker.AuthApp.Uil.Data;
+using BioBooker.AuthApp.Uil.Data.Migrations;
+using BioBooker.AuthApp.Uil.Data.Migrations.AspNetCoreIdentity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using System;
 
 namespace BioBooker.AuthApp.Uil;
 
@@ -16,23 +21,43 @@ internal static class HostingExtensions
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
-        const string connectionString = "Server=PC\\SQLSERVERDEV;Database=AuthDbIdentityServer;User=sa;Password=Password1!;Encrypt=True;TrustServerCertificate=True;Trusted_Connection=SSPI;MultipleActiveResultSets=True";
+        const string connectString = "Server=PC\\SQLSERVERDEV;Database=AuthDbIdentityServer;User=sa;Password=Password1!;Encrypt=True;TrustServerCertificate=True;Trusted_Connection=SSPI;MultipleActiveResultSets=True";
+
+        var connectionString = builder.Configuration.GetConnectionString("ConnectionString") ?? throw new InvalidOperationException("Connection String Not Found!");
 
         builder.Services.AddRazorPages();
 
-        builder.Services.AddIdentityServer()
+        builder.Services.AddDbContext<AuthDbContext>(options =>
+            options.UseSqlServer(connectionString));
+
+        builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<AuthDbContext>()
+            .AddDefaultTokenProviders();// Email Link Token
+
+        builder.Services.AddIdentityServer(options =>
+        {
+            options.Events.RaiseErrorEvents = true;
+            options.Events.RaiseInformationEvents = true;
+            options.Events.RaiseFailureEvents = true;
+            options.Events.RaiseSuccessEvents = true;
+            options.EmitStaticAudienceClaim = true;
+        }
+        )
             .AddConfigurationStore(options =>
             {
-                options.ConfigureDbContext = b => b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                options.ConfigureDbContext = b => b.UseSqlServer(connectString, sql => sql.MigrationsAssembly(migrationsAssembly));
             })
             .AddOperationalStore(options =>
             {
-                options.ConfigureDbContext = b => b.UseSqlServer(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
+                options.ConfigureDbContext = b => b.UseSqlServer(connectString, sql => sql.MigrationsAssembly(migrationsAssembly));
             })
-            .AddTestUsers(TestUsers.Users);
+            //.AddTestUsers(TestUsers.Users);
             //.AddInMemoryIdentityResources(Config.IdentityResources)
             //.AddInMemoryApiScopes(Config.ApiScopes)
             //.AddInMemoryClients(Config.Clients);
+            .AddAspNetIdentity<ApplicationUser>();
+
+        builder.Services.AddAuthentication();
 
         return builder.Build();
     }
@@ -46,54 +71,12 @@ internal static class HostingExtensions
             app.UseDeveloperExceptionPage();
         }
 
-        //InitializeDatabase(app);
-
         app.UseStaticFiles();
         app.UseRouting();
-
         app.UseIdentityServer();
-
-        app.MapRazorPages();
+        app.UseAuthorization();
+        app.MapRazorPages().RequireAuthorization();
 
         return app;
-    }
-
-    private static void InitializeDatabase(IApplicationBuilder app)
-    {
-        using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-        {
-            serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-
-            var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
-
-            context.Database.Migrate();
-
-            if (!context.Clients.Any())
-            {
-                foreach (var client in Config.Clients)
-                {
-                    context.Clients.Add(client.ToEntity());
-                }
-                context.SaveChanges();
-            }
-
-            if (!context.IdentityResources.Any())
-            {
-                foreach (var resource in Config.IdentityResources)
-                {
-                    context.IdentityResources.Add(resource.ToEntity());
-                }
-                context.SaveChanges();
-            }
-
-            if (!context.ApiScopes.Any())
-            {
-                foreach (var resource in Config.ApiScopes)
-                {
-                    context.ApiScopes.Add(resource.ToEntity());
-                }
-                context.SaveChanges();
-            }
-        }
     }
 }

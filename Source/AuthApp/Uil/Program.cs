@@ -1,3 +1,4 @@
+using BioBooker.AuthApp.Uil.Data.Migrations.AspNetCoreIdentity;
 using Microsoft.AspNetCore.Builder;
 using Serilog;
 using System;
@@ -18,6 +19,11 @@ internal static class Program
             builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{Newline}{Exception}{Newline}").Enrich.FromLogContext().ReadFrom.Configuration(ctx.Configuration));
 
             var app = builder.ConfigureServices().ConfigurePipeline();
+
+            Log.Information("Seeding Database!");
+            SeedData.EnsureSeedData(app);
+            Log.Information("Database Seeded!");
+
             app.Run();
         }
         catch (Exception e) when
