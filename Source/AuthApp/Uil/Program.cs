@@ -20,7 +20,12 @@ internal static class Program
             var app = builder.ConfigureServices().ConfigurePipeline();
             app.Run();
         }
-        catch (Exception e)
+        catch (Exception e) when
+        (
+            e.GetType().Name is not "StopTheHostException"
+            &&
+            e.GetType().Name is not "HostAbortedException"
+        )
         {
             Log.Fatal(e, "Unhandled Exception!");
         }

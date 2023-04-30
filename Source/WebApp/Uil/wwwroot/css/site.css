@@ -6,6 +6,7 @@ body {
 
 /*Header*/
 header {
+    border-bottom: 2px solid #000000;
     padding-left: 0%;
     padding-right: 0%;
 }
@@ -28,7 +29,7 @@ nav ul {
     list-style-type: none;
     margin: 0;
     overflow: hidden;
-    padding: 0;
+    padding: 0 0 0 10px;
 }
 
 nav li {
@@ -36,8 +37,8 @@ nav li {
 }
 
 nav li img {
-    padding-left: 10%;
-    padding-top: 10%;
+    margin-inline-end: 10px;
+    padding: 10% 0 0 10%;
 }
 
 nav li a {
@@ -54,24 +55,43 @@ nav li a {
     float: right;
 }
 
-footer {
+/* Footer */
+.container.body-content {
+    height: 1%; /* Force Height on Body Element */
+    position: relative;
+    clear: both;
+}
+
+#rendered-view-div {
+    min-height: 820px;
+}
+
+.footer {
     background-color: #FFFFFF;
-    bottom: 0;
-    color: #000000;
-    padding-bottom: 0.5%;
-    position: fixed;
+    border-top: 2px solid #000000;
+    bottom: 0%;
+    color: #808080;
+    height: 2.5%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
     width: 100%;
-    z-index: 0;
+}
+
+.footer p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    color: #000000;
+    font-size: 20%;
 }
 
 .footer-left {
     float: left;
-}
-
-.footer hr {
-    height: 2%;
-    margin: 0 0 0 0;
-    text-decoration: none;
+    padding-inline-start: 8px;
 }
 
 .footer-right {
@@ -79,9 +99,9 @@ footer {
 }
 
 .footer-right a {
-    color: #000000;
+    color: #808080;
     display: inline;
-    padding: 14px 16px;
-    text-align: center;
     text-decoration: none;
+    padding: 0 0 0 20px;
+    padding-inline-end: 8px;
 }
