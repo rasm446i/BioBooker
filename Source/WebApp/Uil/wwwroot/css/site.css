@@ -61,6 +61,7 @@ footer {
     padding-bottom: 0.5%;
     position: fixed;
     width: 100%;
+    z-index: 0;
 }
 
 .footer-left {

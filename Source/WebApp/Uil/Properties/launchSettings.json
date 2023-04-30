@@ -1,7 +1,7 @@
 {
     "profiles": {
         "DevWebServer": {
-            "applicationUrl": "http://localhost:5111;https://localhost:7111",
+            "applicationUrl": "https://localhost:7111",
             "commandName": "Project",
             "dotnetRunMessages": true,
             "environmentVariables": {
@@ -12,7 +12,7 @@
             "launchBrowser": true
         },
         "ProWebServer": {
-            "applicationUrl": "http://localhost:5333;https://localhost:7333",
+            "applicationUrl": "https://localhost:7333",
             "commandName": "Project",
             "dotnetRunMessages": false,
             "environmentVariables": {
@@ -23,7 +23,7 @@
             "launchBrowser": false
         },
         "StaWebServer": {
-            "applicationUrl": "http://localhost:5222;https://localhost:7222",
+            "applicationUrl": "https://localhost:7222",
             "commandName": "Project",
             "dotnetRunMessages": true,
             "environmentVariables": {
