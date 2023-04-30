@@ -25,11 +25,17 @@ internal static class Program
                 options.ClientId = "WebApp";// Id Client Part 1
                 options.ClientSecret = "authclientsecret"; // Id Client Part 2
                 options.ResponseType = "code";//
+
+                options.SaveTokens = true;// Persist id, access token, and refresh token from IdentityServer in Cookie
+                options.Scope.Clear();
+
+                options.Scope.Add("openid");
                 options.Scope.Add("profile");
+                options.Scope.Add("WebApi.FullCrudScope");
+                options.Scope.Add("offline_access");
                 options.Scope.Add("verification");// Add Custom Claim
                 options.ClaimActions.MapJsonKey("email_verified", "email_verified");// Map Custom Claim from UserInfoEndpoint to a User Object Claim
                 options.GetClaimsFromUserInfoEndpoint = true;
-                options.SaveTokens = true;// Persist Tokens in Cookie from IdentityServer
             });
 
         webAppBuilder.Services.AddControllersWithViews();
