@@ -11,13 +11,6 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\..\..\Source\AuthApp\Bll\BioBooker.AuthApp.Bll.csproj" />
-        <ProjectReference Include="..\..\..\Source\AuthApp\Dal\BioBooker.AuthApp.Dal.csproj" />
-        <ProjectReference Include="..\..\..\Source\AuthApp\Dml\BioBooker.AuthApp.Dml.csproj" />
-        <ProjectReference Include="..\..\..\Source\AuthApp\Svl\BioBooker.AuthApp.Svl.csproj" />
-        <ProjectReference Include="..\..\..\Source\AuthApp\Uil\BioBooker.AuthApp.Uil.csproj" />
-    </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
         <LangVersion>10.0</LangVersion>
