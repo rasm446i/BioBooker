@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace IdentityServerHost.Pages.Device;
+namespace BioBooker.AuthApp.Uil.Pages.Device;
 
 public class ViewModel
 {

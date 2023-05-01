@@ -15,7 +15,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace IdentityServerHost.Pages.ExternalLogin;
+namespace BioBooker.AuthApp.Uil.Pages.ExternalLogin;
 
 [AllowAnonymous]
 [SecurityHeaders]

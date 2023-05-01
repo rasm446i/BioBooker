@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Threading.Tasks;
 
-namespace IdentityServerHost.Pages.Logout;
+namespace BioBooker.AuthApp.Uil.Pages.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]

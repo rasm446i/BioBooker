@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
-namespace IdentityServerHost.Pages.Ciba;
+namespace BioBooker.AuthApp.Uil.Pages.Ciba;
 
 [AllowAnonymous]
 [SecurityHeaders]

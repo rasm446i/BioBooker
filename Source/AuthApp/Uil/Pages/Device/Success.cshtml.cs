@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace IdentityServerHost.Pages.Device;
+namespace BioBooker.AuthApp.Uil.Pages.Device;
 
 [SecurityHeaders]
 [Authorize]

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace IdentityServerHost.Pages.Diagnostics;
+namespace BioBooker.AuthApp.Uil.Pages.Diagnostics;
 
 [SecurityHeaders]
 [Authorize]

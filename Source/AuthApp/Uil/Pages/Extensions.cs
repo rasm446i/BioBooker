@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace IdentityServerHost.Pages;
+namespace BioBooker.AuthApp.Uil.Pages;
 
 public static class Extensions
 {

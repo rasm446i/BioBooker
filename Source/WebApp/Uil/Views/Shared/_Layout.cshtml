@@ -20,8 +20,15 @@
                 <li><a asp-controller="Home" asp-action="Index">Movies</a></li>
                 <li><a asp-controller="Home" asp-action="Index">Movie Showings</a></li>
                 <li><a asp-controller="Home" asp-action="Index">Movie Theaters</a></li>
-                <li class="right-li"><a asp-controller="Home" asp-action="Index">Hi Username!</a></li>
-                <li class="right-li"><a asp-controller="Home" asp-action="Index">My BioBooker</a></li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="right-li"><a asp-controller="Home" asp-action="Logout">Logout</a></li>
+                }
+                else
+                {
+                    <li class="right-li"><a asp-controller="Home" asp-action="Contact">Login</a></li>
+                }
+                <li class="right-li"><a asp-controller="Home" asp-action="My BioBooker">My BioBooker</a></li>
             </ul>
         </nav>
     </header>

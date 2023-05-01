@@ -8,4 +8,15 @@ public partial class HomeView : Form
     {
         InitializeComponent();
     }
+
+    private void BtnMoviesClick(object sender, System.EventArgs e)
+    {
+        MovieView movieView = new MovieView();
+        movieView.Show();
+    }
+
+    private void BtnCloseClick(object sender, System.EventArgs e)
+    {
+
+    }
 }

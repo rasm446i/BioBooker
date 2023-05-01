@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace IdentityServerHost.Pages.Grants;
+namespace BioBooker.AuthApp.Uil.Pages.Grants;
 
 public class ViewModel
 {

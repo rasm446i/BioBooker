@@ -1,6 +1,6 @@
 using System;
 
-namespace IdentityServerHost.Pages.Login;
+namespace BioBooker.AuthApp.Uil.Pages.Login;
 
 public class LoginOptions
 {

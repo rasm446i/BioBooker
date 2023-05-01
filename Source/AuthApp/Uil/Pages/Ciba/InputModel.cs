@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace IdentityServerHost.Pages.Ciba;
+namespace BioBooker.AuthApp.Uil.Pages.Ciba;
 
 public class InputModel
 {

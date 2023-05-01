@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace IdentityServerHost.Pages.Login;
+namespace BioBooker.AuthApp.Uil.Pages.Login;
 
 public class ViewModel
 {

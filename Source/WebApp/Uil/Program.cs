@@ -12,6 +12,7 @@ internal static class Program
         var webAppBuilder = WebApplication.CreateBuilder(args);
 
         JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
         webAppBuilder.Services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";

@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace IdentityServerHost.Pages.Consent;
+namespace BioBooker.AuthApp.Uil.Pages.Consent;
 
 public class InputModel
 {

@@ -20,9 +20,9 @@ internal static class Program
 
             var app = builder.ConfigureServices().ConfigurePipeline();
 
-            Log.Information("Seeding Database!");
-            SeedData.EnsureSeedData(app);
-            Log.Information("Database Seeded!");
+            //Log.Information("Seeding Database!");
+            //SeedData.EnsureSeedData(app);
+            //Log.Information("Database Seeded!");
 
             app.Run();
         }

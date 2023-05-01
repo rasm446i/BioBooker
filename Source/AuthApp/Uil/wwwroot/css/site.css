@@ -1,4 +1,8 @@
-﻿.welcome-page .logo {
+.bg-dark {
+    background: #808080;
+}
+
+.welcome-page .logo {
   width: 64px;
 }
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System;
 using System.Linq;
 
-namespace IdentityServerHost.Pages.Login;
+namespace BioBooker.AuthApp.Uil.Pages.Login;
 
 [SecurityHeaders]
 [AllowAnonymous]

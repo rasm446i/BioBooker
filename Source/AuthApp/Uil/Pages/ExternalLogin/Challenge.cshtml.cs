@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 
-namespace IdentityServerHost.Pages.ExternalLogin;
+namespace BioBooker.AuthApp.Uil.Pages.ExternalLogin;
 
 [AllowAnonymous]
 [SecurityHeaders]

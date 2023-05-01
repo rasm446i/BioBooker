@@ -1,5 +1,5 @@
 
-namespace IdentityServerHost.Pages.Logout;
+namespace BioBooker.AuthApp.Uil.Pages.Logout;
 
 public class LogoutOptions
 {

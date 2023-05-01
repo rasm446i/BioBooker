@@ -30,6 +30,7 @@
         {
             pnlButtons = new System.Windows.Forms.Panel();
             btnClose = new System.Windows.Forms.Button();
+            btnMovies = new System.Windows.Forms.Button();
             pnlButtons.SuspendLayout();
             SuspendLayout();
             // 
@@ -50,12 +51,24 @@
             btnClose.TabIndex = 0;
             btnClose.Text = "Close";
             btnClose.UseVisualStyleBackColor = true;
+            btnClose.Click += BtnCloseClick;
+            // 
+            // btnMovies
+            // 
+            btnMovies.Location = new System.Drawing.Point(12, 12);
+            btnMovies.Name = "btnMovies";
+            btnMovies.Size = new System.Drawing.Size(110, 25);
+            btnMovies.TabIndex = 1;
+            btnMovies.Text = "Movies";
+            btnMovies.UseVisualStyleBackColor = true;
+            btnMovies.Click += BtnMoviesClick;
             // 
             // HomeView
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(884, 461);
+            Controls.Add(btnMovies);
             Controls.Add(pnlButtons);
             Name = "HomeView";
             Text = "Home";
@@ -67,5 +80,6 @@
 
         private System.Windows.Forms.Panel pnlButtons;
         private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnMovies;
     }
 }

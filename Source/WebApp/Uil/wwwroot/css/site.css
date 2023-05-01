@@ -17,15 +17,8 @@ main {
 }
 
 /* Nav Area*/
-nav hr {
-    color: #000000;
-    height: 2px;
-    margin: 0 0 0 0;
-    text-decoration: none;
-}
-
 nav ul {
-    background-color: #FFFFFF;
+    background-color: #808080;
     list-style-type: none;
     margin: 0;
     overflow: hidden;
@@ -42,7 +35,7 @@ nav li img {
 }
 
 nav li a {
-    color: #000000;
+    color: #FFFFFF;
     display: block;
     font-weight: bold;
     padding: 30px 16px;
