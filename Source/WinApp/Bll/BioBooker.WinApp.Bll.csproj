@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
         <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
+        <ProjectReference Include="..\Svl\BioBooker.WinApp.Svl.csproj" />
     </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
