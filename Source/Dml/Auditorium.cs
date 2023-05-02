@@ -14,9 +14,9 @@ namespace BioBooker.Dml
 
         public Auditorium(List<Seat> seats, int auditoriumNumber)
         {
-            new List<Seat>();
+            seats = new List<Seat>();  
             this.auditoriumNumber = auditoriumNumber;
-            this.seats = seats;
+            
         }
 
     }
