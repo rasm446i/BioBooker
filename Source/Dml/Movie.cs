@@ -6,5 +6,4 @@ public class Movie
     public byte[] bytes { get; set; }
     public string MpaaRating { get; set; }
     public string ImdbLink { get; set; }
-    public string gnere { get; set; }
 }

@@ -1,6 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-        <Folder Include="Controllers\" />
         <Folder Include="ViewModels\" />
     </ItemGroup>
     <ItemGroup>
