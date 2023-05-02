@@ -1,15 +1,16 @@
 using BioBooker.Dml;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioBooker.WinApp.Svl
 {
     public interface IMoviesService
     {
-        List<Movie> GetMovies();
-        void AddMovie(Movie movieToAdd);
-        Movie GetMovieById(int id);
-        void UpdateMovie(int id);
-        void DeleteMovie(int id);
-        List<Movie> GetMovieByGenre(string genre);
+        public Task<List<Movie>> GetMovies();
+        public Task<bool> InsertMovieTheaterAsync(Movie movieToAdd);
+        public Task<Movie> GetMovieById(int id);
+        public Task<bool> UpdateMovie(int id);
+        public Task<bool> DeleteMovie(int id);
+        public Task<List<Movie>> GetMovieByGenre(string genre);
     }
 }

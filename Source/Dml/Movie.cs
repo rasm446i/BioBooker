@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace BioBooker.Dml;
 
-public class Movie : IMovie
+public class Movie
 {
     public Movie(string title, string genre, string actors, string director, string producer, string language, string awards, DateTime releaseYear, bool subtitles, string subtitlesLanguage, MPARating mPARatingEnum, string summary, int runtimeHours, int runtimeMinutes, bool color, double iMDbRating, string iMDbLink, string dimension, DateTime premierDate)
     {
@@ -58,7 +58,7 @@ public class Movie : IMovie
     public int RuntimeMinutes { get; set; }
     public bool Color { get; set; }
     //public Image Poster { get; set; }
-    public double iMDbRating;
+    private double iMDbRating;
     public string IMDbLink { get; set; }
     public string Dimension { get; set; }
     public DateTime PremierDate { get; set; }

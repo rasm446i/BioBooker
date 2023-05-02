@@ -1,50 +1,94 @@
 using BioBooker.Dml;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Web.Http;
+//using System.Configuration;
 
 namespace BioBooker.WinApp.Svl
 {
     public class MoviesService : IMoviesService
     {
-        private readonly IServiceConnection _moviesService;
-        private readonly String _serviceBaseUrl = "url";
-        
+        private readonly IServiceConnection _serviceConnection;
+        readonly string _serviceBaseUrl = "url";
+
         public MoviesService() 
         {
-            _moviesService = new ServiceConnection(_serviceBaseUrl);
+            _serviceConnection = new ServiceConnection(_serviceBaseUrl);
         }
 
-        public void AddMovie(Movie movieToAdd)
+        public Task<bool> DeleteMovie(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteMovie(int id)
+        public Task<List<Movie>> GetMovieByGenre(string genre)
         {
             throw new NotImplementedException();
         }
 
-        public List<Movie> GetMovieByGenre(string genre)
+        public Task<Movie> GetMovieById(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Movie GetMovieById(int id)
+        public Task<List<Movie>> GetMovies()
         {
             throw new NotImplementedException();
         }
 
-        public List<Movie> GetMovies()
+        public async Task<bool> InsertMovieAsync(Movie movie)
+        {
+            bool wasSaved = false;
+            if (_serviceConnection != null)
+            {
+                _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
+
+                if (movie != null)
+                {
+                    try
+                    {
+                        var json = JsonConvert.SerializeObject(movie);
+                        var postData = new StringContent(json, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage? response = await _serviceConnection.CallServicePost(postData);
+
+                        if (response != null)
+                        {
+                            wasSaved = true;
+                        }
+                        else
+                        {
+                            wasSaved = false;
+                        }
+                    }
+                    catch (HttpResponseException ex)
+                    {
+                        throw new HttpResponseException(System.Net.HttpStatusCode.ServiceUnavailable);
+                    }
+                }
+            }
+            return wasSaved;
+        }
+
+        public Task<bool> InsertMovieTheaterAsync(Movie movieToAdd)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateMovie(int id)
+        public Task<bool> UpdateMovie(int id)
         {
             throw new NotImplementedException();
         }
+    }
+
+   
     }
 }

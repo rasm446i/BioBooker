@@ -5,7 +5,7 @@ namespace BioBooker.WinApp.Bll
 {
     public interface IMoviesManager
     {
-
+        public Movie CreateMovie(Movie movie);
         
     }
 }

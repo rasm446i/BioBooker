@@ -12,11 +12,18 @@ namespace BioBooker.WinApp.Bll
 {
     public class MoviesManager : IMoviesManager
     {
-        private readonly 
+        private readonly IMoviesService _moviesService;
 
         public MoviesManager(IMoviesService movieService)
         {
-            _moviesService = 
+            _moviesService = movieService;
+        }
+
+        public Movie CreateMovie(Movie movie)
+        {
+            Movie newMovie = new Movie(movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Producer, movie.Language, movie.Awards, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARatingEnum, movie.Summary, movie.RuntimeHours, movie.RuntimeMinutes, movie.Color, movie.IMDbRating, movie.IMDbLink, movie.Dimension, movie.PremierDate);
+
+            return newMovie;
         }
 
    
