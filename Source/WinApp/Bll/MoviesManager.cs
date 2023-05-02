@@ -12,18 +12,14 @@ namespace BioBooker.WinApp.Bll
 {
     public class MoviesManager : IMoviesManager
     {
-        private readonly IMoviesService _moviesService;
+        private readonly 
 
-        public MoviesManager(IMovieRepository movieRepository)
+        public MoviesManager(IMoviesService movieService)
         {
-            _movieRepository = movieRepository;
+            _moviesService = 
         }
 
-        public object AddMovieAsync(Movie movie)
-        {
-            return _movieRepository.AddMovieAsync(movie);
-        }
-
+   
     }
 
 }
