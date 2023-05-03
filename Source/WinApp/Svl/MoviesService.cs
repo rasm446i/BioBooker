@@ -71,9 +71,8 @@ namespace BioBooker.WinApp.Svl
                         }
                     
                     }
-                    catch (HttpResponseException ex)
+                    catch
                     {
-                        throw new HttpResponseException(System.Net.HttpStatusCode.ServiceUnavailable);
                         changedOk = false;
                     }
                 }

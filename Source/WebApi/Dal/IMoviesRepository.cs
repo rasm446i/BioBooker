@@ -1,6 +1,6 @@
-﻿namespace BioBooker.WebApi.Dal
+namespace BioBooker.WebApi.Dal
 {
-    internal interface IMoviesRepository
+    public interface IMoviesRepository
     {
     }
 }

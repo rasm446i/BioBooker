@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Dal
 {
-    internal class MoviesRepository : IMoviesRepository
+    public class MoviesRepository : IMoviesRepository
     {
 
     }
