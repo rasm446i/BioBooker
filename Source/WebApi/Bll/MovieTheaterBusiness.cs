@@ -24,7 +24,7 @@ namespace BioBooker.WebApi.Bll
         {
             List<MovieTheater> movieTheaterList = new List<MovieTheater>();
             
-           return await _movieTheaterServiceApi.GetAllMovieTheaters();
+           return await _movieTheaterServiceApi.GetAllMovieTheatersAsync();
            
         }           
 

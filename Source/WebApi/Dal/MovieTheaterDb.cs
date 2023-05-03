@@ -23,7 +23,7 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-        public async Task<List<MovieTheater>> GetAllMovieTheaters()
+        public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
         {
             var sql = "SELECT * FROM MovieTheaters";
 
