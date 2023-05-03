@@ -12,26 +12,31 @@ namespace BioBooker.WebApi.Ctl.Controllers;
 public class MoviesController : ControllerBase
 {
 
-
-
     private readonly IConfiguration _configuration;
-    private readonly MoviesManager _MoviesManager;
+    private readonly MoviesManager _moviesManager;
 
     // Constructor
     public MoviesController(IConfiguration inConfiguration)
     {
         _configuration = inConfiguration;
-        _MoviesManager = new MoviesManager(_configuration);
+        _moviesManager = new MoviesManager(_configuration);
     }
 
     [HttpPost]
 
     public async Task<IActionResult> InsertMovie([FromBody]Movie movie)
     {
-        IActionResult foundToReturn;
-
-        bool wasOk = await _MoviesManager.InsertMovie(movie);
-       
+        IActionResult inserted;
+        bool wasOk = await _moviesManager.InsertMovieAsync(movie);
+        if (wasOk)
+        {
+            inserted = Ok();
+        }
+        else
+        {
+            inserted = new StatusCodeResult(500);
+        }
+        return inserted;
     }
 
 

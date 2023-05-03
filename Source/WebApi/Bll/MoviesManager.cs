@@ -18,7 +18,7 @@ namespace BioBooker.WebApi.Bll
             _moviesService = new MoviesService();
         }
 
-        public bool InsertMovie(Movie movie)
+        public async Task<bool> InsertMovieAsync(Movie movie)
         {
             throw new NotImplementedException();
         }
