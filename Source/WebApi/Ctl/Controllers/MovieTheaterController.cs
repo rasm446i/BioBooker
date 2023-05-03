@@ -26,20 +26,24 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get()
         {
-           List<MovieTheater> movieTheaters = await Task.Run(() => _movieTheaterBusiness.GetAllMovieTheaters());
+            List<MovieTheater> movieTheaters = await _movieTheaterBusiness.GetAllMovieTheaters();
 
+            if (movieTheaters == null)
+            {
+                return NotFound();
+            }
             return Ok(movieTheaters);
         }
 
-       // [HttpGet, Route("{id}")]
-      //  public async Task<IActionResult> GetMovieTheaterWithId([FromRoute] int id ) 
-      //  {
+        // [HttpGet, Route("{id}")]
+        //  public async Task<IActionResult> GetMovieTheaterWithId([FromRoute] int id ) 
+        //  {
 
 
-     //   }
-        
+        //   }
+
 
 
 
