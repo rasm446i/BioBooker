@@ -20,7 +20,7 @@ namespace BioBooker.WebApi.Svl
         }
 
 
-        public List<MovieTheater> getAllMovieTheaters()
+        public async Task<List<MovieTheater>> GetAllMovieTheaters()
         {
           List<MovieTheater> movieTheaterList = new List<MovieTheater>();    
             

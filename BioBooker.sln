@@ -69,6 +69,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioBooker.WinApp.UnitTests"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BioBooker.WinApp.IntegrationTests", "Tests\WinApp\IntegrationTests\BioBooker.WinApp.IntegrationTests.csproj", "{43455DDC-14C1-441E-BCEE-D4E5FCFEC4D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseConnectionTest", "DatabaseConnectionTest\DatabaseConnectionTest.csproj", "{70E08C34-D597-4131-AC06-9976E7713BDB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,6 +165,10 @@ Global
 		{43455DDC-14C1-441E-BCEE-D4E5FCFEC4D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43455DDC-14C1-441E-BCEE-D4E5FCFEC4D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43455DDC-14C1-441E-BCEE-D4E5FCFEC4D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70E08C34-D597-4131-AC06-9976E7713BDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70E08C34-D597-4131-AC06-9976E7713BDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70E08C34-D597-4131-AC06-9976E7713BDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70E08C34-D597-4131-AC06-9976E7713BDB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -199,6 +205,7 @@ Global
 		{D718890F-B841-4205-868F-E247D4476AFA} = {2CE831E3-CAE5-40F7-8E2A-90BCFE26F330}
 		{417779CD-A86C-4CAB-9384-6CB0C2205F74} = {D718890F-B841-4205-868F-E247D4476AFA}
 		{43455DDC-14C1-441E-BCEE-D4E5FCFEC4D6} = {D718890F-B841-4205-868F-E247D4476AFA}
+		{70E08C34-D597-4131-AC06-9976E7713BDB} = {20CAFA3C-326C-4139-96A9-F5AF1E72DC49}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CFD81582-8D3B-4CDB-92E6-4B48B06F2EA7}

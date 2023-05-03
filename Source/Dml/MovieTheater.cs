@@ -8,9 +8,16 @@ namespace BioBooker.Dml
 {
     public class MovieTheater
     {
+    public int Id { get; set; }
     public string Name { get; set; }
 
     public List<Auditorium> Auditoriums { get;set; }
+    
+        public MovieTheater(int id, string name)
+        {
+            Id = id;
+            Name = name;    
+        }
 
     public MovieTheater(string name, Auditorium auditorium)
         {

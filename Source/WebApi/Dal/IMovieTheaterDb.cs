@@ -9,6 +9,6 @@ namespace BioBooker.WebApi.Dal
 {
     public interface IMovieTheaterDb
     {
-        public Task<List<MovieTheater>> getAllMovieTheaters();
+        public Task<List<MovieTheater>> GetAllMovieTheaters();
     }
 }

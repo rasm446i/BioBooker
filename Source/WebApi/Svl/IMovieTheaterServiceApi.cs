@@ -9,7 +9,7 @@ namespace BioBooker.WebApi.Svl
 {
     public interface IMovieTheaterServiceApi
     {
-        public List<MovieTheater> getAllMovieTheaters();
+        public Task<List<MovieTheater>> GetAllMovieTheaters();
 
     }
 }

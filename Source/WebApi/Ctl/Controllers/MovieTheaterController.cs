@@ -28,7 +28,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
-           List<MovieTheater> movieTheaters = await Task.Run(() => _movieTheaterBusiness.getAllMovieTheaters());
+           List<MovieTheater> movieTheaters = await Task.Run(() => _movieTheaterBusiness.GetAllMovieTheaters());
 
             return Ok(movieTheaters);
         }
