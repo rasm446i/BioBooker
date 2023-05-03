@@ -10,6 +10,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Web.Http;
+using BioBooker.WebApi.Ctl;
+using BioBooker.WebApi.Ctl.Controllers;
 //using System.Configuration;
 
 namespace BioBooker.WinApp.Svl
@@ -18,10 +20,13 @@ namespace BioBooker.WinApp.Svl
     {
         private readonly IServiceConnection _serviceConnection;
         readonly string _serviceBaseUrl = "https://localhost:7011/";
+        private readonly MoviesController _controller;
 
         public MoviesService() 
         {
             _serviceConnection = new ServiceConnection(_serviceBaseUrl);
+            _controller = new MoviesController();
+
         }
 
         public Task<bool> DeleteMovie(int id)
@@ -64,6 +69,7 @@ namespace BioBooker.WinApp.Svl
                         if (response.IsSuccessStatusCode)
                         {
                             changedOk = true;
+                            _controller.InsertMovie(movie);
                         }
                         else
                         {

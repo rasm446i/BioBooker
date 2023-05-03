@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
         <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
-        <ProjectReference Include="..\Bll\BioBooker.WebApi.Bll.csproj" />
+        <ProjectReference Include="..\Dal\BioBooker.WebApi.Dal.csproj" />
     </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>

@@ -10,12 +10,9 @@ namespace BioBooker.WebApi.Svl
     public class MoviesService : IMoviesService
     {
 
-
         public MoviesService()
-        { 
-        
+        {
         
         }
-
     }
 }

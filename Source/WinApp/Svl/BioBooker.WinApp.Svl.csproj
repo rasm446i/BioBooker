@@ -5,6 +5,7 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
+        <ProjectReference Include="..\..\WebApi\Ctl\BioBooker.WebApi.Ctl.csproj" />
     </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
