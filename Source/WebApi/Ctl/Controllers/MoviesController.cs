@@ -23,7 +23,6 @@ public class MoviesController : ControllerBase
     }
 
     [HttpPost]
-
     public async Task<IActionResult> InsertMovie([FromBody]Movie movie)
     {
         IActionResult inserted;
