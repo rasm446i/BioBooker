@@ -17,7 +17,7 @@ namespace BioBooker.WinApp.Svl
     public class MoviesService : IMoviesService
     {
         private readonly IServiceConnection _serviceConnection;
-        readonly string _serviceBaseUrl = "url";
+        readonly string _serviceBaseUrl = "https://localhost:7011/";
 
         public MoviesService() 
         {
@@ -46,7 +46,8 @@ namespace BioBooker.WinApp.Svl
 
         public async Task<bool> InsertMovieAsync(Movie movie)
         {
-            bool wasSaved = false;
+
+            bool changedOk = false;
             if (_serviceConnection != null)
             {
                 _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
@@ -60,22 +61,24 @@ namespace BioBooker.WinApp.Svl
 
                         HttpResponseMessage? response = await _serviceConnection.CallServicePost(postData);
 
-                        if (response != null)
+                        if (response.IsSuccessStatusCode)
                         {
-                            wasSaved = true;
+                            changedOk = true;
                         }
                         else
                         {
-                            wasSaved = false;
+                            changedOk = false;
                         }
+                    
                     }
                     catch (HttpResponseException ex)
                     {
                         throw new HttpResponseException(System.Net.HttpStatusCode.ServiceUnavailable);
+                        changedOk = false;
                     }
                 }
             }
-            return wasSaved;
+            return changedOk;
         }
 
         public Task<bool> InsertMovieTheaterAsync(Movie movieToAdd)

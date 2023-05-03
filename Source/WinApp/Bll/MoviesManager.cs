@@ -14,9 +14,19 @@ namespace BioBooker.WinApp.Bll
     {
         private readonly IMoviesService _moviesService;
 
-        public MoviesManager(IMoviesService movieService)
+        public MoviesManager()
         {
-            _moviesService = movieService;
+            _moviesService = new MoviesService();
+        }
+
+
+        public async Task<bool> CreateAndInsertMovieAsync(Movie movie)
+        {
+            Movie createdMovie = CreateMovie(movie);
+
+            bool inserted = await _moviesService.InsertMovieAsync(createdMovie);
+
+            return inserted;
         }
 
         public Movie CreateMovie(Movie movie)
@@ -26,7 +36,7 @@ namespace BioBooker.WinApp.Bll
             return newMovie;
         }
 
-   
+
     }
 
 }
