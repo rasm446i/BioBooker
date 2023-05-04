@@ -11,6 +11,7 @@ public partial class MovieView : Form
     public MovieView()
     {
         InitializeComponent();
+        InitializeComboBoxes();
     }
 
  
@@ -74,15 +75,14 @@ public partial class MovieView : Form
 
     }
 
-    private void comboBoxMpaRating_SelectedIndexChanged(object sender, System.EventArgs e)
+    private void InitializeComboBoxes()
     {
         List<string> mpaRatings = new List<string> { "G", "PG", "PG-13", "R", "NC-17", "Not Rated" };
         comboBoxMpaRating.Items.AddRange(mpaRatings.ToArray());
-    }
 
-    private void comboBoxGenre_SelectedIndexChanged(object sender, EventArgs e)
-    {
         List<string> genres = new List<string> { "Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Thriller" };
         comboBoxGenre.Items.AddRange(genres.ToArray());
     }
+
+ 
 }

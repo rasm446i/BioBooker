@@ -129,7 +129,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.comboBoxGenre.Name = "comboBoxGenre";
             this.comboBoxGenre.Size = new System.Drawing.Size(121, 23);
             this.comboBoxGenre.TabIndex = 29;
-            this.comboBoxGenre.SelectedIndexChanged += new System.EventHandler(this.comboBoxGenre_SelectedIndexChanged);
+
             // 
             // comboBoxMpaRating
             // 
@@ -138,7 +138,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.comboBoxMpaRating.Name = "comboBoxMpaRating";
             this.comboBoxMpaRating.Size = new System.Drawing.Size(121, 23);
             this.comboBoxMpaRating.TabIndex = 28;
-            this.comboBoxMpaRating.SelectedIndexChanged += new System.EventHandler(this.comboBoxMpaRating_SelectedIndexChanged);
+
             // 
             // checkedListBox1
             // 
