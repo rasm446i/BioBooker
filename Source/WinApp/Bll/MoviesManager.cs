@@ -41,7 +41,7 @@ namespace BioBooker.WinApp.Bll
 
         public Movie CreateMovie(Movie movie)
         {
-            Movie newMovie = new Movie(movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Language, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARatingEnum, movie.RuntimeHours, movie.RuntimeMinutes, movie.Dimension, movie.PremierDate, movie.Poster);
+            Movie newMovie = new Movie(movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Language, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARatingEnum, movie.RuntimeHours, movie.RuntimeMinutes, movie.PremierDate, movie.Poster);
 
             return newMovie;
         }

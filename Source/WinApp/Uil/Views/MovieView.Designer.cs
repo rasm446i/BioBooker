@@ -31,13 +31,11 @@ namespace BioBooker.WinApp.Uil.Views
             this.btnClose = new System.Windows.Forms.Button();
             this.pnlButtons = new System.Windows.Forms.Panel();
             this.pnlInputs = new System.Windows.Forms.Panel();
-            this.comboBoxDimension = new System.Windows.Forms.ComboBox();
             this.comboBoxGenre = new System.Windows.Forms.ComboBox();
             this.comboBoxMpaRating = new System.Windows.Forms.ComboBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label8 = new System.Windows.Forms.Label();
             this.labelPremierDate = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.labelRuntime = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -85,13 +83,11 @@ namespace BioBooker.WinApp.Uil.Views
             // pnlInputs
             // 
             this.pnlInputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlInputs.Controls.Add(this.comboBoxDimension);
             this.pnlInputs.Controls.Add(this.comboBoxGenre);
             this.pnlInputs.Controls.Add(this.comboBoxMpaRating);
             this.pnlInputs.Controls.Add(this.checkedListBox1);
             this.pnlInputs.Controls.Add(this.label8);
             this.pnlInputs.Controls.Add(this.labelPremierDate);
-            this.pnlInputs.Controls.Add(this.label6);
             this.pnlInputs.Controls.Add(this.labelRuntime);
             this.pnlInputs.Controls.Add(this.label4);
             this.pnlInputs.Controls.Add(this.label3);
@@ -114,14 +110,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlInputs.TabIndex = 2;
             this.pnlInputs.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlInputs_Paint);
             // 
-            // comboBoxDimension
-            // 
-            this.comboBoxDimension.FormattingEnabled = true;
-            this.comboBoxDimension.Location = new System.Drawing.Point(118, 342);
-            this.comboBoxDimension.Name = "comboBoxDimension";
-            this.comboBoxDimension.Size = new System.Drawing.Size(121, 23);
-            this.comboBoxDimension.TabIndex = 30;
-            // 
             // comboBoxGenre
             // 
             this.comboBoxGenre.FormattingEnabled = true;
@@ -129,7 +117,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.comboBoxGenre.Name = "comboBoxGenre";
             this.comboBoxGenre.Size = new System.Drawing.Size(121, 23);
             this.comboBoxGenre.TabIndex = 29;
-
             // 
             // comboBoxMpaRating
             // 
@@ -138,7 +125,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.comboBoxMpaRating.Name = "comboBoxMpaRating";
             this.comboBoxMpaRating.Size = new System.Drawing.Size(121, 23);
             this.comboBoxMpaRating.TabIndex = 28;
-
             // 
             // checkedListBox1
             // 
@@ -169,16 +155,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.labelPremierDate.Size = new System.Drawing.Size(101, 20);
             this.labelPremierDate.TabIndex = 22;
             this.labelPremierDate.Text = "Premier Date";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(118, 319);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(84, 20);
-            this.label6.TabIndex = 21;
-            this.label6.Text = "Dimension";
             // 
             // labelRuntime
             // 
@@ -391,7 +367,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.TextBox textLanguage;
         private System.Windows.Forms.TextBox textBoxPremierDate;
         private System.Windows.Forms.Label labelPremierDate;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -402,7 +377,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.ComboBox comboBoxMpaRating;
         private System.Windows.Forms.Label labelRuntime;
         private System.Windows.Forms.TextBox textBoxRunTime;
-        private System.Windows.Forms.ComboBox comboBoxDimension;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox pictureBox1;
     }

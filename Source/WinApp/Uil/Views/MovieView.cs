@@ -79,10 +79,11 @@ public partial class MovieView : Form
     {
         List<string> mpaRatings = new List<string> { "G", "PG", "PG-13", "R", "NC-17", "Not Rated" };
         comboBoxMpaRating.Items.AddRange(mpaRatings.ToArray());
+        comboBoxMpaRating.DropDownStyle = ComboBoxStyle.DropDownList;
 
         List<string> genres = new List<string> { "Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Thriller" };
         comboBoxGenre.Items.AddRange(genres.ToArray());
+        comboBoxGenre.DropDownStyle = ComboBoxStyle.DropDownList;
     }
 
- 
 }
