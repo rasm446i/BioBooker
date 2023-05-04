@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using System.Drawing;
+using BioBooker.Dml;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BioBooker.Dml;
 
@@ -8,7 +11,7 @@ public class Movie
 {
 
 
-    public Movie(string title, string genre, string actors, string director, string producer, string language, string awards, DateTime releaseYear, Byte subtitles, string subtitlesLanguage, string mPARatingEnum, string summary, int runtimeHours, int runtimeMinutes, Byte color, double imdbRating, string iMDbLink, string dimension, DateTime premierDate)
+    public Movie(string title, string genre, string actors, string director, string producer, string language, string awards, DateTime releaseYear, Byte subtitles, string subtitlesLanguage, string mPARatingEnum, string summary, int runtimeHours, int runtimeMinutes, Byte color, double imdbRating, string iMDbLink, string dimension, DateTime premierDate, Poster poster)
     {
         Title = title;
         Genre = genre;
@@ -30,10 +33,11 @@ public class Movie
         IMDbLink = iMDbLink;
         Dimension = dimension;
         PremierDate = premierDate;
+        Poster = poster;
     }
 
-    
 
+    
     public enum MPARating
     {
         G,
@@ -61,7 +65,7 @@ public class Movie
     public int RuntimeHours { get; set; }
     public int RuntimeMinutes { get; set; }
     public Byte Color { get; set; }
-    //public Image Poster { get; set; }
+    public Poster Poster { get; set; }
     public double IMDbRating { get; set; }
     public string IMDbLink { get; set; }
     public string Dimension { get; set; }
