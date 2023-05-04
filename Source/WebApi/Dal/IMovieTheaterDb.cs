@@ -9,6 +9,7 @@ namespace BioBooker.WebApi.Dal
 {
     public interface IMovieTheaterDb
     {
+        public Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater);
         public Task<List<MovieTheater>> GetAllMovieTheatersAsync();
     }
 }

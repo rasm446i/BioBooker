@@ -13,13 +13,21 @@ namespace BioBooker.Dml
 
     public List<Auditorium> Auditoriums { get;set; }
     
+        public MovieTheater()
+        {
+
+        }
         public MovieTheater(int id, string name)
         {
             Id = id;
             Name = name;    
         }
-
-    public MovieTheater(string name, Auditorium auditorium)
+        //temp constructor
+        public MovieTheater(string name) 
+        { 
+            Name = name;
+        }
+        public MovieTheater(string name, Auditorium auditorium)
         {
             Auditoriums = new List<Auditorium>();
             Auditoriums.Add(auditorium);

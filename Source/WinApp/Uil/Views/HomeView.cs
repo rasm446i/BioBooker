@@ -19,4 +19,10 @@ public partial class HomeView : Form
     {
 
     }
+
+    private void buttonMovieTheater_Click(object sender, System.EventArgs e)
+    {
+        MovieTheaterView movieTheaterView = new MovieTheaterView();
+        movieTheaterView.Show();
+    }
 }

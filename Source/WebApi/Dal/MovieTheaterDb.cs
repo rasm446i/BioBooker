@@ -28,7 +28,6 @@ namespace BioBooker.WebApi.Dal
             List<MovieTheater> movieTheaters;
             string query = "SELECT * FROM MovieTheaters";
             
-
             using (var connection = new SqlConnection(_connectionString))
             {
 
@@ -38,9 +37,18 @@ namespace BioBooker.WebApi.Dal
             return movieTheaters;
         }
 
+        public async Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater)
+        {
+            int numRowsInserted = 1;
+            int numRowsAffected;
 
+            string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name)";
 
-
-
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                numRowsAffected = await connection.ExecuteAsync(insertQuery, newMovieTheater);
+            }
+            return numRowsAffected == numRowsInserted;
+        }
     }
 }

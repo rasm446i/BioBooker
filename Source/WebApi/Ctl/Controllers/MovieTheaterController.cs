@@ -8,11 +8,13 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using System.Web.Http.Results;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
     [Route("api/movieTheaters")]
     [ApiController]
+    [AllowAnonymous]
     public class MovieTheaterController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -23,38 +25,54 @@ namespace BioBooker.WebApi.Ctl.Controllers
             _movieTheaterBusiness = new MovieTheaterBusiness(_configuration);
         
         }
-
-        [HttpGet]
-        [AllowAnonymous]
-        public async Task<IActionResult> Get()
+        [HttpPost]
+        public async Task<IActionResult> Post(MovieTheater newMovieTheater)
         {
-            List<MovieTheater> movieTheaters = await _movieTheaterBusiness.GetAllMovieTheaters();
+            bool wasInserted;
 
-            if (movieTheaters == null)
+            if (newMovieTheater != null)
             {
-                return NotFound();
+                wasInserted = await _movieTheaterBusiness.InsertMovieTheaterAsync(newMovieTheater);
+
+                if (wasInserted)
+                {
+                    return CreatedAtAction(nameof(Post), newMovieTheater);
+                }
+                else
+                {
+                    //409 conflict response if movie theater already exists
+                    //currently also returns 409 if server is down (have to compare by name instead)
+                    return Conflict("Movie theater already exists");
+                }
+
             }
-            return Ok(movieTheaters);
+            else
+            {
+                {
+                    BadRequest();
+                }
+              
+            }
+            return StatusCode(500);
         }
+            [HttpGet]
+            public async Task<IActionResult> Get()
+            {
+                List<MovieTheater> movieTheaters = await _movieTheaterBusiness.GetAllMovieTheatersAsync();
 
-        // [HttpGet, Route("{id}")]
-        //  public async Task<IActionResult> GetMovieTheaterWithId([FromRoute] int id ) 
-        //  {
+                if (movieTheaters == null)
+                {
+                    return NotFound();
+                }
+                return Ok(movieTheaters);
+            }
 
+            // [HttpGet, Route("{id}")]
+            //  public async Task<IActionResult> GetMovieTheaterWithId([FromRoute] int id ) 
+            //  {
 
-        //   }
+            //   }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        
     }
 }

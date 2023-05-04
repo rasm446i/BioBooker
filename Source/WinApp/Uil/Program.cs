@@ -39,24 +39,24 @@ internal static class Program
         }
         );
 
-        if (tokenResponse.IsError)
-        {
-            MessageBox.Show(tokenResponse.Error);
-            return;
-        }
+      //  if (tokenResponse.IsError)
+        //{
+          //  MessageBox.Show(tokenResponse.Error);
+            //return;
+        //}
 
         // Post Token to jwt.io to See Content of It
-        MessageBox.Show(tokenResponse.AccessToken);
+       // MessageBox.Show(tokenResponse.AccessToken);
 
         // Call API (Set HTTP Authorization Header)
-        var apiClient = new HttpClient();
-        apiClient.SetBearerToken(tokenResponse.AccessToken);
+       // var apiClient = new HttpClient();
+      //  apiClient.SetBearerToken(tokenResponse.AccessToken);
 
-        var response = await apiClient.GetAsync("https://localhost:7011/identity");
-
+     //   var response = await apiClient.GetAsync("https://localhost:7011/identity");
+        /*
         if (!response.IsSuccessStatusCode)
         {
-            MessageBox.Show(response.StatusCode.ToString());
+           MessageBox.Show(response.StatusCode.ToString());
         }
         else
         {
@@ -64,5 +64,6 @@ internal static class Program
 
             MessageBox.Show(JsonSerializer.Serialize(doc, new JsonSerializerOptions { WriteIndented = true }));
         }
+        */
     }
 }

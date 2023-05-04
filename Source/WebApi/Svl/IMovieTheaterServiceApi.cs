@@ -11,5 +11,7 @@ namespace BioBooker.WebApi.Svl
     {
         public Task<List<MovieTheater>> GetAllMovieTheatersAsync();
 
+        public Task<bool> InsertMovieTheaterAsync(MovieTheater newTheater);
+
     }
 }

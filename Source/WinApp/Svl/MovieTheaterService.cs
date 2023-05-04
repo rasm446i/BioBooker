@@ -13,7 +13,7 @@ namespace BioBooker.WinApp.Svl
     public class MovieTheaterService : IMovieTheaterService
     {
         readonly IServiceConnection _serviceConnection;
-        readonly string _serviceBaseUrl = "https://localhost:7261/api/movieTheaters/";
+        readonly string _serviceBaseUrl = "https://localhost:7011/api/movieTheaters/";
 
         public MovieTheaterService() 
             {

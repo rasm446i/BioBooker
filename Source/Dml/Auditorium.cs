@@ -9,13 +9,17 @@ namespace BioBooker.Dml
 
     public class Auditorium
     {
-        int auditoriumNumber;
+        public int AuditoriumNumber { get; set; }
         public List<Seat> seats;
 
+        public Auditorium()
+        {
+            
+        }
         public Auditorium(List<Seat> seats, int auditoriumNumber)
         {
             seats = new List<Seat>();  
-            this.auditoriumNumber = auditoriumNumber;
+            AuditoriumNumber = auditoriumNumber;
             
         }
 

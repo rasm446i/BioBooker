@@ -18,12 +18,18 @@ namespace BioBooker.WebApi.Bll
             _movieTheaterServiceApi = new MovieTheaterServiceApi(configuration);
         }
 
- 
-
-        public async Task<List<MovieTheater>> GetAllMovieTheaters()
+        public async Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater)
         {
-            List<MovieTheater> movieTheaterList = new List<MovieTheater>();
-            
+            bool wasInserted;
+
+            wasInserted = await _movieTheaterServiceApi.InsertMovieTheaterAsync(newMovieTheater);
+
+            return wasInserted;
+        }
+
+        public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
+        {
+           
            return await _movieTheaterServiceApi.GetAllMovieTheatersAsync();
            
         }           

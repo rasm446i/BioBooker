@@ -19,6 +19,14 @@ namespace BioBooker.WebApi.Svl
             _movieTheaterDb = new MovieTheaterDb(configuration);
         }
 
+        public async Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater)
+        {
+            bool wasInserted;
+
+            wasInserted = await _movieTheaterDb.InsertMovieTheaterAsync(newMovieTheater);
+
+            return wasInserted;
+        }
 
         public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
         {
@@ -26,8 +34,6 @@ namespace BioBooker.WebApi.Svl
 
             return movieTheaterList;   
         }
-
-
 
     }
 }
