@@ -32,7 +32,6 @@ namespace BioBooker.WebApi.Dal
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                await connection.OpenAsync();
                 numRowsAffected = await connection.ExecuteAsync(sqlInsert, movie);
             }
 

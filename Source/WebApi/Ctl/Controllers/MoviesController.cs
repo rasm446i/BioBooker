@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Ctl.Controllers;
 
-    [ApiController]
-    [Route("/movies")]
-
+[Route("api/movies")]
+[ApiController]
 public class MoviesController : ControllerBase
 {
 
@@ -23,7 +22,7 @@ public class MoviesController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> InsertMovie([FromBody]Movie movie)
+    public async Task<IActionResult> InsertMovie([FromBody] Movie movie)
     {
         IActionResult inserted;
         bool wasOk = await _moviesManager.InsertMovieAsync(movie);
