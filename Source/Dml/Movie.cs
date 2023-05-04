@@ -11,33 +11,26 @@ public class Movie
 {
 
 
-    public Movie(string title, string genre, string actors, string director, string producer, string language, string awards, DateTime releaseYear, Byte subtitles, string subtitlesLanguage, string mPARatingEnum, string summary, int runtimeHours, int runtimeMinutes, Byte color, double imdbRating, string iMDbLink, string dimension, DateTime premierDate, Poster poster)
+    public Movie(string title, string genre, string actors, string director, string language, DateTime releaseYear, bool subtitles, string subtitlesLanguage, MPARating? mpaRating, int runtimeHours, int runtimeMinutes, string dimension, DateTime premierDate, Poster poster)
     {
         Title = title;
         Genre = genre;
         Actors = actors;
         Director = director;
-        Producer = producer;
         Language = language;
-        Awards = awards;
         ReleaseYear = releaseYear;
         Subtitles = subtitles;
         SubtitlesLanguage = subtitlesLanguage;
-        MPARatingEnum = mPARatingEnum;
-        Summary = summary;
+        MPARatingEnum = mpaRating;
         RuntimeHours = runtimeHours;
         RuntimeMinutes = runtimeMinutes;
-        Color = color;
-        //Poster = poster; mangler ogsaa op i constructor parameter
-        IMDbRating = imdbRating;
-        IMDbLink = iMDbLink;
         Dimension = dimension;
         PremierDate = premierDate;
         Poster = poster;
     }
 
 
-    
+
     public enum MPARating
     {
         G,
@@ -48,29 +41,23 @@ public class Movie
         NotRated
     }
 
-//    public int Id { get; set; }
-    //public Byte[] Version { get; set; }
+    public int Id { get; set; }
+    public Byte[] Version { get; set; }
     public string Title { get; set; }
     public string Genre { get; set; }
     public string Actors { get; set; }
     public string Director { get; set; }
-    public string Producer { get; set; }
     public string Language { get; set; }
-    public string Awards { get; set; }
     public DateTime ReleaseYear { get; set; }
-    public Byte Subtitles { get; set; }
+    public bool Subtitles { get; set; }
     public string SubtitlesLanguage { get; set; }
-    public string MPARatingEnum { get; set; }
+    public MPARating? MPARatingEnum { get; set; }
     public string Summary { get; set; }
     public int RuntimeHours { get; set; }
     public int RuntimeMinutes { get; set; }
-    public Byte Color { get; set; }
     public Poster Poster { get; set; }
-    public double IMDbRating { get; set; }
-    public string IMDbLink { get; set; }
     public string Dimension { get; set; }
     public DateTime PremierDate { get; set; }
-    //private double _imdbRating;
 
 
     /// <summary>
