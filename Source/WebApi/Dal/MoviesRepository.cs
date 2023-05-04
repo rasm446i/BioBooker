@@ -28,8 +28,8 @@ namespace BioBooker.WebApi.Dal
             int numRowsInserted = 1;
             int numRowsAffected;
 
-            string sqlInsert = @"INSERT INTO Movies (Title, Genre, Actors, Director, Producer, Language, Awards, ReleaseYear, Subtitles, SubtitlesLanguage, MPARatingEnum, Summary, RuntimeHours, RuntimeMinutes, Color, IMDbRating, IMDbLink, Dimension, PremierDate) 
-             VALUES (@Title, @Genre, @Actors, @Director, @Producer, @Language, @Awards, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARatingEnum, @Summary, @RuntimeHours, @RuntimeMinutes, @Color, @IMDbRating, @IMDbLink, @Dimension, @PremierDate)";
+            string sqlInsert = @"INSERT INTO Movies (Id, Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARatingEnum, RuntimeHours, RuntimeMinutes, PremierDate) 
+             VALUES (@Id, @Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARatingEnum, @RuntimeHours, @RuntimeMinutes, @PremierDate)";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -38,5 +38,18 @@ namespace BioBooker.WebApi.Dal
 
             return numRowsAffected == numRowsInserted;
         }
+
+        public async Task<Movie> GetMovieByTitleAsync(string title)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string sqlQuery = @"SELECT * FROM Movies WHERE Title = @title";
+                var parameters = new { Title = title };
+                var result = await connection.QuerySingleOrDefaultAsync<Movie>(sqlQuery, parameters);
+                return result;
+            }
+        }
+
     }
 }

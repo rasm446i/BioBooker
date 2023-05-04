@@ -77,9 +77,6 @@ public partial class MovieView : Form
         comboBoxSubtitlesYesNo.DropDownStyle = ComboBoxStyle.DropDownList;
     }
 
-
-   
-
     private void InitializeComboBoxes()
     {
         List<string> mpaRatings = new List<string> { "G", "PG", "PG-13", "R", "NC-17", "Not Rated" };

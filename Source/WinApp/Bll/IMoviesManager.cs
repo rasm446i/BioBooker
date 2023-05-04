@@ -10,6 +10,8 @@ namespace BioBooker.WinApp.Bll
 
         public Task<bool> CreateAndInsertMovieAsync(Movie movie);
 
+        public Task<Movie> GetMovieByTitleAsync(string title);
+
 
     }
 }

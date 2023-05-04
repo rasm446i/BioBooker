@@ -18,5 +18,4 @@ public class Poster
         PosterTitle = posterTitle;
         ImageData = imageData;
     }
-    
 }

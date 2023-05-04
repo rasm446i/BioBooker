@@ -43,10 +43,32 @@ namespace BioBooker.WinApp.Svl
             throw new NotImplementedException();
         }
 
-        public Task<Movie> GetMovieById(int id)
+        public async Task<Movie> GetMovieByTitleAsync(string title)
         {
-            throw new NotImplementedException();
+            Movie movie = null;
+
+            if (_serviceConnection != null)
+            {
+                _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/" + title;
+
+                try
+                {
+                    HttpResponseMessage? response = await _serviceConnection.CallServiceGet();
+                    if (response != null && response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        movie = JsonConvert.DeserializeObject<Movie>(json);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            return movie;
         }
+
 
         public Task<List<Movie>> GetMovies()
         {
@@ -81,7 +103,7 @@ namespace BioBooker.WinApp.Svl
                             if (response.IsSuccessStatusCode)
                             {
                                 changedOk = true;
-                                await _controller.InsertMovie(movie);
+                                await _controller.InsertMovieAsync(movie);
                             }
                             else
                             {

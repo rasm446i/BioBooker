@@ -4,10 +4,11 @@ using Microsoft.Extensions.Configuration;
 using BioBooker.Dml;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace BioBooker.WebApi.Ctl.Controllers;
 
-[Route("/movies")]
+[Route("movies")]
 [ApiController]
 public class MoviesController : ControllerBase
 {
@@ -24,7 +25,7 @@ public class MoviesController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> InsertMovie([FromBody] Movie movie)
+    public async Task<IActionResult> InsertMovieAsync([FromBody] Movie movie)
     {
         IActionResult inserted;
         bool wasOk = await _moviesManager.InsertMovieAsync(movie);
@@ -37,6 +38,20 @@ public class MoviesController : ControllerBase
             inserted = new StatusCodeResult(500);
         }
         return inserted;
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetMovieByTitleAsync([FromQuery] string title)
+    {
+        Movie movie = await _moviesManager.GetMovieByTitleAsync(title);
+
+        if (movie == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(movie);
     }
 
 
