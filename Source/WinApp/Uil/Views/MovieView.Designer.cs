@@ -56,6 +56,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlOutputs = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.comboBoxSubtitlesYesNo = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.pnlButtons.SuspendLayout();
             this.pnlInputs.SuspendLayout();
             this.pnlOutputs.SuspendLayout();
@@ -83,6 +85,8 @@ namespace BioBooker.WinApp.Uil.Views
             // pnlInputs
             // 
             this.pnlInputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlInputs.Controls.Add(this.label5);
+            this.pnlInputs.Controls.Add(this.comboBoxSubtitlesYesNo);
             this.pnlInputs.Controls.Add(this.comboBoxGenre);
             this.pnlInputs.Controls.Add(this.comboBoxMpaRating);
             this.pnlInputs.Controls.Add(this.checkedListBox1);
@@ -129,12 +133,12 @@ namespace BioBooker.WinApp.Uil.Views
             // checkedListBox1
             // 
             this.checkedListBox1.FormattingEnabled = true;
-            this.checkedListBox1.Location = new System.Drawing.Point(297, 36);
+            this.checkedListBox1.Location = new System.Drawing.Point(265, 113);
             this.checkedListBox1.MultiColumn = true;
             this.checkedListBox1.Name = "checkedListBox1";
             this.checkedListBox1.Size = new System.Drawing.Size(120, 94);
             this.checkedListBox1.TabIndex = 27;
-            this.checkedListBox1.SelectedIndexChanged += new System.EventHandler(this.checkedListBox1_SelectedIndexChanged);
+
             // 
             // label8
             // 
@@ -180,7 +184,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(303, 13);
+            this.label3.Location = new System.Drawing.Point(271, 90);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(70, 20);
             this.label3.TabIndex = 18;
@@ -330,6 +334,25 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // comboBoxSubtitlesYesNo
+            // 
+            this.comboBoxSubtitlesYesNo.FormattingEnabled = true;
+            this.comboBoxSubtitlesYesNo.Location = new System.Drawing.Point(265, 36);
+            this.comboBoxSubtitlesYesNo.Name = "comboBoxSubtitlesYesNo";
+            this.comboBoxSubtitlesYesNo.Size = new System.Drawing.Size(121, 23);
+            this.comboBoxSubtitlesYesNo.TabIndex = 30;
+            this.comboBoxSubtitlesYesNo.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubtitlesYesNo_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(265, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(70, 20);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "Subtitles";
+            // 
             // MovieView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -379,5 +402,7 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.TextBox textBoxRunTime;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBoxSubtitlesYesNo;
     }
 }

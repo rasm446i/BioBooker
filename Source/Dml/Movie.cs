@@ -71,7 +71,6 @@ public class Movie
     public bool Subtitles { get; set; }
     public Subtitle SubtitlesLanguage { get; set; }
     public MPARating? MPARatingEnum { get; set; }
-    public string Summary { get; set; }
     public int RuntimeHours { get; set; }
     public int RuntimeMinutes { get; set; }
     public Poster Poster { get; set; }

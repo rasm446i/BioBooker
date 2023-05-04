@@ -12,9 +12,9 @@ public partial class MovieView : Form
     {
         InitializeComponent();
         InitializeComboBoxes();
+        IntializeCheckedListBox();
+        InitializeSubtitleDropDown();
     }
-
- 
 
     private void label1_Click(object sender, System.EventArgs e)
     {
@@ -70,10 +70,15 @@ public partial class MovieView : Form
         }
     }
 
-    private void checkedListBox1_SelectedIndexChanged(object sender, System.EventArgs e)
+    private void InitializeSubtitleDropDown()
     {
-
+        comboBoxSubtitlesYesNo.Items.Add("Yes");
+        comboBoxSubtitlesYesNo.Items.Add("No");
+        comboBoxSubtitlesYesNo.DropDownStyle = ComboBoxStyle.DropDownList;
     }
+
+
+   
 
     private void InitializeComboBoxes()
     {
@@ -86,4 +91,22 @@ public partial class MovieView : Form
         comboBoxGenre.DropDownStyle = ComboBoxStyle.DropDownList;
     }
 
+    private void IntializeCheckedListBox()
+    {
+        List<string> Subtitles = new List<string> { "English", "Danish", "German", "Chinese", "French", "Spanish" };
+        checkedListBox1.Items.AddRange(Subtitles.ToArray());
+    }
+
+    private void comboBoxSubtitlesYesNo_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (comboBoxSubtitlesYesNo.SelectedItem.ToString() == "Yes")
+        {
+            checkedListBox1.Enabled = true;
+        }
+        else
+        {
+            checkedListBox1.Enabled = false;
+            checkedListBox1.ClearSelected();
+        }
+    }
 }
