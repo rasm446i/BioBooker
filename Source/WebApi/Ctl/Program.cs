@@ -32,6 +32,8 @@ internal static class Program
             )
         );
 
+
+
         var webApi = webApiBuilder.Build();
         webApi.UseHttpsRedirection();
         webApi.UseAuthentication();

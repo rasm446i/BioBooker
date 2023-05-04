@@ -3,10 +3,11 @@ using BioBooker.WebApi.Bll;
 using Microsoft.Extensions.Configuration;
 using BioBooker.Dml;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BioBooker.WebApi.Ctl.Controllers;
 
-[Route("api/movies")]
+[Route("/movies")]
 [ApiController]
 public class MoviesController : ControllerBase
 {
@@ -22,6 +23,7 @@ public class MoviesController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> InsertMovie([FromBody] Movie movie)
     {
         IActionResult inserted;

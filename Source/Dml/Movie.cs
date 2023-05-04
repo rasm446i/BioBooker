@@ -6,7 +6,9 @@ namespace BioBooker.Dml;
 
 public class Movie
 {
-    public Movie(string title, string genre, string actors, string director, string producer, string language, string awards, DateTime releaseYear, bool subtitles, string subtitlesLanguage, MPARating mPARatingEnum, string summary, int runtimeHours, int runtimeMinutes, bool color, double iMDbRating, string iMDbLink, string dimension, DateTime premierDate)
+
+
+    public Movie(string title, string genre, string actors, string director, string producer, string language, string awards, DateTime releaseYear, Byte subtitles, string subtitlesLanguage, string mPARatingEnum, string summary, int runtimeHours, int runtimeMinutes, Byte color, double imdbRating, string iMDbLink, string dimension, DateTime premierDate)
     {
         Title = title;
         Genre = genre;
@@ -24,11 +26,13 @@ public class Movie
         RuntimeMinutes = runtimeMinutes;
         Color = color;
         //Poster = poster; mangler ogsaa op i constructor parameter
-        IMDbRating = iMDbRating;
+        IMDbRating = imdbRating;
         IMDbLink = iMDbLink;
         Dimension = dimension;
         PremierDate = premierDate;
     }
+
+    
 
     public enum MPARating
     {
@@ -40,8 +44,8 @@ public class Movie
         NotRated
     }
 
-    public int Id { get; set; }
-    public Byte[] Version { get; set; }
+//    public int Id { get; set; }
+    //public Byte[] Version { get; set; }
     public string Title { get; set; }
     public string Genre { get; set; }
     public string Actors { get; set; }
@@ -50,19 +54,19 @@ public class Movie
     public string Language { get; set; }
     public string Awards { get; set; }
     public DateTime ReleaseYear { get; set; }
-    public bool Subtitles { get; set; }
+    public Byte Subtitles { get; set; }
     public string SubtitlesLanguage { get; set; }
-    public MPARating MPARatingEnum { get; set; }
+    public string MPARatingEnum { get; set; }
     public string Summary { get; set; }
     public int RuntimeHours { get; set; }
     public int RuntimeMinutes { get; set; }
-    public bool Color { get; set; }
+    public Byte Color { get; set; }
     //public Image Poster { get; set; }
-    private double iMDbRating;
+    public double IMDbRating { get; set; }
     public string IMDbLink { get; set; }
     public string Dimension { get; set; }
     public DateTime PremierDate { get; set; }
-
+    //private double _imdbRating;
 
 
     /// <summary>
@@ -72,41 +76,35 @@ public class Movie
     /// The IMDb rating of the movie. Must be a number between 0 and 10, with a maximum of two decimal places.
     /// </value>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when the input value is not a valid number, is greater than 10 or less than 0, or has more than two decimal places.</exception>
-    public double IMDbRating
+    /*public double IMDbRating
     {
-        get { return IMDbRating; }
+        get { return _imdbRating; }
         set
         {
+            double rating;
+            if (double.TryParse(value.ToString(), out rating))
             {
-                double rating;
-                if (double.TryParse(value.ToString(), out rating))
+                if (rating >= 0 && rating <= 10)
                 {
-                    if (rating >= 0 && rating <= 10)
+                    if (rating.ToString().Length > 3)
                     {
-                        if (rating.ToString().Length > 3)
-                        {
-                            throw new ArgumentOutOfRangeException("max 2 decimals");
-                        }
-                        iMDbRating = Math.Round(rating, 2);
+                        throw new ArgumentOutOfRangeException("max 2 decimals");
                     }
-                    else
-                    {
-                        throw new ArgumentOutOfRangeException("Number must be greater than 0 or maximum 10");
-                    }
+                    _imdbRating = Math.Round(rating, 2);
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("must only contain numbers and decimal point");
+                    throw new ArgumentOutOfRangeException("Number must be greater than 0 or maximum 10");
                 }
             }
-
-        }
-
-
+            else
+            {
+                throw new ArgumentOutOfRangeException("must only contain numbers and decimal point");
+            }
+        }*/
+    
     }
-}
 
 
 
-
-
+    

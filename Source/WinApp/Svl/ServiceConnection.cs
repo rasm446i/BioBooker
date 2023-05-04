@@ -18,7 +18,7 @@ namespace BioBooker.WinApp.Svl
         }
 
         public HttpClient HttpEnabler { private get; init; }
-        public string? BaseUrl { get; init; }
+        public string? BaseUrl { get; set; }
         public string? UseUrl { get; set; }
 
         public async Task<HttpResponseMessage?> CallServiceGet()

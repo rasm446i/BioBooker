@@ -15,7 +15,7 @@ namespace BioBooker.WebApi.Bll
 
         public MoviesManager(IConfiguration inConfiguration)
         {
-            _moviesService = new MoviesService();
+            _moviesService = new MoviesService(inConfiguration);
         }
 
         public async Task<bool> InsertMovieAsync(Movie movie)

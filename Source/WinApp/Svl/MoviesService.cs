@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using BioBooker.WebApi.Ctl;
 using BioBooker.WebApi.Ctl.Controllers;
+using Microsoft.Extensions.Configuration;
+using BioBooker.WebApi.Dal;
 //using System.Configuration;
 
 namespace BioBooker.WinApp.Svl
@@ -21,11 +23,13 @@ namespace BioBooker.WinApp.Svl
         private readonly IServiceConnection _serviceConnection;
         readonly string _serviceBaseUrl = "https://localhost:7011/";
         private readonly MoviesController _controller;
+        private readonly IMoviesRepository _movieRepository;
 
-        public MoviesService()
+        public MoviesService(IConfiguration configuration)
         {
             _serviceConnection = new ServiceConnection(_serviceBaseUrl);
-            _controller = new MoviesController();
+            _controller = new MoviesController(configuration);
+           //_movieRepository = new MoviesRepository(configuration);
 
         }
 
@@ -49,6 +53,12 @@ namespace BioBooker.WinApp.Svl
             throw new NotImplementedException();
         }
 
+        /*public async Task<bool> InsertMovieAsync(Movie movie)
+        {
+            return await _movieRepository.AddMovieAsync(movie);
+        }
+        */
+        
         public async Task<bool> InsertMovieAsync(Movie movie)
         {
 
@@ -77,9 +87,7 @@ namespace BioBooker.WinApp.Svl
                             {
                                 changedOk = false;
                             }
-
                         }
-
                     }
                     catch
                     {
@@ -89,11 +97,7 @@ namespace BioBooker.WinApp.Svl
             }
             return changedOk;
         }
-
-        public Task<bool> InsertMovieTheaterAsync(Movie movieToAdd)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public Task<bool> UpdateMovie(int id)
         {
@@ -103,4 +107,4 @@ namespace BioBooker.WinApp.Svl
 
 
 }
-}
+

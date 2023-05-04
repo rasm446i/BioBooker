@@ -14,11 +14,12 @@ namespace BioBooker.WebApi.Dal
     {
         private readonly string _connectionString;
 
-        private IConfiguration Configuration { get; set; }
+        private IConfiguration Configuration;
 
-        public MoviesRepository()
-        { 
-            _connectionString = Configuration.GetConnectionString("BioBookerConnection");
+        public MoviesRepository(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            _connectionString = Configuration.GetConnectionString("ConnectionString");
         }
 
 
@@ -37,9 +38,5 @@ namespace BioBooker.WebApi.Dal
 
             return numRowsAffected == numRowsInserted;
         }
-
-
-
-
     }
 }

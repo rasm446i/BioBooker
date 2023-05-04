@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BioBooker.Dml;
 using BioBooker.WebApi.Dal;
+using Microsoft.Extensions.Configuration;
 
 namespace BioBooker.WebApi.Svl
 {
@@ -12,9 +13,9 @@ namespace BioBooker.WebApi.Svl
     {
         private readonly IMoviesRepository _moviesRepository;
 
-        public MoviesService()
+        public MoviesService(IConfiguration configuration)
         {
-            _moviesRepository = new MoviesRepository();
+            _moviesRepository = new MoviesRepository(configuration);
         }
 
         public async Task<bool> InsertMovieAsync(Movie movie)
