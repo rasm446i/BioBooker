@@ -6,15 +6,21 @@ namespace BioBooker.Dml;
 public class Poster
 {
     public int Id { get; set; }
-    public byte[] Version { get; set; }
+    //public byte[] Version { get; set; }
+    public int MovieId { get; set; }
     public string PosterTitle { get; set; }
-    public byte[] ImageData { get; set; }
+    public string ImageData { get; set; }
 
-    
-    public Poster(int id, byte[] version, string posterTitle, byte[] imageData)
+
+    public Poster()
+    {
+        
+    }
+
+    public Poster(int id, int movieId, string posterTitle, string imageData)
     {
         Id = id;
-        Version = version;
+        MovieId = movieId;
         PosterTitle = posterTitle;
         ImageData = imageData;
     }

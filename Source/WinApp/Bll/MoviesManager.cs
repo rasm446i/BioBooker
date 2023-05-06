@@ -16,14 +16,14 @@ namespace BioBooker.WinApp.Bll
         }
 
 
-        public async Task<bool> CreateAndInsertMovieAsync(Movie movie)
+        public async Task<bool> CreateAndInsertMovieAsync(Movie movie, Poster poster)
         {
             bool inserted;
             try
             {
                 Movie createdMovie = CreateMovie(movie);
 
-                inserted = await _moviesService.InsertMovieAsync(createdMovie);
+                inserted = await _moviesService.InsertMovieAsync(createdMovie, poster);
 
             }
             catch

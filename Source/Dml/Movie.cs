@@ -5,6 +5,7 @@ using BioBooker.Dml;
 using System.Collections;
 using System.Collections.Generic;
 
+
 namespace BioBooker.Dml;
 
 public class Movie
@@ -15,7 +16,7 @@ public class Movie
 
     }
 
-    public Movie(int id, string title, string genre, string actors, string director, string language, DateTime releaseYear, byte subtitles, string subtitlesLanguage, string mpaRatingEnum, int runtimeHours, int runtimeMinutes, DateTime premierDate)
+    public Movie(int id, string title, string genre, string actors, string director, string language, string releaseYear, byte subtitles, string subtitlesLanguage, string mpaRatingEnum, int runtimeHours, int runtimeMinutes, string premierDate, Poster poster)
     {
         Id = id;
         Title = title;
@@ -30,7 +31,7 @@ public class Movie
         RuntimeHours = runtimeHours;
         RuntimeMinutes = runtimeMinutes;
         PremierDate = premierDate;
-
+        Poster = poster;
     }
 
     public enum MPARating
@@ -70,14 +71,17 @@ public class Movie
     public string Actors { get; set; }
     public string Director { get; set; }
     public string Language { get; set; }
-    public DateTime ReleaseYear { get; set; }
+
+    public string ReleaseYear { get; set; }
     public Byte Subtitles { get; set; }
     public string SubtitlesLanguage { get; set; }
     public string MPARatingEnum { get; set; }
     public int RuntimeHours { get; set; }
     public int RuntimeMinutes { get; set; }
-    public DateTime PremierDate { get; set; }
-   
+
+    public string PremierDate { get; set; }
+    public Poster Poster { get; set; }
+
 }
 
 

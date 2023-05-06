@@ -81,7 +81,7 @@ namespace BioBooker.WinApp.Svl
         }
         */
         
-        public async Task<bool> InsertMovieAsync(Movie movie)
+        public async Task<bool> InsertMovieAsync(Movie movie, Poster poster)
         {
 
             bool changedOk = false;
