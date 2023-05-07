@@ -34,35 +34,6 @@ public class Movie
         Poster = poster;
     }
 
-    public enum MPARating
-    {
-        G,
-        PG,
-        PG13,
-        R,
-        NC17,
-        NotRated
-    }
-
-    public enum Genres
-    {
-        Action,
-        Comedy,
-        Drama,
-        Horror,
-        SciFi,
-        Thriller
-    }
-
-    public enum Subtitle
-    {
-        English,
-        Spanish,
-        French,
-        German,
-        Chinese,
-        Danish
-    }
 
     public int Id { get; set; }
     //public byte[] Version { get; set; }

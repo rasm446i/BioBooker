@@ -27,13 +27,7 @@ namespace BioBooker.WebApi.Dal
 
         public async Task<bool> AddMovieAsync(Movie movie)
         {
-            int numRowsAffected;
-            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARatingEnum, RuntimeHours, RuntimeMinutes, PremierDate)
-                    VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARatingEnum, @RuntimeHours, @RuntimeMinutes, @PremierDate);
-                    SELECT SCOPE_IDENTITY();";
-
-            string sqlInsertPosters = @"INSERT INTO Posters (MovieId, PosterTitle, ImageData)
-                     VALUES (@MovieId, @PosterTitle, @ImageData);";
+            ValidateMovie(movie);
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -42,16 +36,12 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        // Insert the movie and retrieve the newly assigned movie ID
-                        int movieId = await connection.ExecuteScalarAsync<int>(sqlInsertMovies, movie, transaction);
-
-                        // Assign the movieId to the Poster object
+                        int movieId = await InsertMovieAsync(connection, transaction, movie);
                         movie.Poster.MovieId = movieId;
-
-                        // Insert the poster
-                        numRowsAffected = await connection.ExecuteAsync(sqlInsertPosters, movie.Poster, transaction);
+                        await InsertPosterAsync(connection, transaction, movie.Poster);
 
                         transaction.Commit();
+                        return true;
                     }
                     catch
                     {
@@ -60,9 +50,33 @@ namespace BioBooker.WebApi.Dal
                     }
                 }
             }
-
-            return numRowsAffected > 0;
         }
+
+        private void ValidateMovie(Movie movie)
+        {
+            if (string.IsNullOrEmpty(movie.MPARatingEnum))
+            {
+                throw new ArgumentException("MPA Rating is required.");
+            }
+        }
+
+        private async Task<int> InsertMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
+        {
+            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARatingEnum, RuntimeHours, RuntimeMinutes, PremierDate)
+                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARatingEnum, @RuntimeHours, @RuntimeMinutes, @PremierDate);
+                              SELECT SCOPE_IDENTITY();";
+
+            return await connection.ExecuteScalarAsync<int>(sqlInsertMovies, movie, transaction);
+        }
+
+        private async Task InsertPosterAsync(SqlConnection connection, SqlTransaction transaction, Poster poster)
+        {
+            string sqlInsertPosters = @"INSERT INTO Posters (MovieId, PosterTitle, ImageData)
+                               VALUES (@MovieId, @PosterTitle, @ImageData);";
+
+            await connection.ExecuteAsync(sqlInsertPosters, poster, transaction);
+        }
+
 
 
 
