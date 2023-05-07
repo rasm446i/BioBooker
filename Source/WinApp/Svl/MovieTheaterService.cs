@@ -54,6 +54,8 @@ namespace BioBooker.WinApp.Svl
             
         }
 
+       
+
         public async Task<MovieTheater> GetMovieTheaterAsync()
         {
             throw new NotImplementedException();
