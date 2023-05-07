@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +15,23 @@ namespace BioBooker.WinApp.Uil.Views
         public MovieTheaterAuditoriumView()
         {
             InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex == -1)
+            {
+                errorLabel.Text = "Select a value with the dropdown below";
+            }
+            else
+            {
+
+            }
         }
     }
 }
