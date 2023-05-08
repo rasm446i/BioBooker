@@ -48,15 +48,15 @@ namespace BioBooker.WinApp.Uil.Views
             button1.Name = "button1";
             button1.Size = new System.Drawing.Size(75, 23);
             button1.TabIndex = 1;
-            button1.Text = "button1";
+            button1.Text = "Load";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // label1
+            // errorLabel
             // 
             errorLabel.AutoSize = true;
             errorLabel.Location = new System.Drawing.Point(34, 9);
-            errorLabel.Name = "label1";
+            errorLabel.Name = "errorLabel";
             errorLabel.Size = new System.Drawing.Size(38, 15);
             errorLabel.TabIndex = 2;
             errorLabel.Text = "label1";

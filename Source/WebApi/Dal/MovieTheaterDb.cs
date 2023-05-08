@@ -22,6 +22,15 @@ namespace BioBooker.WebApi.Dal
             _connectionString = Configuration.GetConnectionString("BioBookerConnection");
         }
 
+        public async Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int movieTheaterId)
+        {
+            string query = "SELECT * FROM Auditorium WHERE MovieTheaterId = @Id";
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                List<Auditorium> auditoriums = (await connection.QueryAsync<Auditorium>(query, new { Id = movieTheaterId })).ToList();
+                return auditoriums;
+            }
+        }
 
         public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
         {
