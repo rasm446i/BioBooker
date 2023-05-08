@@ -1,5 +1,6 @@
 using BioBooker.Dml;
 using BioBooker.WinApp.Bll;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,11 +12,11 @@ namespace BioBooker.WinApp.Uil.Views;
 public partial class MovieView : Form
 {
 
-    private string selectedImagePath;
+    private string? selectedImagePath;
     private MoviesManager moviesManager;
-    public MovieView()
+    public MovieView(IConfiguration configuration)
     {
-
+        moviesManager = new MoviesManager(configuration);
         InitializeComponent();
         InitializeComboBoxes();
         IntializeCheckedListBox();
@@ -138,7 +139,7 @@ public partial class MovieView : Form
 
     }
 
-    private void buttonSubmit_Click(object sender, EventArgs e)
+    private async void buttonSubmit_Click(object sender, EventArgs e)
     {
         string title = txtTitle.Text;
         string genre = comboBoxGenre.Text;
@@ -189,7 +190,14 @@ public partial class MovieView : Form
         
         Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
 
-        moviesManager.CreateAndInsertMovieAsync(movie, poster);
+        bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
+        if(inserted)
+        {
+            MessageBox.Show("inserted");
+        } else
+        {
+            MessageBox.Show("no");
+        }
 
     }
 }

@@ -1,6 +1,8 @@
 using BioBooker.WinApp.Uil.Views;
 using IdentityModel.Client;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -13,9 +15,13 @@ internal static class Program
     [STAThread]
     internal static void Main(string[] args)
     {
+        IConfiguration configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json")
+            .Build();
         Auth();
         ApplicationConfiguration.Initialize();
-        Application.Run(new HomeView());
+        Application.Run(new HomeView(configuration));
     }
 
     public static async void Auth()

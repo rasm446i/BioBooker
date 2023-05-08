@@ -1,4 +1,4 @@
-﻿namespace BioBooker.WinApp.Uil.Views
+namespace BioBooker.WinApp.Uil.Views
 {
     partial class HomeView
     {

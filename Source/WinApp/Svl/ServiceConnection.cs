@@ -31,12 +31,12 @@ namespace BioBooker.WinApp.Svl
             return hrm;
         }
 
-        public async Task<HttpResponseMessage?> CallServicePost(StringContent postJson)
+        public async Task<HttpResponseMessage?> CallServicePost(string url, StringContent postJson)
         {
             HttpResponseMessage? hrm = null;
-            if (UseUrl != null)
+            if (url != null)
             {
-                hrm = await HttpEnabler.PostAsync(UseUrl, postJson);
+                hrm = await HttpEnabler.PostAsync(url, postJson);
             }
             return hrm;
         }

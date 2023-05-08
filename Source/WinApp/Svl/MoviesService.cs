@@ -73,7 +73,8 @@ namespace BioBooker.WinApp.Svl
             bool changedOk = false;
             if (_serviceConnection != null)
             {
-                _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
+               // _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
+                string url = _serviceBaseUrl + "movies/";
 
                 if (movie != null)
                 {
@@ -82,14 +83,14 @@ namespace BioBooker.WinApp.Svl
                         var json = JsonConvert.SerializeObject(movie);
                         var postData = new StringContent(json, Encoding.UTF8, "application/json");
 
-                        HttpResponseMessage? response = await _serviceConnection.CallServicePost(postData);
+                        HttpResponseMessage? response = await _serviceConnection.CallServicePost(url, postData);
                         if (response != null)
                         {
 
                             if (response.IsSuccessStatusCode)
                             {
                                 changedOk = true;
-                                await _controller.InsertMovieAsync(movie);
+                                //await _controller.InsertMovieAsync(movie);
                             }
                             else
                             {
