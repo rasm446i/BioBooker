@@ -135,7 +135,38 @@ namespace BioBooker.WebApi.Dal
                 return movie;
             }
         }
-        
+
+        public async Task<List<Movie>> GetAllMoviesAsync()
+        {
+            string sqlQuery = "SELECT * FROM Movies";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var movies = await connection.QueryAsync<Movie>(sqlQuery);
+
+                foreach (var movie in movies)
+                {
+                    DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
+                    movie.ReleaseYear = releaseYear.ToString("yyyy-MM-dd");
+
+                    DateTime premierDate = DateTime.Parse(movie.PremierDate);
+                    movie.PremierDate = premierDate.ToString("yyyy-MM-dd");
+
+                    // Retrieve the poster for each movie
+                    string sqlPosterQuery = "SELECT * FROM Posters WHERE MovieId = @MovieId";
+                    var posterParameters = new { MovieId = movie.Id };
+                    var poster = await connection.QueryFirstOrDefaultAsync<Poster>(sqlPosterQuery, posterParameters);
+
+                    if (poster != null)
+                    {
+                        movie.Poster = poster;
+                    }
+                }
+
+                return movies.ToList();
+            }
+        }
 
     }
 }

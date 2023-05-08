@@ -27,7 +27,11 @@ namespace BioBooker.WebApi.Svl
         {
             return await _moviesRepository.AddMovieAsync(movie);
         }
-
+        
+        public async Task<List<Movie>> GetAllMoviesAsync()
+        {
+            return await _moviesRepository.GetAllMoviesAsync();
+        }
 
     }
 }

@@ -2,6 +2,7 @@ using BioBooker.Dml;
 using System.Threading.Tasks;
 using BioBooker.WinApp.Svl;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 
 namespace BioBooker.WinApp.Bll
 {
@@ -54,5 +55,20 @@ namespace BioBooker.WinApp.Bll
             return movie;
         
         }
+
+        public async Task<List<Movie>> GetAllMoviesAsync()
+        {
+            List<Movie> movies;
+            try
+            {
+                movies = await _moviesService.GetAllMoviesAsync();
+            }
+            catch
+            {
+                movies = null;
+            }
+            return movies;
+        }
+
     }
 }

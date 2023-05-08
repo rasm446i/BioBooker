@@ -9,13 +9,13 @@ using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Views;
 
-public partial class MovieView : Form
+public partial class CreateMovieView : Form
 {
 
     private string? selectedImagePath;
-    private MoviesManager moviesManager;
+    private IMoviesManager moviesManager;
     private string hexImageData;
-    public MovieView(IConfiguration configuration)
+    public CreateMovieView(IConfiguration configuration)
     {
         moviesManager = new MoviesManager(configuration);
         InitializeComponent();

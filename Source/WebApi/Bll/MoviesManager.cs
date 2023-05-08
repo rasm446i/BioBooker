@@ -27,5 +27,10 @@ namespace BioBooker.WebApi.Bll
         {
             return await _moviesService.InsertMovieAsync(movie);
         }
+
+        public async Task<List<Movie>> GetAllMoviesAsync()
+        {
+            return await _moviesService.GetAllMoviesAsync();
+        }
     }
 }

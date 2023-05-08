@@ -1,6 +1,6 @@
 namespace BioBooker.WinApp.Uil.Views
 {
-    partial class MovieView
+    partial class CreateMovieView
     {
         /// <summary>
         /// Required designer variable.

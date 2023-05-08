@@ -13,14 +13,22 @@ public partial class HomeView : Form
         this.configuration = configuration;
     }
 
-    private void BtnMoviesClick(object sender, System.EventArgs e)
-    {
-        MovieView movieView = new MovieView(configuration);
-        movieView.Show();
-    }
+
 
     private void BtnCloseClick(object sender, System.EventArgs e)
     {
 
+    }
+
+    private void buttonViewMovies_Click(object sender, System.EventArgs e)
+    {
+        ViewMoviesView viewMovies = new ViewMoviesView(configuration);
+        viewMovies.Show();
+    }
+
+    private void btnCreateMovies_Click(object sender, System.EventArgs e)
+    {
+        CreateMovieView createMovie = new CreateMovieView(configuration);
+        createMovie.Show();
     }
 }

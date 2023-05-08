@@ -54,5 +54,20 @@ public class MoviesController : ControllerBase
         return Ok(movie);
     }
 
+    [HttpGet("all")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAllMoviesAsync()
+    {
+        List<Movie> movies = await _moviesManager.GetAllMoviesAsync();
+
+        if (movies == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(movies);
+    }
+
+
 
 }

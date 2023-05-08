@@ -63,10 +63,32 @@ namespace BioBooker.WinApp.Svl
 
 
 
-        public Task<List<Movie>> GetMovies()
+        public async Task<List<Movie>> GetAllMoviesAsync()
         {
-            throw new NotImplementedException();
+            List<Movie> movies = null;
+
+            if (_serviceConnection != null)
+            {
+                string url = _serviceBaseUrl + "movies/all";
+
+                try
+                {
+                    HttpResponseMessage? response = await _serviceConnection.CallServiceGet(url);
+                    if (response != null && response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        movies = JsonConvert.DeserializeObject<List<Movie>>(json);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            return movies;
         }
+
 
         public async Task<bool> InsertMovieAsync(Movie movie, Poster poster)
         {

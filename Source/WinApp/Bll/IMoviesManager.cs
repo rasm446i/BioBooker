@@ -12,6 +12,6 @@ namespace BioBooker.WinApp.Bll
 
         public Task<Movie> GetMovieByTitleAsync(string title);
 
-
+        public Task<List<Movie>> GetAllMoviesAsync();
     }
 }
