@@ -72,6 +72,12 @@ namespace BioBooker.WebApi.Ctl.Controllers
               {
             List<Auditorium> auditorium = await _movieTheaterBusiness.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
 
+            if(auditorium == null)
+            {
+                return NotFound();
+
+            }
+            return Ok(auditorium);
                }
 
         

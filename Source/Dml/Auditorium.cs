@@ -9,8 +9,8 @@ namespace BioBooker.Dml
 
     public class Auditorium
     {
-        public int AuditoriumNumber { get; set; }
-        public List<Seat> seats;
+        public int AuditoriumId { get; set; }
+        public List<Seat> seats { get; set; }
 
         public Auditorium()
         {
@@ -19,7 +19,7 @@ namespace BioBooker.Dml
         public Auditorium(List<Seat> seats, int auditoriumNumber)
         {
             seats = new List<Seat>();  
-            AuditoriumNumber = auditoriumNumber;
+            AuditoriumId = auditoriumNumber;
             
         }
 

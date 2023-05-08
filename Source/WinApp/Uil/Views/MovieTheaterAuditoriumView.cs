@@ -27,7 +27,7 @@ namespace BioBooker.WinApp.Uil.Views
             else
             {
                 var selectedItem = comboBox1.SelectedIndex;
-                GetAuditoriumById(int id);
+                
 
             }
 

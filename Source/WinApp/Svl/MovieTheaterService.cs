@@ -64,7 +64,7 @@ namespace BioBooker.WinApp.Svl
         public async Task<List<Auditorium>> GetAuditoriumsAsync(int movieTheaterId)
         {
 
-
+            throw new NotImplementedException();
         }
 
         public async Task<bool> UpdateMovieTheaterAsync()
