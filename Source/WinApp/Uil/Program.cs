@@ -25,7 +25,7 @@ internal static class Program
 
         if (discoveryDocument.IsError)
         {
-            MessageBox.Show(discoveryDocument.Error);
+            //MessageBox.Show(discoveryDocument.Error);
             return;
         }
 
@@ -41,12 +41,12 @@ internal static class Program
 
         if (tokenResponse.IsError)
         {
-            MessageBox.Show(tokenResponse.Error);
+            //MessageBox.Show(tokenResponse.Error);
             return;
         }
 
         // Post Token to jwt.io to See Content of It
-        MessageBox.Show(tokenResponse.AccessToken);
+        //MessageBox.Show(tokenResponse.AccessToken);
 
         // Call API (Set HTTP Authorization Header)
         var apiClient = new HttpClient();
@@ -56,13 +56,13 @@ internal static class Program
 
         if (!response.IsSuccessStatusCode)
         {
-            MessageBox.Show(response.StatusCode.ToString());
+            //MessageBox.Show(response.StatusCode.ToString());
         }
         else
         {
             var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync()).RootElement;
 
-            MessageBox.Show(JsonSerializer.Serialize(doc, new JsonSerializerOptions { WriteIndented = true }));
+           //MessageBox.Show(JsonSerializer.Serialize(doc, new JsonSerializerOptions { WriteIndented = true }));
         }
     }
 }

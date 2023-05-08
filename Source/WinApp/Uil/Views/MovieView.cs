@@ -1,4 +1,5 @@
 using BioBooker.Dml;
+using BioBooker.WinApp.Bll;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,8 +10,12 @@ namespace BioBooker.WinApp.Uil.Views;
 
 public partial class MovieView : Form
 {
+
+    private string selectedImagePath;
+    private MoviesManager moviesManager;
     public MovieView()
     {
+
         InitializeComponent();
         InitializeComboBoxes();
         IntializeCheckedListBox();
@@ -63,12 +68,13 @@ public partial class MovieView : Form
 
     }
 
-    private void btnAddPoster_Click(object sender, System.EventArgs e)
+    private void btnAddPoster_Click(object sender, EventArgs e)
     {
         openFileDialog1.Filter = "Select image(*.jpg; *.png;)|*.jpg; *.png;";
         if (openFileDialog1.ShowDialog() == DialogResult.OK)
         {
-            pictureBox1.Image = Image.FromFile(openFileDialog1.FileName);
+            selectedImagePath = openFileDialog1.FileName; // Store the selected image file path
+            pictureBox1.Image = Image.FromFile(selectedImagePath);
         }
     }
 
@@ -140,31 +146,9 @@ public partial class MovieView : Form
         string director = txtDirector.Text;
         string language = comboBoxLanguage.Text;
         string releaseYear = dateTimePickerReleaseYear.Value.ToString();
+
         byte subtitles = 0;
         string subtitlesLanguage = "";
-        string mpaRatingEnum = comboBoxMpaRating.Text;
-        int runtimeHours = 0;
-        int parsedRuntimeHours;
-        string premierDate = dateTimePickerPremierDate.Value.ToString();
-        Image image = pictureBox1.Image;
-        byte[] imageData = ImageToByteArray(image);
-        Poster poster = new Poster
-        {
-            PosterTitle = posterTitle,
-            ImageData = imageData
-        };
-
-
-
-        if (int.TryParse(textBoxRunTime.Text, out parsedRuntimeHours))
-        {
-            runtimeHours = parsedRuntimeHours;
-        }
-        else
-        {
-            MessageBox.Show("Invalid runtime hours. Please enter a valid integer.");
-        }
-
         if (comboBoxSubtitlesYesNo.Text == "Yes")
         {
             subtitles = 1;
@@ -181,7 +165,31 @@ public partial class MovieView : Form
         {
             subtitlesLanguage = "No Subtitles";
         }
+
+        string mpaRatingEnum = comboBoxMpaRating.Text;
+
+        int runtimeHours = 0;
+        int parsedRuntimeHours;
+        if (int.TryParse(textBoxRunTime.Text, out parsedRuntimeHours))
+        {
+            runtimeHours = parsedRuntimeHours;
+        }
+        else
+        {
+            MessageBox.Show("Invalid runtime hours. Please enter a valid integer.");
+        }
+
+        string premierDate = dateTimePickerPremierDate.Value.ToString();
+        Image image = pictureBox1.Image;
+        string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
+        byte[] imageData = File.ReadAllBytes(selectedImagePath);
+        string imageDataString = Convert.ToBase64String(imageData);
+
+        Poster poster = new Poster(posterTitle, imageDataString);
+        
         Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
+
+        moviesManager.CreateAndInsertMovieAsync(movie, poster);
 
     }
 }

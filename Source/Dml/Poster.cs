@@ -16,9 +16,8 @@ public class Poster
         
     }
 
-    public Poster(int movieId, string posterTitle, string imageData)
+    public Poster(string posterTitle, string imageData)
     {
-        MovieId = movieId;
         PosterTitle = posterTitle;
         ImageData = imageData;
     }

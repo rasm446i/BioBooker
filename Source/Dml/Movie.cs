@@ -26,7 +26,7 @@ public class Movie
         ReleaseYear = releaseYear;
         Subtitles = subtitles;
         SubtitlesLanguage = subtitlesLanguage;
-        MPARatingEnum = mpaRatingEnum;
+        MPARating = mpaRatingEnum;
         RuntimeMinutes = runtimeMinutes;
         PremierDate = premierDate;
         Poster = poster;
@@ -44,7 +44,7 @@ public class Movie
     public string ReleaseYear { get; set; }
     public Byte Subtitles { get; set; }
     public string SubtitlesLanguage { get; set; }
-    public string MPARatingEnum { get; set; }
+    public string MPARating { get; set; }
     public int RuntimeMinutes { get; set; }
     public string PremierDate { get; set; }
     public Poster Poster { get; set; }
