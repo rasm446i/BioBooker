@@ -11,8 +11,9 @@ namespace BioBooker.Dml
     public int Id { get; set; }
     public string Name { get; set; }
 
-    public List<Auditorium> Auditoriums { get;set; }
-    
+        public List<Auditorium> Auditoriums { get; set; } = new List<Auditorium>();
+
+
         public MovieTheater()
         {
 
@@ -29,8 +30,12 @@ namespace BioBooker.Dml
         }
         public MovieTheater(string name, Auditorium auditorium)
         {
-            Auditoriums = new List<Auditorium>();
-            Auditoriums.Add(auditorium);
+            Name = name;
+            if(auditorium != null)
+            {
+                Auditoriums.Add(auditorium);
+            }
+            throw new ArgumentNullException(nameof(auditorium), "An auditorium is required.");
         }
 
 
