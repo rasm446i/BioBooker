@@ -50,24 +50,54 @@ namespace BioBooker.WebApi.Dal
 
         public async Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater)
         {
+            bool result = false;
+
+            using(var connection = new SqlConnection(_connectionString))    
+            using(var transaction = await connection.BeginTransactionAsync())
+            {
+                try
+                {
+                    await CreateAndInsertMovieTheaterAsync(newMovieTheater);
+                    transaction.Commit();
+                    result = true;  
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    transaction.Rollback();
+                    result = false;
+                }
+
+
+
+            }
+            return result;
+        }
+
+
+        public async Task<bool> CreateAndInsertMovieTheaterAsync(MovieTheater newMovieTheater, IDbConnection connection)
+        {
             int numRowsInserted = 1;
             int numRowsAffected;
             int movieTheaterId = -1;
             try
             {
                 string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name)";
-                
-                using (var connection = new SqlConnection(_connectionString))
+
+                using (connection)
                 {
                     movieTheaterId = (int)await connection.ExecuteScalarAsync(insertQuery, newMovieTheater);
 
                 }
 
-                Auditorium ?audi = newMovieTheater.Auditoriums.FirstOrDefault();
-                if(audi != null)
-                await InsertAuditorium(audi, movieTheaterId) ;
+                Auditorium? audi = newMovieTheater.Auditoriums.FirstOrDefault();
+                if (audi != null)
+                    await InsertAuditorium(audi, movieTheaterId);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
@@ -76,10 +106,39 @@ namespace BioBooker.WebApi.Dal
 
         public async Task<bool> InsertAuditorium(Auditorium auditorium, int movieTheaterId)
         {
+            bool result = false;
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var transaction = await connection.BeginTransactionAsync())
+            {
+                try
+                {
+                    await CreateAndInsertAuditorium(auditorium, movieTheaterId);
+                    transaction.Commit();
+                    result = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    transaction.Rollback();
+                    result = false;
+                }
+
+
+
+            }
+            return result;
+
+        }
+
+        public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId)
+        {
             int numRowsAffected = 0;
             int MovieTheaterId = auditorium.AuditoriumId;
-            
-           
+
+
             string insertQuery = @"INSERT INTO Auditorium (MovieTheaterId) VALUES(@movieTheaterId)";
 
 
@@ -90,48 +149,44 @@ namespace BioBooker.WebApi.Dal
 
         public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
         {
-            int numRowsAffected;
-            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
+            bool result = false;
+
+            using (var connection = new SqlConnection(_connectionString))
+            using (var transaction = await connection.BeginTransactionAsync())
+            {
+                try
+                {
+                    await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId);
+
+                    transaction.Commit();
+                    result = true;
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    transaction.Rollback();
+                    result = false;
+                }
+
+
+
+            }
+            return result;
+        }
+
+        public async Task<bool> CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
+        {
+           string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
 
             try
             {
-                //Using statements ensures propper disposal of resources
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    //This line is necessary even though Dapper opens and closes connections. DONT DELETE
-                    await connection.OpenAsync();
-                    using (var transaction = connection.BeginTransaction())
-                    {
-                        try
-                        {
-                            foreach (var seat in seats)
-                            {
-                                numRowsAffected = await connection.ExecuteAsync(insertQuery, new { SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, IsAvailable = seat.IsAvailable, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
 
-                                if (numRowsAffected <= 0)
-                                {
-                                    transaction.Rollback();
-                                    return false;
-                                }
-                            }
+                
 
-                            transaction.Commit();
-                            return true;
-                        }
-                        catch (Exception ex) 
-                        {
-                            Console.WriteLine(ex.Message);
-                            transaction.Rollback();
-                            return false;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
-            }
+            }catch (Exception ex) { }
+
         }
     }
 
@@ -140,3 +195,4 @@ namespace BioBooker.WebApi.Dal
     
 
 
+//TODO Ændre så at i hirakiet kalder den ikke Insert men Create And Insert
