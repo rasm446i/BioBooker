@@ -14,6 +14,7 @@ public partial class MovieView : Form
 
     private string? selectedImagePath;
     private MoviesManager moviesManager;
+    private string hexImageData;
     public MovieView(IConfiguration configuration)
     {
         moviesManager = new MoviesManager(configuration);
@@ -129,16 +130,6 @@ public partial class MovieView : Form
 
     }
 
-    private byte[] ImageToByteArray(Image image)
-    {
-        using (MemoryStream ms = new MemoryStream())
-        {
-            image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            return ms.ToArray();
-        }
-
-    }
-
     private async void buttonSubmit_Click(object sender, EventArgs e)
     {
         string title = txtTitle.Text;
@@ -191,6 +182,58 @@ public partial class MovieView : Form
 
         bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
     }
+
+
+    // USED TO SHOW THE POSTERS IN THE DATABASE
+    /*
+    private async void buttonShow_Click(object sender, EventArgs e)
+    {
+        string title =  txtTitle.Text;
+        Movie movie = await moviesManager.GetMovieByTitleAsync(title);
+
+        if (movie != null && movie.Poster != null)
+        {
+            byte[] imageData = movie.Poster.ImageData;
+            hexImageData = ConvertByteArrayToHex(imageData);
+            DisplayPoster();
+        }
+        else
+        {
+            MessageBox.Show("No poster found for the given movie title.");
+        }
+    }
+
+    private string ConvertByteArrayToHex(byte[] byteArray)
+    {
+        string hexString = BitConverter.ToString(byteArray);
+        return hexString.Replace("-", "");
+    }
+
+    private void DisplayPoster()
+    {
+        if (!string.IsNullOrEmpty(hexImageData))
+        {
+            byte[] imageData = ConvertHexToByteArray(hexImageData);
+            using (MemoryStream ms = new MemoryStream(imageData))
+            {
+                pictureBox1.Image = Image.FromStream(ms);
+            }
+        }
+    }
+
+    private byte[] ConvertHexToByteArray(string hexString)
+    {
+        int length = hexString.Length;
+        byte[] byteArray = new byte[length / 2];
+
+        for (int i = 0; i < length; i += 2)
+        {
+            byteArray[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+        }
+
+        return byteArray;
+    }*/
+
 }
 
 

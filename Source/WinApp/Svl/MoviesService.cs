@@ -41,12 +41,11 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                //_serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/?title=" + title;
                 string url = _serviceBaseUrl + "movies?title=" + title;
 
                 try
                 {
-                    HttpResponseMessage? response = await _serviceConnection.CallServiceGet();
+                    HttpResponseMessage? response = await _serviceConnection.CallServiceGet(url);
                     if (response != null && response.IsSuccessStatusCode)
                     {
                         string json = await response.Content.ReadAsStringAsync();
@@ -61,6 +60,7 @@ namespace BioBooker.WinApp.Svl
 
             return movie;
         }
+
 
 
         public Task<List<Movie>> GetMovies()

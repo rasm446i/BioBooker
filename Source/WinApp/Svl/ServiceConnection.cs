@@ -21,12 +21,12 @@ namespace BioBooker.WinApp.Svl
         public string? BaseUrl { get; set; }
         public string? UseUrl { get; set; }
 
-        public async Task<HttpResponseMessage?> CallServiceGet()
+        public async Task<HttpResponseMessage?> CallServiceGet(string url)
         {
             HttpResponseMessage? hrm = null;
-            if (UseUrl != null)
+            if (url != null)
             {
-                hrm = await HttpEnabler.GetAsync(UseUrl);
+                hrm = await HttpEnabler.GetAsync(url);
             }
             return hrm;
         }

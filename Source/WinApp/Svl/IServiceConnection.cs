@@ -13,7 +13,7 @@ namespace BioBooker.WinApp.Svl
         public string? BaseUrl { get; set; }
         public string? UseUrl { get; set; }
 
-        Task<HttpResponseMessage?> CallServiceGet();
+        Task<HttpResponseMessage?> CallServiceGet(string url);
         Task<HttpResponseMessage?> CallServicePost(string url, StringContent postJson);
         Task<HttpResponseMessage?> CallServicePut(StringContent postJson);
         Task<HttpResponseMessage?> CallServiceDelete();
