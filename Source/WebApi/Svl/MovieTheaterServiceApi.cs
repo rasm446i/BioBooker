@@ -35,9 +35,9 @@ namespace BioBooker.WebApi.Svl
             return movieTheaterList;   
         }
 
-        public async Task<List<Auditorium>> GetAllAditoriumsFromMovieIdAsync(int id)
+        public async Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id)
         {
-            List<Auditorium> auditoriums = await _movieTheaterDb.GetAllAditoriumsFromMovieIdAsync();
+            List<Auditorium> auditoriums = await _movieTheaterDb.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
 
             return auditoriums;
 

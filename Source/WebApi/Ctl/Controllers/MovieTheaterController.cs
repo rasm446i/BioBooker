@@ -70,7 +70,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
              [HttpGet, Route("{id}/Auditoriums")]
               public async Task<IActionResult> Get([FromRoute] int id ) 
               {
-            List<Auditorium> auditorium = await _movieTheaterBusiness.GetAllAuditoriumsFromMovieIdAsync(id);
+            List<Auditorium> auditorium = await _movieTheaterBusiness.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
 
                }
 
