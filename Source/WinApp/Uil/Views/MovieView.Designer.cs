@@ -48,8 +48,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxRunTime = new System.Windows.Forms.TextBox();
-            this.txtGenre = new System.Windows.Forms.TextBox();
-            this.txtActor = new System.Windows.Forms.TextBox();
+            this.txtDirector = new System.Windows.Forms.TextBox();
+            this.txtActors = new System.Windows.Forms.TextBox();
             this.lblGenre = new System.Windows.Forms.Label();
             this.lblMpaaRating = new System.Windows.Forms.Label();
             this.lblReleaseYear = new System.Windows.Forms.Label();
@@ -114,8 +114,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlInputs.Controls.Add(this.label2);
             this.pnlInputs.Controls.Add(this.label1);
             this.pnlInputs.Controls.Add(this.textBoxRunTime);
-            this.pnlInputs.Controls.Add(this.txtGenre);
-            this.pnlInputs.Controls.Add(this.txtActor);
+            this.pnlInputs.Controls.Add(this.txtDirector);
+            this.pnlInputs.Controls.Add(this.txtActors);
             this.pnlInputs.Controls.Add(this.lblGenre);
             this.pnlInputs.Controls.Add(this.lblMpaaRating);
             this.pnlInputs.Controls.Add(this.lblReleaseYear);
@@ -268,24 +268,25 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.textBoxRunTime.Location = new System.Drawing.Point(3, 113);
             this.textBoxRunTime.Name = "textBoxRunTime";
-            this.textBoxRunTime.PlaceholderText = "time in minutes";
+            this.textBoxRunTime.PlaceholderText = "Time in minutes";
             this.textBoxRunTime.Size = new System.Drawing.Size(120, 23);
             this.textBoxRunTime.TabIndex = 12;
             // 
-            // txtGenre
+            // txtDirector
             // 
-            this.txtGenre.Location = new System.Drawing.Point(147, 194);
-            this.txtGenre.Name = "txtGenre";
-            this.txtGenre.Size = new System.Drawing.Size(121, 23);
-            this.txtGenre.TabIndex = 8;
-            this.txtGenre.TextChanged += new System.EventHandler(this.txtGenre_TextChanged);
+            this.txtDirector.Location = new System.Drawing.Point(147, 194);
+            this.txtDirector.Name = "txtDirector";
+            this.txtDirector.Size = new System.Drawing.Size(121, 23);
+            this.txtDirector.TabIndex = 8;
+            this.txtDirector.TextChanged += new System.EventHandler(this.txtGenre_TextChanged);
             // 
-            // txtActor
+            // txtActors
             // 
-            this.txtActor.Location = new System.Drawing.Point(147, 265);
-            this.txtActor.Name = "txtActor";
-            this.txtActor.Size = new System.Drawing.Size(121, 23);
-            this.txtActor.TabIndex = 7;
+            this.txtActors.Location = new System.Drawing.Point(147, 265);
+            this.txtActors.Name = "txtActors";
+            this.txtActors.PlaceholderText = "name, name, etc";
+            this.txtActors.Size = new System.Drawing.Size(121, 23);
+            this.txtActors.TabIndex = 7;
             // 
             // lblGenre
             // 
@@ -302,9 +303,9 @@ namespace BioBooker.WinApp.Uil.Views
             this.lblMpaaRating.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblMpaaRating.Location = new System.Drawing.Point(147, 242);
             this.lblMpaaRating.Name = "lblMpaaRating";
-            this.lblMpaaRating.Size = new System.Drawing.Size(48, 20);
+            this.lblMpaaRating.Size = new System.Drawing.Size(55, 20);
             this.lblMpaaRating.TabIndex = 3;
-            this.lblMpaaRating.Text = "Actor";
+            this.lblMpaaRating.Text = "Actors";
             // 
             // lblReleaseYear
             // 
@@ -397,8 +398,8 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Label lblGenre;
         private System.Windows.Forms.Label lblMpaaRating;
         private System.Windows.Forms.Panel pnlOutputs;
-        private System.Windows.Forms.TextBox txtGenre;
-        private System.Windows.Forms.TextBox txtActor;
+        private System.Windows.Forms.TextBox txtDirector;
+        private System.Windows.Forms.TextBox txtActors;
         private System.Windows.Forms.Button btnAddPoster;
         private System.Windows.Forms.Label labelPremierDate;
         private System.Windows.Forms.Label label4;
