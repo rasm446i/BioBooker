@@ -77,8 +77,8 @@ namespace BioBooker.WebApi.Dal
 
         private async Task<int> InsertMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
         {
-            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARatingEnum, RuntimeHours, RuntimeMinutes, PremierDate)
-                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARatingEnum, @RuntimeHours, @RuntimeMinutes, @PremierDate);
+            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARatingEnum, RuntimeMinutes, PremierDate)
+                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARatingEnum, @RuntimeMinutes, @PremierDate);
                               SELECT SCOPE_IDENTITY();";
 
             return await connection.ExecuteScalarAsync<int>(sqlInsertMovies, movie, transaction);
