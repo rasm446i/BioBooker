@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +15,12 @@ namespace BioBooker.WinApp.Uil.Views
         public MovieTheaterView()
         {
             InitializeComponent();
+        }
+
+        private void btnCreateAuditorium_Click(object sender, EventArgs e)
+        {
+            CreateAuditoriumView auditoriumView = new CreateAuditoriumView();
+            auditoriumView.Show();
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace BioBooker.WinApp.Uil.Views
+namespace BioBooker.WinApp.Uil.Views
 {
     partial class MovieTheaterView
     {
@@ -28,12 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.btnCreateAuditorium = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // btnCreateAuditorium
+            // 
+            this.btnCreateAuditorium.Location = new System.Drawing.Point(55, 56);
+            this.btnCreateAuditorium.Name = "btnCreateAuditorium";
+            this.btnCreateAuditorium.Size = new System.Drawing.Size(121, 23);
+            this.btnCreateAuditorium.TabIndex = 0;
+            this.btnCreateAuditorium.Text = "Create Auditorium";
+            this.btnCreateAuditorium.UseVisualStyleBackColor = true;
+            this.btnCreateAuditorium.Click += new System.EventHandler(this.btnCreateAuditorium_Click);
+            // 
+            // MovieTheaterView
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnCreateAuditorium);
+            this.Name = "MovieTheaterView";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+
         }
 
         #endregion
+
+        private System.Windows.Forms.Button btnCreateAuditorium;
     }
 }

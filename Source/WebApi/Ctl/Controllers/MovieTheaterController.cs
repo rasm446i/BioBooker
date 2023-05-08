@@ -87,8 +87,14 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             bool wasAdded = await _movieTheaterBusiness.InsertSeats(Seats, id, auditoriumId);
 
-
-            return Ok();
+            if(!wasAdded)
+            {
+                return NotFound();
+            } else
+            {
+                return Ok(Seats);
+            }
+            
         }
 
     }

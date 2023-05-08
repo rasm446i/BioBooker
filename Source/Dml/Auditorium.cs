@@ -17,10 +17,9 @@ namespace BioBooker.Dml
         {
             
         }
-        public Auditorium(List<Seat> seats, int auditoriumNumber)
+        public Auditorium(List<Seat> seats)
         {
             Seats = new List<Seat>();  
-            AuditoriumId = auditoriumNumber;
             
         }
 

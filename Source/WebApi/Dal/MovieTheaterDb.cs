@@ -71,7 +71,7 @@ namespace BioBooker.WebApi.Dal
                 //Using statements ensures propper disposal of resources
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    //This line is necessary even tho dapper opens and closes connections. DONT DELETE
+                    //This line is necessary even though Dapper opens and closes connections. DONT DELETE
                     await connection.OpenAsync();
                     using (var transaction = connection.BeginTransaction())
                     {
