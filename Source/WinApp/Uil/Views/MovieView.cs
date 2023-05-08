@@ -184,9 +184,8 @@ public partial class MovieView : Form
         Image image = pictureBox1.Image;
         string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
         byte[] imageData = File.ReadAllBytes(selectedImagePath);
-        string imageDataString = Convert.ToBase64String(imageData);
 
-        Poster poster = new Poster(posterTitle, imageDataString);
+        Poster poster = new Poster(posterTitle, imageData);
         
         Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
 

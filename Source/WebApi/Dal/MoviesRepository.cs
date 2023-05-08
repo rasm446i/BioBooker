@@ -91,7 +91,7 @@ namespace BioBooker.WebApi.Dal
             // To store the poster in the database, ImageData needs to be converted from a Base64-encoded string to binary format
             // This conversion ensures that the picture data is represented correctly before being stored in the ImageData column.
             string sqlInsertPosters = @"INSERT INTO Posters (MovieId, PosterTitle, ImageData)
-                               VALUES (@MovieId, @PosterTitle, CONVERT(varbinary(max), @ImageData));";
+                               VALUES (@MovieId, @PosterTitle, @ImageData);";
 
             var parameters = new
             {

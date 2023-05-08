@@ -41,7 +41,8 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/" + title;
+                //_serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/?title=" + title;
+                string url = _serviceBaseUrl + "movies?title=" + title;
 
                 try
                 {
