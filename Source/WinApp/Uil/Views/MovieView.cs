@@ -16,6 +16,7 @@ public partial class MovieView : Form
         InitializeSubtitleDropDown();
     }
 
+
     private void label1_Click(object sender, System.EventArgs e)
     {
 
@@ -86,13 +87,20 @@ public partial class MovieView : Form
         List<string> genres = new List<string> { "Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Thriller" };
         comboBoxGenre.Items.AddRange(genres.ToArray());
         comboBoxGenre.DropDownStyle = ComboBoxStyle.DropDownList;
+
+        List<string> languages = new List<string> { "English", "Danish", "German", "Chinese", "French", "Spanish" };
+        comboBoxLanguage.Items.AddRange(languages.ToArray());
+        comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
     }
 
     private void IntializeCheckedListBox()
     {
         List<string> Subtitles = new List<string> { "English", "Danish", "German", "Chinese", "French", "Spanish" };
         checkedListBox1.Items.AddRange(Subtitles.ToArray());
+        checkedListBox1.Enabled = false;
     }
+
+
 
     private void comboBoxSubtitlesYesNo_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -106,4 +114,18 @@ public partial class MovieView : Form
             checkedListBox1.ClearSelected();
         }
     }
+
+    private void btnClose_Click(object sender, EventArgs e)
+    {
+        this.Close();
+
+    }
+
+    private void buttonSubmit_Click(object sender, EventArgs e)
+    {
+
+        Movie movie = new Movie(id, title, genre, actors, director, language, releaseYear, subtitles, susbtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
+        
+    }
 }
+
