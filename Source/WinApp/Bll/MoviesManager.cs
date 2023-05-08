@@ -2,7 +2,6 @@ using BioBooker.Dml;
 using System.Threading.Tasks;
 using BioBooker.WinApp.Svl;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics;
 
 namespace BioBooker.WinApp.Bll
 {

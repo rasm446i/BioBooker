@@ -2,19 +2,12 @@ using BioBooker.Dml;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using System.Web.Http;
-using BioBooker.WebApi.Ctl;
 using BioBooker.WebApi.Ctl.Controllers;
 using Microsoft.Extensions.Configuration;
 using BioBooker.WebApi.Dal;
-//using System.Configuration;
 
 namespace BioBooker.WinApp.Svl
 {
@@ -29,7 +22,6 @@ namespace BioBooker.WinApp.Svl
         {
             _serviceConnection = new ServiceConnection(_serviceBaseUrl);
             _controller = new MoviesController(configuration);
-           //_movieRepository = new MoviesRepository(configuration);
 
         }
 
@@ -75,12 +67,6 @@ namespace BioBooker.WinApp.Svl
             throw new NotImplementedException();
         }
 
-        /*public async Task<bool> InsertMovieAsync(Movie movie)
-        {
-            return await _movieRepository.AddMovieAsync(movie);
-        }
-        */
-        
         public async Task<bool> InsertMovieAsync(Movie movie, Poster poster)
         {
 
