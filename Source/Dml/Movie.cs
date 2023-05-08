@@ -16,9 +16,8 @@ public class Movie
 
     }
 
-    public Movie(int id, string title, string genre, string actors, string director, string language, string releaseYear, byte subtitles, string subtitlesLanguage, string mpaRatingEnum, int runtimeMinutes, string premierDate, Poster poster)
+    public Movie(string title, string genre, string actors, string director, string language, string releaseYear, byte subtitles, string subtitlesLanguage, string mpaRatingEnum, int runtimeMinutes, string premierDate, Poster poster)
     {
-        Id = id;
         Title = title;
         Genre = genre;
         Actors = actors;
