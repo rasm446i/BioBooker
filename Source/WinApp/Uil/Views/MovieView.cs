@@ -123,8 +123,26 @@ public partial class MovieView : Form
 
     private void buttonSubmit_Click(object sender, EventArgs e)
     {
+        string title = txtTitle.Text;
+        string genre = comboBoxGenre.Text;
+        string actors = txtActors.Text;
+        string director = txtDirector.Text;
+        string language = comboBoxLanguage.Text;
+        string releaseYear = dateTimePicker1.Value.ToString();
+        byte subtitles = 0;
+        string subtitlesLanguage = "";
+        if(comboBoxSubtitlesYesNo.Text=="Yes")
+        {
+            byte subtitles = 1;
+            subtitlesLanguage =  checkedListBox1.Text;
+        }
+        else
+        {
+            subtitlesLanguage = "No Subtitles";
 
-        Movie movie = new Movie(id, title, genre, actors, director, language, releaseYear, subtitles, susbtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
+        }
+
+        Movie movie = new Movie(id, title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
         
     }
 }
