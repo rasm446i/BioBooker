@@ -2,6 +2,7 @@ using BioBooker.Dml;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Views;
@@ -121,6 +122,16 @@ public partial class MovieView : Form
 
     }
 
+    private byte[] ImageToByteArray(Image image)
+    {
+        using (MemoryStream ms = new MemoryStream())
+        {
+            image.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return ms.ToArray();
+        }
+
+    }
+
     private void buttonSubmit_Click(object sender, EventArgs e)
     {
         string title = txtTitle.Text;
@@ -128,22 +139,51 @@ public partial class MovieView : Form
         string actors = txtActors.Text;
         string director = txtDirector.Text;
         string language = comboBoxLanguage.Text;
-        string releaseYear = dateTimePicker1.Value.ToString();
+        string releaseYear = dateTimePickerReleaseYear.Value.ToString();
         byte subtitles = 0;
         string subtitlesLanguage = "";
-        if(comboBoxSubtitlesYesNo.Text=="Yes")
+        string mpaRatingEnum = comboBoxMpaRating.Text;
+        int runtimeHours = 0;
+        int parsedRuntimeHours;
+        string premierDate = dateTimePickerPremierDate.Value.ToString();
+        Image image = pictureBox1.Image;
+        byte[] imageData = ImageToByteArray(image);
+        Poster poster = new Poster
         {
-            byte subtitles = 1;
-            subtitlesLanguage =  checkedListBox1.Text;
+            PosterTitle = posterTitle,
+            ImageData = imageData
+        };
+
+
+
+        if (int.TryParse(textBoxRunTime.Text, out parsedRuntimeHours))
+        {
+            runtimeHours = parsedRuntimeHours;
+        }
+        else
+        {
+            MessageBox.Show("Invalid runtime hours. Please enter a valid integer.");
+        }
+
+        if (comboBoxSubtitlesYesNo.Text == "Yes")
+        {
+            subtitles = 1;
+
+            // Retrieve selected subtitles languages from the CheckedListBox
+            List<string> selectedSubtitles = new List<string>();
+            foreach (var item in checkedListBox1.CheckedItems)
+            {
+                selectedSubtitles.Add(item.ToString());
+            }
+            subtitlesLanguage = string.Join(", ", selectedSubtitles);
         }
         else
         {
             subtitlesLanguage = "No Subtitles";
-
         }
+        Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
 
-        Movie movie = new Movie(id, title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
-        
     }
 }
+
 

@@ -33,8 +33,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonSubmit = new System.Windows.Forms.Button();
             this.pnlInputs = new System.Windows.Forms.Panel();
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePickerRealseYear = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerPremierDate = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerReleaseYear = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxSubtitlesYesNo = new System.Windows.Forms.ComboBox();
             this.comboBoxGenre = new System.Windows.Forms.ComboBox();
@@ -99,8 +99,8 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.pnlInputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlInputs.Controls.Add(this.comboBoxLanguage);
-            this.pnlInputs.Controls.Add(this.dateTimePicker1);
-            this.pnlInputs.Controls.Add(this.dateTimePickerRealseYear);
+            this.pnlInputs.Controls.Add(this.dateTimePickerPremierDate);
+            this.pnlInputs.Controls.Add(this.dateTimePickerReleaseYear);
             this.pnlInputs.Controls.Add(this.label5);
             this.pnlInputs.Controls.Add(this.comboBoxSubtitlesYesNo);
             this.pnlInputs.Controls.Add(this.comboBoxGenre);
@@ -135,19 +135,19 @@ namespace BioBooker.WinApp.Uil.Views
             this.comboBoxLanguage.Size = new System.Drawing.Size(123, 23);
             this.comboBoxLanguage.TabIndex = 35;
             // 
-            // dateTimePicker1
+            // dateTimePickerPremierDate
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(3, 197);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(123, 23);
-            this.dateTimePicker1.TabIndex = 34;
+            this.dateTimePickerPremierDate.Location = new System.Drawing.Point(3, 197);
+            this.dateTimePickerPremierDate.Name = "dateTimePickerPremierDate";
+            this.dateTimePickerPremierDate.Size = new System.Drawing.Size(123, 23);
+            this.dateTimePickerPremierDate.TabIndex = 34;
             // 
-            // dateTimePickerRealseYear
+            // dateTimePickerReleaseYear
             // 
-            this.dateTimePickerRealseYear.Location = new System.Drawing.Point(3, 36);
-            this.dateTimePickerRealseYear.Name = "dateTimePickerRealseYear";
-            this.dateTimePickerRealseYear.Size = new System.Drawing.Size(125, 23);
-            this.dateTimePickerRealseYear.TabIndex = 33;
+            this.dateTimePickerReleaseYear.Location = new System.Drawing.Point(3, 36);
+            this.dateTimePickerReleaseYear.Name = "dateTimePickerReleaseYear";
+            this.dateTimePickerReleaseYear.Size = new System.Drawing.Size(125, 23);
+            this.dateTimePickerReleaseYear.TabIndex = 33;
             // 
             // label5
             // 
@@ -417,8 +417,8 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxSubtitlesYesNo;
         private System.Windows.Forms.Button buttonSubmit;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePickerRealseYear;
+        private System.Windows.Forms.DateTimePicker dateTimePickerPremierDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerReleaseYear;
         private System.Windows.Forms.ComboBox comboBoxLanguage;
     }
 }
