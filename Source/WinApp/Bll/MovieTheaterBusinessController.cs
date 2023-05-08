@@ -22,6 +22,7 @@ namespace BioBooker.WinApp.Bll
             {
                 //Task<Auditorium> auditoriumTask = CreateAuditorium(seats);
                 Auditorium newAuditorium = await CreateAuditorium(seats);
+
                 MovieTheater newMovieTheater = new MovieTheater(movieTheaterName, newAuditorium);
                 wasInserted = await InsertMovieTheaterAsync(newMovieTheater);
             }

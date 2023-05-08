@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BioBooker.WebApi.Dal
 {
@@ -51,14 +52,40 @@ namespace BioBooker.WebApi.Dal
         {
             int numRowsInserted = 1;
             int numRowsAffected;
-
-            string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name)";
-
-            using (var connection = new SqlConnection(_connectionString))
+            int movieTheaterId = -1;
+            try
             {
-                numRowsAffected = await connection.ExecuteAsync(insertQuery, newMovieTheater);
+                string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name)";
+                
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    movieTheaterId = (int)await connection.ExecuteScalarAsync(insertQuery, newMovieTheater);
+
+                }
+
+                Auditorium ?audi = newMovieTheater.Auditoriums.FirstOrDefault();
+                if(audi != null)
+                await InsertAuditorium(audi, movieTheaterId) ;
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
-            return numRowsAffected == numRowsInserted;
+            return movieTheaterId >= 0;
+        }
+
+        public async Task<bool> InsertAuditorium(Auditorium auditorium, int movieTheaterId)
+        {
+            int numRowsAffected = 0;
+            int MovieTheaterId = auditorium.AuditoriumId;
+            
+           
+            string insertQuery = @"INSERT INTO Auditorium (MovieTheaterId) VALUES(@movieTheaterId)";
+
+
+
+
+            return numRowsAffected <= 0;
         }
 
         public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)

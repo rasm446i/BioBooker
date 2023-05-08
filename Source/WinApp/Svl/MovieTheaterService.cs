@@ -13,7 +13,7 @@ namespace BioBooker.WinApp.Svl
     public class MovieTheaterService : IMovieTheaterService
     {
         readonly IServiceConnection _serviceConnection;
-        readonly string _serviceBaseUrl = "https://localhost:7011/api/movieTheaters/";
+        readonly string _serviceBaseUrl = "https://localhost:7011/api/movieTheaters";
 
         public MovieTheaterService() 
             {
@@ -24,7 +24,7 @@ namespace BioBooker.WinApp.Svl
             bool wasSaved = false;
             if(_serviceConnection != null)
             {
-                _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movieTheaters/";
+               
 
                 if(movieTheater != null)
                 {
