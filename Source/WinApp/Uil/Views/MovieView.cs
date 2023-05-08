@@ -146,7 +146,7 @@ public partial class MovieView : Form
         string actors = txtActors.Text;
         string director = txtDirector.Text;
         string language = comboBoxLanguage.Text;
-        string releaseYear = dateTimePickerReleaseYear.Value.ToString();
+        string releaseYear = dateTimePickerReleaseYear.Value.ToString("yyyy-MM-dd");
 
         byte subtitles = 0;
         string subtitlesLanguage = "";
@@ -180,7 +180,7 @@ public partial class MovieView : Form
             MessageBox.Show("Invalid runtime hours. Please enter a valid integer.");
         }
 
-        string premierDate = dateTimePickerPremierDate.Value.ToString();
+        string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
         Image image = pictureBox1.Image;
         string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
         byte[] imageData = File.ReadAllBytes(selectedImagePath);
@@ -191,14 +191,6 @@ public partial class MovieView : Form
         Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
 
         bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
-        if(inserted)
-        {
-            MessageBox.Show("inserted");
-        } else
-        {
-            MessageBox.Show("no");
-        }
-
     }
 }
 
