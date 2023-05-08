@@ -12,5 +12,6 @@ namespace BioBooker.WebApi.Dal
         public Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater);
         public Task<List<MovieTheater>> GetAllMovieTheatersAsync();
         Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id);
+        Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId);
     }
 }

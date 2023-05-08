@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using System.Web.Http.Results;
+using System.Security.Cryptography.X509Certificates;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -19,11 +20,11 @@ namespace BioBooker.WebApi.Ctl.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly MovieTheaterBusiness _movieTheaterBusiness;
-        public MovieTheaterController(IConfiguration inConfiguration) 
+        public MovieTheaterController(IConfiguration inConfiguration)
         {
-        _configuration = inConfiguration;
+            _configuration = inConfiguration;
             _movieTheaterBusiness = new MovieTheaterBusiness(_configuration);
-        
+
         }
         [HttpPost]
         public async Task<IActionResult> Post(MovieTheater newMovieTheater)
@@ -51,35 +52,45 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 {
                     BadRequest();
                 }
-              
+
             }
             return StatusCode(500);
         }
-            [HttpGet]
-            public async Task<IActionResult> Get()
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            List<MovieTheater> movieTheaters = await _movieTheaterBusiness.GetAllMovieTheatersAsync();
+
+            if (movieTheaters == null)
             {
-                List<MovieTheater> movieTheaters = await _movieTheaterBusiness.GetAllMovieTheatersAsync();
-
-                if (movieTheaters == null)
-                {
-                    return NotFound();
-                }
-                return Ok(movieTheaters);
+                return NotFound();
             }
+            return Ok(movieTheaters);
+        }
 
-             [HttpGet, Route("{id}/Auditoriums")]
-              public async Task<IActionResult> Get([FromRoute] int id ) 
-              {
+        [HttpGet, Route("{id}/Auditoriums")]
+        public async Task<IActionResult> Get([FromRoute] int id)
+        {
             List<Auditorium> auditorium = await _movieTheaterBusiness.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
 
-            if(auditorium == null)
+            if (auditorium == null)
             {
                 return NotFound();
 
             }
             return Ok(auditorium);
-               }
+        }
 
-        
+        [HttpPost, Route("{id}/Auditoriums/{auditoriumId}/Seats")]
+        public async Task<IActionResult> Post(List<Seat> Seats, [FromRoute] int id, int auditoriumId)
+        {
+
+            bool wasAdded = await _movieTheaterBusiness.InsertSeats(Seats, id, auditoriumId);
+
+
+            return Ok();
+        }
+
     }
+    
 }

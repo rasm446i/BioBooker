@@ -9,6 +9,7 @@ namespace BioBooker.Dml
 
     public class Auditorium
     {
+        public int MovieTheaterId { get; set; }
         public int AuditoriumId { get; set; }
         public List<Seat> Seats { get; set; }
 

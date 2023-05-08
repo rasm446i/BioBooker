@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using System.Data;
 
 namespace BioBooker.WebApi.Dal
 {
@@ -16,7 +17,7 @@ namespace BioBooker.WebApi.Dal
 
         private IConfiguration Configuration;
 
-        public MovieTheaterDb(IConfiguration configuration) 
+        public MovieTheaterDb(IConfiguration configuration)
         {
             Configuration = configuration;
             _connectionString = Configuration.GetConnectionString("BioBookerConnection");
@@ -36,12 +37,12 @@ namespace BioBooker.WebApi.Dal
         {
             List<MovieTheater> movieTheaters;
             string query = "SELECT * FROM MovieTheaters";
-            
+
             using (var connection = new SqlConnection(_connectionString))
             {
 
                 movieTheaters = (await connection.QueryAsync<MovieTheater>(query)).ToList();
-                
+
             }
             return movieTheaters;
         }
@@ -59,5 +60,56 @@ namespace BioBooker.WebApi.Dal
             }
             return numRowsAffected == numRowsInserted;
         }
+
+        public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
+        {
+            int numRowsAffected;
+            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
+
+            try
+            {
+                //Using statements ensures propper disposal of resources
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    //This line is necessary even tho dapper opens and closes connections. DONT DELETE
+                    await connection.OpenAsync();
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            foreach (var seat in seats)
+                            {
+                                numRowsAffected = await connection.ExecuteAsync(insertQuery, new { SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, IsAvailable = seat.IsAvailable, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
+
+                                if (numRowsAffected <= 0)
+                                {
+                                    transaction.Rollback();
+                                    return false;
+                                }
+                            }
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch (Exception ex) 
+                        {
+                            Console.WriteLine(ex.Message);
+                            transaction.Rollback();
+                            return false;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
+
+
 }
+    
+
+

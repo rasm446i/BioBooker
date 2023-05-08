@@ -38,5 +38,10 @@ namespace BioBooker.WebApi.Bll
         {
             return await _movieTheaterServiceApi.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
         }
+
+        public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
+        {
+            return await _movieTheaterServiceApi.InsertSeats(seats, movieTheaterId, auditoriumId);
+        }
     }
 }
