@@ -97,7 +97,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return NotFound();
             } else
             {
-                return Ok(Seats);
+                return CreatedAtAction(nameof(Post), Seats);
             }
             
         }
