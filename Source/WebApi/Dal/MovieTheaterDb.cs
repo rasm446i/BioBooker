@@ -142,15 +142,19 @@ namespace BioBooker.WebApi.Dal
 
             int auditoriumId = await connection.ExecuteScalarAsync<int>(insertQuery, new { MovieTheaterId = movieTheaterId }, transaction);
 
-            numRowsInserted = auditoriumId > 0 ? 1 : 0;
-
-            if (numRowsInserted > 0)
+            if (auditoriumId > 0)
             {
+                numRowsInserted = 1;
                 await CreateAndInsertSeats(auditorium.Seats, movieTheaterId, auditoriumId, connection, transaction);
+            }
+            else
+            {
+                numRowsInserted = 0;
             }
 
             return numRowsInserted > 0;
         }
+
 
         /*
         public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
