@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using BioBooker.WebApi.Ctl.Controllers;
 using Microsoft.Extensions.Configuration;
-using BioBooker.WebApi.Dal;
 
 namespace BioBooker.WinApp.Svl
 {
@@ -16,7 +15,6 @@ namespace BioBooker.WinApp.Svl
         private readonly IServiceConnection _serviceConnection;
         readonly string _serviceBaseUrl = "https://localhost:7011/";
         private readonly MoviesController _controller;
-        private readonly IMoviesRepository _movieRepository;
 
         public MoviesService(IConfiguration configuration)
         {

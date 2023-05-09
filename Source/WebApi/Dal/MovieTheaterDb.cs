@@ -21,7 +21,7 @@ namespace BioBooker.WebApi.Dal
         public MovieTheaterDb(IConfiguration configuration)
         {
             Configuration = configuration;
-            _connectionString = Configuration.GetConnectionString("BioBookerConnection");
+            _connectionString = Configuration.GetConnectionString("ConnectionString");
         }
 
         public async Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int movieTheaterId)

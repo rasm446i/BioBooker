@@ -31,24 +31,19 @@ namespace BioBooker.WinApp.Svl
             return hrm;
         }
 
-        public async Task<HttpResponseMessage?> CallServiceGet()
+        public async Task<HttpResponseMessage?> CallServicePost(string endpoint, StringContent postData)
         {
-            HttpResponseMessage? hrm = null;
-            if (UseUrl != null)
+            HttpResponseMessage? response = null;
+            try
             {
-                hrm = await HttpEnabler.GetAsync(UseUrl);
+                response = await HttpEnabler.PostAsync(endpoint, postData);
             }
-            return hrm;
-        }
-
-        public async Task<HttpResponseMessage?> CallServicePost(string url, StringContent postJson)
-        {
-            HttpResponseMessage? hrm = null;
-            if (url != null)
+            catch (Exception ex)
             {
-                hrm = await HttpEnabler.PostAsync(url, postJson);
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
             }
-            return hrm;
+            return response;
         }
 
         public Task<HttpResponseMessage?> CallServicePut(StringContent postJson)

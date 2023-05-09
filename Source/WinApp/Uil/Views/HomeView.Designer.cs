@@ -73,16 +73,10 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonViewMovies.Text = "View movies";
             this.buttonViewMovies.UseVisualStyleBackColor = true;
             this.buttonViewMovies.Click += new System.EventHandler(this.buttonViewMovies_Click);
-            this.btnMovies.Location = new System.Drawing.Point(12, 12);
-            this.btnMovies.Name = "btnMovies";
-            this.btnMovies.Size = new System.Drawing.Size(110, 25);
-            this.btnMovies.TabIndex = 1;
-            this.btnMovies.Text = "Movies";
-            this.btnMovies.UseVisualStyleBackColor = true;
             // 
             // buttonMovieTheater
             // 
-            this.buttonMovieTheater.Location = new System.Drawing.Point(148, 13);
+            this.buttonMovieTheater.Location = new System.Drawing.Point(255, 13);
             this.buttonMovieTheater.Name = "buttonMovieTheater";
             this.buttonMovieTheater.Size = new System.Drawing.Size(102, 24);
             this.buttonMovieTheater.TabIndex = 2;
@@ -98,7 +92,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.buttonViewMovies);
             this.Controls.Add(this.btnCreateMovies);
             this.Controls.Add(this.buttonMovieTheater);
-            this.Controls.Add(this.btnMovies);
             this.Controls.Add(this.pnlButtons);
             this.Name = "HomeView";
             this.Text = "Home";
