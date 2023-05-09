@@ -58,7 +58,7 @@ public class MoviesController : ControllerBase
         return Ok(movie);
     }
 
-    [HttpGet, Route("movies")]
+    [HttpGet("all")]
     [AllowAnonymous]
     // Retrieves all movies from the database using the _moviesManager.GetAllMoviesAsync() method.
     // Returns Ok(movies) if movies are found, otherwise returns NotFound().

@@ -14,7 +14,7 @@ namespace BioBooker.WinApp.Svl
     public class MoviesService : IMoviesService
     {
         private readonly IServiceConnection _serviceConnection;
-        readonly string _serviceBaseUrl = "https://localhost:7011/movies/";
+        readonly string _serviceBaseUrl = "https://localhost:7011/";
         private readonly MoviesController _controller;
         private readonly IMoviesRepository _movieRepository;
 
@@ -76,7 +76,7 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies";
+                string url = _serviceBaseUrl + "movies/all";
 
                 try
                 {
@@ -109,7 +109,7 @@ namespace BioBooker.WinApp.Svl
             if (_serviceConnection != null)
             {
                // _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
-                string url = _serviceBaseUrl + "movies/";
+                string url = _serviceBaseUrl + "movies";
 
                 if (movie != null)
                 {
