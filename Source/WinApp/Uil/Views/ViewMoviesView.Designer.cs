@@ -36,6 +36,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonClose = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.buttonDetails = new System.Windows.Forms.Button();
+            this.labelNoMovieFound = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxSearch
@@ -109,11 +110,21 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonDetails.UseVisualStyleBackColor = true;
             this.buttonDetails.Click += new System.EventHandler(this.buttonDetails_Click);
             // 
+            // labelNoMovieFound
+            // 
+            this.labelNoMovieFound.AutoSize = true;
+            this.labelNoMovieFound.ForeColor = System.Drawing.Color.IndianRed;
+            this.labelNoMovieFound.Location = new System.Drawing.Point(143, 47);
+            this.labelNoMovieFound.Name = "labelNoMovieFound";
+            this.labelNoMovieFound.Size = new System.Drawing.Size(0, 15);
+            this.labelNoMovieFound.TabIndex = 10;
+            // 
             // ViewMoviesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelNoMovieFound);
             this.Controls.Add(this.buttonDetails);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.buttonClose);
@@ -124,6 +135,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.textBoxSearch);
             this.Name = "ViewMoviesView";
             this.Text = "ViewMoviesView";
+            this.Load += new System.EventHandler(this.ViewMoviesView_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -138,5 +150,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button buttonDetails;
+        private System.Windows.Forms.Label labelNoMovieFound;
     }
 }

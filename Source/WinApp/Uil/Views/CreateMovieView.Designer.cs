@@ -363,12 +363,13 @@ namespace BioBooker.WinApp.Uil.Views
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // MovieView
+            // CreateMovieView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -376,7 +377,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.pnlOutputs);
             this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlButtons);
-            this.Name = "MovieView";
+            this.Name = "CreateMovieView";
             this.Text = "MovieView";
             this.pnlButtons.ResumeLayout(false);
             this.pnlInputs.ResumeLayout(false);

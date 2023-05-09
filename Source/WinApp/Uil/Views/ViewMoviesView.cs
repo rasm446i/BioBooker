@@ -59,32 +59,25 @@ namespace BioBooker.WinApp.Uil.Views
         private async void buttonSearch_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
+            labelNoMovieFound.Text = "";
 
             string searchQuery = textBoxSearch.Text.Trim();
 
-            List<Movie> movies = await moviesManager.GetAllMoviesAsync();
+            Movie matchingMovie = await moviesManager.GetMovieByTitleAsync(searchQuery);
 
-            // Add movie data to the ListView
-            bool foundMovies = false;
-            foreach (var movie in movies)
+            if (matchingMovie != null)
             {
-                if (string.Equals(movie.Title, searchQuery, StringComparison.OrdinalIgnoreCase))
-                {
-                    var item = new ListViewItem(movie.Id.ToString());
-                    item.SubItems.Add(movie.Title);
-                    item.SubItems.Add(movie.Genre);
-                    item.SubItems.Add(movie.RuntimeMinutes.ToString());
-                    item.SubItems.Add(movie.MPARating);
-                    listView1.Items.Add(item);
-                    foundMovies = true;
-                    // Break out of the loop if a matching movie is found
-                    break;
-                }
+                listView1.Items.Clear();
+                var item = new ListViewItem(matchingMovie.Id.ToString());
+                item.SubItems.Add(matchingMovie.Title);
+                item.SubItems.Add(matchingMovie.Genre);
+                item.SubItems.Add(matchingMovie.RuntimeMinutes.ToString());
+                item.SubItems.Add(matchingMovie.MPARating);
+                listView1.Items.Add(item);
             }
-
-            // If no movies matching the search query were found, display all movies
-            if (!foundMovies)
+            else
             {
+                List<Movie> movies = await moviesManager.GetAllMoviesAsync();
                 listView1.Items.Clear();
                 foreach (var movie in movies)
                 {
@@ -97,10 +90,9 @@ namespace BioBooker.WinApp.Uil.Views
                 }
             }
 
-            // Display the MessageBox outside the loop
-            if (!foundMovies)
+            if (matchingMovie == null)
             {
-                MessageBox.Show("No movie was found with that title");
+                labelNoMovieFound.Text = "No movie with that title found";
             }
         }
 
@@ -111,11 +103,11 @@ namespace BioBooker.WinApp.Uil.Views
                 ListViewItem selectedItem = listView1.SelectedItems[0];
                 string title = selectedItem.SubItems[1].Text;
 
-              //  MovieDetailView movieDetailView = new MovieDetailView(title, configuration);
-
-               // movieDetailView.Show();
+                MovieDetailView movieDetailView = new MovieDetailView(title, configuration);
+                movieDetailView.Show();
             }
         }
+
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -129,6 +121,11 @@ namespace BioBooker.WinApp.Uil.Views
             {
                 buttonDetails.Enabled = false;
             }
+        }
+
+        private void ViewMoviesView_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

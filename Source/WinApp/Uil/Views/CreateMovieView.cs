@@ -14,7 +14,7 @@ public partial class CreateMovieView : Form
 
     private string? selectedImagePath;
     private IMoviesManager moviesManager;
-    private string hexImageData;
+    
     public CreateMovieView(IConfiguration configuration)
     {
         moviesManager = new MoviesManager(configuration);
@@ -183,56 +183,13 @@ public partial class CreateMovieView : Form
         bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
     }
 
-
-    // USED TO SHOW THE POSTERS IN THE DATABASE
-    /*
-    private async void buttonShow_Click(object sender, EventArgs e)
+    private void pictureBox1_Click(object sender, EventArgs e)
     {
-        string title =  txtTitle.Text;
-        Movie movie = await moviesManager.GetMovieByTitleAsync(title);
 
-        if (movie != null && movie.Poster != null)
-        {
-            byte[] imageData = movie.Poster.ImageData;
-            hexImageData = ConvertByteArrayToHex(imageData);
-            DisplayPoster();
-        }
-        else
-        {
-            MessageBox.Show("No poster found for the given movie title.");
-        }
     }
 
-    private string ConvertByteArrayToHex(byte[] byteArray)
-    {
-        string hexString = BitConverter.ToString(byteArray);
-        return hexString.Replace("-", "");
-    }
 
-    private void DisplayPoster()
-    {
-        if (!string.IsNullOrEmpty(hexImageData))
-        {
-            byte[] imageData = ConvertHexToByteArray(hexImageData);
-            using (MemoryStream ms = new MemoryStream(imageData))
-            {
-                pictureBox1.Image = Image.FromStream(ms);
-            }
-        }
-    }
-
-    private byte[] ConvertHexToByteArray(string hexString)
-    {
-        int length = hexString.Length;
-        byte[] byteArray = new byte[length / 2];
-
-        for (int i = 0; i < length; i += 2)
-        {
-            byteArray[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
-        }
-
-        return byteArray;
-    }*/
+    
 
 }
 
