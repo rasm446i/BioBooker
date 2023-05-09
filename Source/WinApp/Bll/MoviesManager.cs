@@ -76,5 +76,21 @@ namespace BioBooker.WinApp.Bll
             return movies;
         }
 
+        // Deletes a movie from the sql database by its ID.
+        // Returns a boolean value indicating whether the movie deletion was successful.
+        public async Task<bool> DeleteMovieByIdAsync(int id)
+        {
+            bool deleted;
+            try
+            {
+                deleted = await _moviesService.DeleteMovie(id);
+            }
+            catch
+            {
+                deleted = false;
+            }
+            return deleted;
+        }
+
     }
 }

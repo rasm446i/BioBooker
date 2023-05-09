@@ -25,9 +25,29 @@ namespace BioBooker.WinApp.Svl
 
         }
 
-        public Task<bool> DeleteMovie(int id)
+        public async Task<bool> DeleteMovieByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            bool deleted = false;
+
+            if (_serviceConnection != null)
+            {
+                string url = _serviceBaseUrl + "movies/" + id;
+
+                try
+                {
+                    HttpResponseMessage? response = await _serviceConnection.CallServiceDelete(id);
+                    if (response != null && response.IsSuccessStatusCode)
+                    {
+                        deleted = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            return deleted;
         }
 
         public Task<List<Movie>> GetMovieByGenre(string genre)

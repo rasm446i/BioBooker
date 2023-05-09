@@ -203,5 +203,35 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+        /// <summary>
+        /// Deletes a movie from the database.
+        /// </summary>
+        /// <param name="id">The ID of the movie to delete.</param>
+        /// <returns>A task representing the asynchronous operation. The task result is true if the movie was deleted successfully.</returns>
+        public async Task<bool> DeleteMovieByIdAsync(int id)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        string sqlDeleteMovie = "DELETE FROM Movies WHERE Id = @Id";
+                        await connection.ExecuteAsync(sqlDeleteMovie, new { Id = id }, transaction);
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+
     }
 }

@@ -55,9 +55,13 @@ namespace BioBooker.WinApp.Svl
         {
             throw new NotImplementedException();
         }
-        public Task<HttpResponseMessage?> CallServiceDelete()
+        public async Task<HttpResponseMessage?> CallServiceDelete(string url)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage? hrm = null;
+            if (url != null)
+            {
+                hrm = await HttpEnabler.DeleteAsync(url);
+            }
+            return hrm;
         }
-    }
 }
