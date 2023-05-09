@@ -18,6 +18,9 @@
         <ProjectReference Include="..\..\..\Source\WinApp\Svl\BioBooker.WinApp.Svl.csproj" />
         <ProjectReference Include="..\..\..\Source\WinApp\Uil\BioBooker.WinApp.Uil.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Bll\" />
+    </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
         <LangVersion>10.0</LangVersion>
