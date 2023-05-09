@@ -183,6 +183,66 @@ public partial class CreateMovieView : Form
         bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
     }
 
+    public bool validateAll()
+    {
+        bool wasOk = false;
+        if (validateSubs() && validatePremierAndReleaseDate() && validateRuntime())
+        {
+            wasOk = true;
+        }
+
+
+
+        return wasOk;
+    }
+
+    public bool validateSubs()
+    {
+        bool wasOk = false;
+
+        if (comboBoxSubtitlesYesNo.Text == "No" && checkedListBox1.CheckedItems.Count > 0)
+        {
+            MessageBox.Show("No subtitles was selected. Yet there was selected a subtitles language");
+        }
+        else if (comboBoxSubtitlesYesNo.Text == "Yes" && checkedListBox1.CheckedItems.Count < 1)
+        {
+            MessageBox.Show("Existence of subtitles was selected. Yet there was selected not ant subtitles languages");
+        }
+        else
+        {
+            wasOk = true;
+        }
+
+        return wasOk;
+
+    }
+
+    public bool validatePremierAndReleaseDate()
+    {
+        bool wasOk = true;
+
+        if (dateTimePickerPremierDate.Value < dateTimePickerReleaseYear.Value)
+        {
+            MessageBox.Show("Premier Date is the first date the movie i shown. We cannot show a movie before it is released.");
+
+            wasOk = false;
+        }
+
+        return wasOk;
+
+    }
+    public bool validateRuntime()
+    {
+        bool wasOk = true;
+        int parsedValue;
+        if (!int.TryParse(textBoxRunTime.Text, out parsedValue))
+        {
+            MessageBox.Show("Runtime is whole numbers only field.");
+            wasOk = false;
+        }
+        return wasOk;
+    }
+
     private void pictureBox1_Click(object sender, EventArgs e)
     {
 
