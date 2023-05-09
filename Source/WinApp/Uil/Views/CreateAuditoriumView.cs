@@ -44,7 +44,7 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-        private List<Seat> GetGeneratedSeats(int amountOfRows, int seatsPerRow) 
+        public static List<Seat> GetGeneratedSeats(int amountOfRows, int seatsPerRow) 
         {
             List<Seat> seats = new List<Seat>();
             for (int i = 1; i <= amountOfRows; i++)
