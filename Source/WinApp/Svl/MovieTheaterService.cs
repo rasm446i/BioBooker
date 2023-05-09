@@ -22,39 +22,40 @@ namespace BioBooker.WinApp.Svl
         public async Task<bool> InsertMovieTheaterAsync(MovieTheater movieTheater)
         {
             bool wasSaved = false;
-            if(_serviceConnection != null)
+
+            if (_serviceConnection != null && movieTheater != null)
             {
-               
-
-                if(movieTheater != null)
+                try
                 {
-                    try
+                    var json = JsonConvert.SerializeObject(movieTheater);
+                    var postData = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    using (var httpClient = new HttpClient())
                     {
-                        var json = JsonConvert.SerializeObject(movieTheater);
-                        var postData = new StringContent(json,Encoding.UTF8, "application/json");
+                        var response = await httpClient.PostAsync(_serviceBaseUrl, postData);
 
-                        HttpResponseMessage? response = await _serviceConnection.CallServicePost(postData);
-
-                        if(response != null)
+                        if (response.IsSuccessStatusCode)
                         {
                             wasSaved = true;
-                        } else
+                        }
+                        else
                         {
                             wasSaved = false;
                         }
                     }
-                    catch (HttpResponseException ex)
-                    {
-                        throw new HttpResponseException(System.Net.HttpStatusCode.ServiceUnavailable);
-                    }
                 }
-
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                    throw;
+                }
             }
+
             return wasSaved;
-            
         }
 
-       
+
+
 
         public async Task<MovieTheater> GetMovieTheaterAsync()
         {

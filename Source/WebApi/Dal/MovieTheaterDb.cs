@@ -156,20 +156,6 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-        /*
-        public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
-        {
-            int numRowsInserted = 0;
-
-            string insertQuery = "INSERT INTO Auditorium (movieTheaterId) VALUES (@movieTheaterId)";
-
-            numRowsInserted = await connection.ExecuteAsync(insertQuery, new { movieTheaterId }, transaction);
-
-            await CreateAndInsertSeats(auditorium.Seats, movieTheaterId, auditorium.AuditoriumId, connection, transaction);
-            // Call the method to insert Seats
-            return numRowsInserted > 0;
-        }
-        */
         public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
             {
                 bool result = false;
@@ -218,27 +204,7 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
-        /*
-            public async Task<bool> CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
-            {
-                string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
-
-                int numRowsInserted = 0;
-
-                try
-                {
-                    foreach (Seat seat in seats)
-                    {
-                        numRowsInserted += await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
-                    }
-
-                }
-                catch (Exception ex) { }
-
-                return numRowsInserted == seats.Count;
-            }
-       
-        */
+      
 
     }
 }
