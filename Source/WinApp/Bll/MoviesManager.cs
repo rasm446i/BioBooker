@@ -83,7 +83,7 @@ namespace BioBooker.WinApp.Bll
             bool deleted;
             try
             {
-                deleted = await _moviesService.DeleteMovie(id);
+                deleted = await _moviesService.DeleteMovieByIdAsync(id);
             }
             catch
             {
