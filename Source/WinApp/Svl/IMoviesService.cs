@@ -9,7 +9,7 @@ namespace BioBooker.WinApp.Svl
         public Task<bool> InsertMovieAsync(Movie movieToAdd, Poster poster);
         public Task<Movie> GetMovieByTitleAsync(string title);
         public Task<bool> UpdateMovie(int id);
-        public Task<bool> DeleteMovie(int id);
+        public Task<bool> DeleteMovieByIdAsync(int id);
         public Task<List<Movie>> GetMovieByGenre(string genre);
         public Task<List<Movie>> GetAllMoviesAsync();
     }

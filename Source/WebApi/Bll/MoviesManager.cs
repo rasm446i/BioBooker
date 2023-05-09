@@ -32,5 +32,10 @@ namespace BioBooker.WebApi.Bll
         {
             return await _moviesService.GetAllMoviesAsync();
         }
+
+        public async Task<bool> DeleteMovieByIdAsync(int id)
+        {
+            return await _moviesService.DeleteMovieByIdAsync(id);
+        }
     }
 }

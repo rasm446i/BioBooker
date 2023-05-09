@@ -74,6 +74,17 @@ public class MoviesController : ControllerBase
         return Ok(movies);
     }
 
+    [HttpDelete("{id}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Delete(int id)
+    {
+        bool wasDeleted = await _moviesManager.DeleteMovieByIdAsync(id);
 
+        if (wasDeleted)
+        {
+            return Ok();
+        }
 
+        return NotFound();
+    }
 }
