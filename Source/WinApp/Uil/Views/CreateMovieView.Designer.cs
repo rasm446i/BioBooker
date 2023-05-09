@@ -125,7 +125,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlInputs.Name = "pnlInputs";
             this.pnlInputs.Size = new System.Drawing.Size(428, 392);
             this.pnlInputs.TabIndex = 2;
-            this.pnlInputs.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlInputs_Paint);
             // 
             // comboBoxLanguage
             // 
@@ -242,7 +241,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.label3.Size = new System.Drawing.Size(70, 20);
             this.label3.TabIndex = 18;
             this.label3.Text = "Subtitles";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label2
             // 
@@ -278,7 +276,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.txtDirector.Name = "txtDirector";
             this.txtDirector.Size = new System.Drawing.Size(121, 23);
             this.txtDirector.TabIndex = 8;
-            this.txtDirector.TextChanged += new System.EventHandler(this.txtGenre_TextChanged);
             // 
             // txtActors
             // 
@@ -316,7 +313,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.lblReleaseYear.Size = new System.Drawing.Size(51, 20);
             this.lblReleaseYear.TabIndex = 2;
             this.lblReleaseYear.Text = "Genre";
-            this.lblReleaseYear.Click += new System.EventHandler(this.lblReleaseYear_Click_1);
             // 
             // txtTitle
             // 
@@ -363,7 +359,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // openFileDialog1
             // 
