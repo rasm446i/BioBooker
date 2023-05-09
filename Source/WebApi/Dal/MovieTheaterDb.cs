@@ -53,25 +53,29 @@ namespace BioBooker.WebApi.Dal
             bool result = false;
 
             using (var connection = new SqlConnection(_connectionString))
-            using (var transaction = await connection.BeginTransactionAsync())
             {
-                try
+                await connection.OpenAsync();
+
+                using (var transaction = await connection.BeginTransactionAsync())
                 {
-                    await CreateAndInsertMovieTheaterAsync(newMovieTheater, connection, transaction);
-                    transaction.Commit();
-                    result = true;
+                    try
+                    {
+                        await CreateAndInsertMovieTheaterAsync(newMovieTheater, connection, transaction);
+                        transaction.Commit();
+                        result = true;
+
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        transaction.Rollback();
+                        result = false;
+                    }
+
 
 
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    transaction.Rollback();
-                    result = false;
-                }
-
-
-
             }
             return result;
         }
@@ -105,24 +109,27 @@ namespace BioBooker.WebApi.Dal
         {
             bool result = false;
             using (var connection = new SqlConnection(_connectionString))
-            using (var transaction = await connection.BeginTransactionAsync())
             {
-                try
+                await connection.OpenAsync();
+
+                using (var transaction = await connection.BeginTransactionAsync())
                 {
-                    await CreateAndInsertAuditorium(auditorium, movieTheaterId, connection, transaction);
-                    transaction.Commit();
-                    result = true;
+                    try
+                    {
+                        await CreateAndInsertAuditorium(auditorium, movieTheaterId, connection, transaction);
+                        transaction.Commit();
+                        result = true;
 
 
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    transaction.Rollback();
-                    result = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        transaction.Rollback();
+                        result = false;
+                    }
                 }
             }
-
 
 
             return result;
@@ -146,22 +153,26 @@ namespace BioBooker.WebApi.Dal
         {
             bool result = false;
             using (var connection = new SqlConnection(_connectionString))
-            using (var transaction = await connection.BeginTransactionAsync())
             {
-                try
+               await connection.OpenAsync();
+
+                using (var transaction = await connection.BeginTransactionAsync())
                 {
-                    await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId, connection, transaction);
+                    try
+                    {
+                        await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId, connection, transaction);
 
-                    transaction.Commit();
-                    result = true;
+                        transaction.Commit();
+                        result = true;
 
 
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    transaction.Rollback();
-                    result = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        transaction.Rollback();
+                        result = false;
+                    }
                 }
             }
             return result;
