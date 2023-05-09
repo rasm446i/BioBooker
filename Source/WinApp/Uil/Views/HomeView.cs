@@ -30,5 +30,9 @@ public partial class HomeView : Form
     {
         CreateMovieView createMovie = new CreateMovieView(configuration);
         createMovie.Show();
+    private void buttonMovieTheater_Click(object sender, System.EventArgs e)
+    {
+        MovieTheaterView movieTheaterView = new MovieTheaterView();
+        movieTheaterView.Show();
     }
 }

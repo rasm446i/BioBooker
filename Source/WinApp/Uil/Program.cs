@@ -53,10 +53,12 @@ internal static class Program
 
         // Post Token to jwt.io to See Content of It
         //MessageBox.Show(tokenResponse.AccessToken);
+      //  if (tokenResponse.IsError)
+        //{
+          //  MessageBox.Show(tokenResponse.Error);
+            //return;
+        //}
 
-        // Call API (Set HTTP Authorization Header)
-        var apiClient = new HttpClient();
-        apiClient.SetBearerToken(tokenResponse.AccessToken);
 
         var response = await apiClient.GetAsync("https://localhost:7011/identity");
 
@@ -70,5 +72,6 @@ internal static class Program
 
            //MessageBox.Show(JsonSerializer.Serialize(doc, new JsonSerializerOptions { WriteIndented = true }));
         }
+        */
     }
 }

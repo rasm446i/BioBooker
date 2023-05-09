@@ -32,6 +32,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.btnClose = new System.Windows.Forms.Button();
             this.btnCreateMovies = new System.Windows.Forms.Button();
             this.buttonViewMovies = new System.Windows.Forms.Button();
+            this.buttonMovieTheater = new System.Windows.Forms.Button();
             this.pnlButtons.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,6 +73,22 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonViewMovies.Text = "View movies";
             this.buttonViewMovies.UseVisualStyleBackColor = true;
             this.buttonViewMovies.Click += new System.EventHandler(this.buttonViewMovies_Click);
+            this.btnMovies.Location = new System.Drawing.Point(12, 12);
+            this.btnMovies.Name = "btnMovies";
+            this.btnMovies.Size = new System.Drawing.Size(110, 25);
+            this.btnMovies.TabIndex = 1;
+            this.btnMovies.Text = "Movies";
+            this.btnMovies.UseVisualStyleBackColor = true;
+            // 
+            // buttonMovieTheater
+            // 
+            this.buttonMovieTheater.Location = new System.Drawing.Point(148, 13);
+            this.buttonMovieTheater.Name = "buttonMovieTheater";
+            this.buttonMovieTheater.Size = new System.Drawing.Size(102, 24);
+            this.buttonMovieTheater.TabIndex = 2;
+            this.buttonMovieTheater.Text = "Movie Theater";
+            this.buttonMovieTheater.UseVisualStyleBackColor = true;
+            this.buttonMovieTheater.Click += new System.EventHandler(this.buttonMovieTheater_Click);
             // 
             // HomeView
             // 
@@ -80,6 +97,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.ClientSize = new System.Drawing.Size(884, 461);
             this.Controls.Add(this.buttonViewMovies);
             this.Controls.Add(this.btnCreateMovies);
+            this.Controls.Add(this.buttonMovieTheater);
+            this.Controls.Add(this.btnMovies);
             this.Controls.Add(this.pnlButtons);
             this.Name = "HomeView";
             this.Text = "Home";
@@ -94,5 +113,7 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnCreateMovies;
         private System.Windows.Forms.Button buttonViewMovies;
+        private System.Windows.Forms.Button btnMovies;
+        private System.Windows.Forms.Button buttonMovieTheater;
     }
 }
