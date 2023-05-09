@@ -52,14 +52,14 @@ namespace BioBooker.WebApi.Dal
         {
             bool result = false;
 
-            using(var connection = new SqlConnection(_connectionString))    
-            using(var transaction = await connection.BeginTransactionAsync())
+            using (var connection = new SqlConnection(_connectionString))
+            using (var transaction = await connection.BeginTransactionAsync())
             {
                 try
                 {
-                    await CreateAndInsertMovieTheaterAsync(newMovieTheater);
+                    await CreateAndInsertMovieTheaterAsync(newMovieTheater, connection, transaction);
                     transaction.Commit();
-                    result = true;  
+                    result = true;
 
 
                 }
@@ -77,7 +77,7 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-        public async Task<bool> CreateAndInsertMovieTheaterAsync(MovieTheater newMovieTheater, IDbConnection connection)
+        public async Task<bool> CreateAndInsertMovieTheaterAsync(MovieTheater newMovieTheater, IDbConnection connection, IDbTransaction transaction)
         {
             int numRowsInserted = 1;
             int numRowsAffected;
@@ -86,34 +86,30 @@ namespace BioBooker.WebApi.Dal
             {
                 string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name)";
 
-                using (connection)
-                {
-                    movieTheaterId = (int)await connection.ExecuteScalarAsync(insertQuery, newMovieTheater);
-
-                }
+                    movieTheaterId = (int)await connection.ExecuteScalarAsync(insertQuery, newMovieTheater, transaction);
 
                 Auditorium? audi = newMovieTheater.Auditoriums.FirstOrDefault();
                 if (audi != null)
-                    await InsertAuditorium(audi, movieTheaterId);
+                    await CreateAndInsertAuditorium(audi, movieTheaterId, connection, transaction);
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+
             return movieTheaterId >= 0;
         }
 
         public async Task<bool> InsertAuditorium(Auditorium auditorium, int movieTheaterId)
         {
             bool result = false;
-
             using (var connection = new SqlConnection(_connectionString))
             using (var transaction = await connection.BeginTransactionAsync())
             {
                 try
                 {
-                    await CreateAndInsertAuditorium(auditorium, movieTheaterId);
+                    await CreateAndInsertAuditorium(auditorium, movieTheaterId, connection, transaction);
                     transaction.Commit();
                     result = true;
 
@@ -125,38 +121,36 @@ namespace BioBooker.WebApi.Dal
                     transaction.Rollback();
                     result = false;
                 }
-
-
-
             }
+
+
+
             return result;
 
         }
 
-        public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId)
+        public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
         {
-            int numRowsAffected = 0;
-            int MovieTheaterId = auditorium.AuditoriumId;
+            int numRowsInserted = 0;
 
+            string insertQuery = "INSERT INTO Auditorium (movieTheaterId) VALUES (@movieTheaterId)";
 
-            string insertQuery = @"INSERT INTO Auditorium (MovieTheaterId) VALUES(@movieTheaterId)";
+            numRowsInserted = await connection.ExecuteAsync(insertQuery, new { movieTheaterId }, transaction);
 
-
-
-
-            return numRowsAffected <= 0;
+            await CreateAndInsertSeats(auditorium.Seats, movieTheaterId, auditorium.AuditoriumId, connection, transaction);
+            // Call the method to insert Seats
+            return numRowsInserted > 0;
         }
 
         public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
         {
             bool result = false;
-
             using (var connection = new SqlConnection(_connectionString))
             using (var transaction = await connection.BeginTransactionAsync())
             {
                 try
                 {
-                    await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId);
+                    await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId, connection, transaction);
 
                     transaction.Commit();
                     result = true;
@@ -169,30 +163,31 @@ namespace BioBooker.WebApi.Dal
                     transaction.Rollback();
                     result = false;
                 }
-
-
-
             }
             return result;
         }
 
-        public async Task<bool> CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
+        public async Task<bool> CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
         {
-           string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
+            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
+
+            int numRowsInserted = 0;
 
             try
             {
+                foreach (Seat seat in seats)
+                {
+                    numRowsInserted += await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
+                }
 
-                
+            }
+            catch (Exception ex) { }
 
-            }catch (Exception ex) { }
-
+            return numRowsInserted == seats.Count;
         }
     }
 
 
 }
-    
 
 
-//TODO Ændre så at i hirakiet kalder den ikke Insert men Create And Insert
