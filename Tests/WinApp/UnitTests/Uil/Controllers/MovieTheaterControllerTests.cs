@@ -19,7 +19,6 @@ namespace BioBooker.WinApp.UnitTests.Uil.Controllers
             //arrange
             int amountOfRows = 5;
             int seatsPerRow = 2;
-            MovieTheaterControllerTests createAuditoriumView = new MovieTheaterControllerTests();
             
             //act
             List<Seat> seats = MovieTheaterController.GetGeneratedSeats(amountOfRows, seatsPerRow);
