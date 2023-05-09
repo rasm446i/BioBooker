@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BioBooker.WinApp.IntegrationTests.Bll
+namespace BioBooker.WinApp.IntegrationTests.Svl
 {
     public class MoviesManagerIntegrationTest
     {
