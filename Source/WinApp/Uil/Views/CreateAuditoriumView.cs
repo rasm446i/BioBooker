@@ -31,32 +31,30 @@ namespace BioBooker.WinApp.Uil.Views
             int amountOfRowsParseResult = int.Parse(amountOfRows);
             int seatsPerRowParseResult = int.Parse(seatsPerRow);
 
-            if (amountOfRowsParseResult <= 0 || seatsPerRowParseResult <= 0 && !String.IsNullOrEmpty(movieTheaterName))
+            if (amountOfRowsParseResult < 1 || seatsPerRowParseResult < 1 && !String.IsNullOrEmpty(movieTheaterName))
             {
                 MessageBox.Show("Amount of rows and seats per row must be higher than 0");
             }
             else
             {
+              List<Seat> seats = GetGeneratedSeats(amountOfRowsParseResult, seatsPerRowParseResult);
 
-                List<Seat> seats = new List<Seat>();
-                for(int i = 0; i < amountOfRowsParseResult; i++)
-                {
-                    for (int j = 0; j < seatsPerRowParseResult; j++)
-                    {
-                        seats.Add(new Seat(i, j));
-                    }
-                }
                 await movieTheaterController.PassListOfSeatsToAuditoriumCreateAuditorium(movieTheaterName, seats);
                 
-       //         Seat[,] seats = new Seat[amountOfRows, seatsPerRow];
-       //         for (int rowNumber = 0; rowNumber < amountOfRows; rowNumber++)
-       //         {
-       //             for (int seatNumber = 0; seatNumber < seatsPerRow; seatNumber++)
-       //             {
-       //                 seats[rowNumber, seatNumber] = new Seat(seatNumber + 1, rowNumber + 1);
-       //             }
-       //             }
             }
+        }
+
+        private List<Seat> GetGeneratedSeats(int amountOfRows, int seatsPerRow) 
+        {
+            List<Seat> seats = new List<Seat>();
+            for (int i = 1; i <= amountOfRows; i++)
+            {
+                for (int j = 1; j <= seatsPerRow; j++)
+                {
+                    seats.Add(new Seat(i, j));
+                }
+            }
+            return seats;
         }
     }
 }
