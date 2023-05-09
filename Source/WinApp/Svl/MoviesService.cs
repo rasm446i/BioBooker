@@ -35,6 +35,11 @@ namespace BioBooker.WinApp.Svl
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Retrieves a movie from the sql database based on the title.
+        /// </summary>
+        /// <param name="title">The title of the movie to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The retrieved Movie object or null if the movie is not found.</returns>
         public async Task<Movie> GetMovieByTitleAsync(string title)
         {
             Movie movie = null;
@@ -61,8 +66,10 @@ namespace BioBooker.WinApp.Svl
             return movie;
         }
 
-
-
+        /// <summary>
+        /// Retrieves all movies from the sql database asynchronously.
+        /// </summary>
+        /// <returns>A task representing the asynchronous operation that returns a list all of movies.</returns>
         public async Task<List<Movie>> GetAllMoviesAsync()
         {
             List<Movie> movies = null;
@@ -89,7 +96,12 @@ namespace BioBooker.WinApp.Svl
             return movies;
         }
 
-
+        /// <summary>
+        /// Inserts a movie and its corresponding poster into the sql database.
+        /// </summary>
+        /// <param name="movie">The movie to insert.</param>
+        /// <param name="poster">The poster associated with the movie.</param>
+        /// <returns>A task representing the asynchronous operation. The task result indicates whether the movie insertion was successful.</returns>
         public async Task<bool> InsertMovieAsync(Movie movie, Poster poster)
         {
 

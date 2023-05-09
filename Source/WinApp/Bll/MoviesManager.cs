@@ -15,7 +15,8 @@ namespace BioBooker.WinApp.Bll
             _moviesService = new MoviesService(configuration);
         }
 
-
+        // Creates a movie and inserts it along with the associated poster into the sql database.
+        // Returns a boolean value indicating whether the movie insertion was successful.
         public async Task<bool> CreateAndInsertMovieAsync(Movie movie, Poster poster)
         {
             bool inserted;
@@ -34,6 +35,7 @@ namespace BioBooker.WinApp.Bll
             return inserted;
         }
 
+        // Creates a new instance of the Movie class based on the provided movie object and returns it.
         public Movie CreateMovie(Movie movie)
         {
             Movie newMovie = new Movie(movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Language, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARating, movie.RuntimeMinutes, movie.PremierDate, movie.Poster);
@@ -41,6 +43,8 @@ namespace BioBooker.WinApp.Bll
             return newMovie;
         }
 
+        // Retrieves a movie by its title from the sql database.
+        // Returns the movie if found, or null if an error occurs.
         public async Task<Movie> GetMovieByTitleAsync(string title)
         {
             Movie movie;
@@ -56,6 +60,8 @@ namespace BioBooker.WinApp.Bll
         
         }
 
+        // Retrieves all movies from the sql database.
+        // Returns a list of movies if successful, or null if an error occurs.
         public async Task<List<Movie>> GetAllMoviesAsync()
         {
             List<Movie> movies;

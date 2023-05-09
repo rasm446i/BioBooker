@@ -25,6 +25,8 @@ public class MoviesController : ControllerBase
 
     [HttpPost]
     [AllowAnonymous]
+    // Inserts a new movie into the database using the _moviesManager.InsertMovieAsync() method.
+    // Returns Ok() if the insertion was successful, otherwise returns a StatusCodeResult with code 500.
     public async Task<IActionResult> InsertMovieAsync([FromBody] Movie movie)
     {
         IActionResult inserted;
@@ -42,6 +44,8 @@ public class MoviesController : ControllerBase
 
     [HttpGet]
     [AllowAnonymous]
+    // Retrieves a movie from the database by its title using the _moviesManager.GetMovieByTitleAsync() method.
+    // Returns Ok(movie) if the movie is found, otherwise returns NotFound().
     public async Task<IActionResult> GetMovieByTitleAsync([FromQuery] string title)
     {
         Movie movie = await _moviesManager.GetMovieByTitleAsync(title);
@@ -56,6 +60,8 @@ public class MoviesController : ControllerBase
 
     [HttpGet("all")]
     [AllowAnonymous]
+    // Retrieves all movies from the database using the _moviesManager.GetAllMoviesAsync() method.
+    // Returns Ok(movies) if movies are found, otherwise returns NotFound().
     public async Task<IActionResult> GetAllMoviesAsync()
     {
         List<Movie> movies = await _moviesManager.GetAllMoviesAsync();
