@@ -23,25 +23,22 @@ namespace BioBooker.WinApp.Svl
         {
             bool wasSaved = false;
 
-            if (_serviceConnection != null && movieTheater != null)
+            if (_serviceBaseUrl != null && movieTheater != null)
             {
                 try
                 {
                     var json = JsonConvert.SerializeObject(movieTheater);
                     var postData = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    using (var httpClient = new HttpClient())
-                    {
-                        var response = await httpClient.PostAsync(_serviceBaseUrl, postData);
+                    var response = await _serviceConnection.CallServicePost(_serviceBaseUrl, postData);
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            wasSaved = true;
-                        }
-                        else
-                        {
-                            wasSaved = false;
-                        }
+                    if (response != null && response.IsSuccessStatusCode)
+                    {
+                        wasSaved = true;
+                    }
+                    else
+                    {
+                        wasSaved = false;
                     }
                 }
                 catch (Exception ex)
@@ -53,6 +50,7 @@ namespace BioBooker.WinApp.Svl
 
             return wasSaved;
         }
+
 
 
 

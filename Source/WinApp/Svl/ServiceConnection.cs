@@ -19,17 +19,22 @@ namespace BioBooker.WinApp.Svl
             UseUrl = BaseUrl;
         }
 
-        public async Task<HttpResponseMessage?> CallServicePost(StringContent postJson)
+        public async Task<HttpResponseMessage?> CallServicePost(string endpoint, StringContent postData)
         {
-            HttpResponseMessage hrm = null;
-
-            if(UseUrl != null) 
-            { 
-                hrm = await HttpEnabler.GetAsync(UseUrl);
+            HttpResponseMessage? response = null;
+            try
+            {
+                response = await HttpEnabler.PostAsync(endpoint, postData);
             }
-            return hrm;
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
+            }
+            return response;
         }
-         
+
+
         public Task<HttpResponseMessage?> CallServiceGet()
         {
             throw new NotImplementedException();
