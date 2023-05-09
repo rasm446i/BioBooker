@@ -21,6 +21,7 @@ namespace BioBooker.WinApp.Svl
         public string? BaseUrl { get; set; }
         public string? UseUrl { get; set; }
 
+
         public async Task<HttpResponseMessage?> CallServiceGet(string url)
         {
             HttpResponseMessage? hrm = null;
@@ -50,13 +51,11 @@ namespace BioBooker.WinApp.Svl
         {
             throw new NotImplementedException();
         }
-        public async Task<HttpResponseMessage?> CallServiceDelete(string url)
+
+        public Task<HttpResponseMessage?> CallServiceDelete(int id)
         {
-            HttpResponseMessage? hrm = null;
-            if (url != null)
-            {
-                hrm = await HttpEnabler.DeleteAsync(url);
-            }
-            return hrm;
+            throw new NotImplementedException();
         }
+
+    }
 }
