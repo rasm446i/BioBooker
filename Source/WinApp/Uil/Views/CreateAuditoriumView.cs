@@ -37,9 +37,7 @@ namespace BioBooker.WinApp.Uil.Views
             }
             else
             {
-              List<Seat> seats = MovieTheaterController.GetGeneratedSeats(amountOfRowsParseResult, seatsPerRowParseResult);
-
-                await movieTheaterController.PassListOfSeatsToAuditoriumCreateAuditorium(movieTheaterName, seats, amountOfRowsParseResult, seatsPerRowParseResult);
+                await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInput(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult);
                 
             }
         }

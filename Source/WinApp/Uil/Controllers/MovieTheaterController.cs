@@ -16,20 +16,20 @@ namespace BioBooker.WinApp.Uil.Controllers
             movieTheaterBusinessController= new MovieTheaterBusinessController();
         }
 
-        public async Task PassListOfSeatsToAuditoriumCreateAuditorium(string movieTheaterName, List<Seat> seats, int amountOfRows, int seatsPerRow)
+        public async Task CreateSeatsAndMovieTheaterFromUserInput(string movieTheaterName, int amountOfRows, int seatsPerRow)
         {
             List<Seat> generatedSeats = GetGeneratedSeats(amountOfRows, seatsPerRow);
-           await movieTheaterBusinessController.CreateMovieTheater(movieTheaterName, generatedSeats);
+            await movieTheaterBusinessController.CreateMovieTheater(movieTheaterName, generatedSeats);
         }
 
         public static List<Seat> GetGeneratedSeats(int amountOfRows, int seatsPerRow)
         {
             List<Seat> seats = new List<Seat>();
-            for (int i = 1; i <= amountOfRows; i++)
+            for (int rowNum = 1; rowNum <= amountOfRows; rowNum++)
             {
-                for (int j = 1; j <= seatsPerRow; j++)
+                for (int seatNum = 1; seatNum <= seatsPerRow; seatNum++)
                 {
-                    seats.Add(new Seat(i, j));
+                    seats.Add(new Seat(rowNum, seatNum));
                 }
             }
             return seats;
