@@ -60,11 +60,7 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        await CreateAndInsertMovieTheaterAsync(newMovieTheater, connection, transaction);
-                        transaction.Commit();
-                        result = true;
-
-
+                        result = await CreateAndInsertMovieTheaterAsync(newMovieTheater, connection, transaction);
                     }
                     catch (Exception ex)
                     {
@@ -72,9 +68,6 @@ namespace BioBooker.WebApi.Dal
                         transaction.Rollback();
                         result = false;
                     }
-
-
-
                 }
             }
             return result;
@@ -82,60 +75,88 @@ namespace BioBooker.WebApi.Dal
 
 
         public async Task<bool> CreateAndInsertMovieTheaterAsync(MovieTheater newMovieTheater, IDbConnection connection, IDbTransaction transaction)
-        {
-            int numRowsInserted = 1;
-            int numRowsAffected;
-            int movieTheaterId = -1;
-            try
             {
-                string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name)";
-
-                    movieTheaterId = (int)await connection.ExecuteScalarAsync(insertQuery, newMovieTheater, transaction);
-
-                Auditorium? audi = newMovieTheater.Auditoriums.FirstOrDefault();
-                if (audi != null)
-                    await CreateAndInsertAuditorium(audi, movieTheaterId, connection, transaction);
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-
-            return movieTheaterId >= 0;
-        }
-
-        public async Task<bool> InsertAuditorium(Auditorium auditorium, int movieTheaterId)
-        {
-            bool result = false;
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                using (var transaction = await connection.BeginTransactionAsync())
+                int numRowsInserted = 1;
+                int numRowsAffected;
+                int movieTheaterId = -1;
+                try
                 {
-                    try
+                    
+                string insertQuery = @"INSERT INTO MovieTheaters (Name) VALUES (@Name); SELECT CAST(SCOPE_IDENTITY() as int)";
+
+                    movieTheaterId = await connection.ExecuteScalarAsync<int>(insertQuery, newMovieTheater, transaction);
+
+                    // Add this line after retrieving the movieTheaterId
+                    Console.WriteLine($"MovieTheaterId: {movieTheaterId}");
+
+                    if (newMovieTheater.Auditoriums != null && newMovieTheater.Auditoriums.Any())
                     {
-                        await CreateAndInsertAuditorium(auditorium, movieTheaterId, connection, transaction);
-                        transaction.Commit();
-                        result = true;
-
-
+                        foreach (var audi in newMovieTheater.Auditoriums)
+                        {
+                            await CreateAndInsertAuditorium(audi, movieTheaterId, connection, transaction);
+                        }
                     }
-                    catch (Exception ex)
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    transaction.Rollback();
+
+                }
+
+                return movieTheaterId >= 0;
+            }
+
+            public async Task<bool> InsertAuditorium(Auditorium auditorium, int movieTheaterId)
+            {
+                bool result = false;
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+
+                    using (var transaction = await connection.BeginTransactionAsync())
                     {
-                        Console.WriteLine(ex.Message);
-                        transaction.Rollback();
-                        result = false;
+                        try
+                        {
+                            await CreateAndInsertAuditorium(auditorium, movieTheaterId, connection, transaction);
+                            transaction.Commit();
+                            result = true;
+
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            transaction.Rollback();
+                            result = false;
+                        }
                     }
                 }
+
+
+                return result;
+
+            }
+        public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
+        {
+            int numRowsInserted = 0;
+
+            string insertQuery = "INSERT INTO Auditorium (MovieTheaterId) VALUES (@MovieTheaterId); SELECT CAST(SCOPE_IDENTITY() as int)";
+
+            int auditoriumId = await connection.ExecuteScalarAsync<int>(insertQuery, new { MovieTheaterId = movieTheaterId }, transaction);
+
+            numRowsInserted = auditoriumId > 0 ? 1 : 0;
+
+            if (numRowsInserted > 0)
+            {
+                await CreateAndInsertSeats(auditorium.Seats, movieTheaterId, auditoriumId, connection, transaction);
             }
 
-
-            return result;
-
+            return numRowsInserted > 0;
         }
 
+        /*
         public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
         {
             int numRowsInserted = 0;
@@ -148,57 +169,79 @@ namespace BioBooker.WebApi.Dal
             // Call the method to insert Seats
             return numRowsInserted > 0;
         }
-
+        */
         public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
-        {
-            bool result = false;
-            using (var connection = new SqlConnection(_connectionString))
             {
-               await connection.OpenAsync();
-
-                using (var transaction = await connection.BeginTransactionAsync())
+                bool result = false;
+                using (var connection = new SqlConnection(_connectionString))
                 {
-                    try
+                    await connection.OpenAsync();
+
+                    using (var transaction = await connection.BeginTransactionAsync())
                     {
-                        await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId, connection, transaction);
+                        try
+                        {
+                            await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId, connection, transaction);
 
-                        transaction.Commit();
-                        result = true;
+                            transaction.Commit();
+                            result = true;
 
 
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        transaction.Rollback();
-                        result = false;
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                            transaction.Rollback();
+                            result = false;
+                        }
                     }
                 }
+                return result;
             }
-            return result;
-        }
-
-        public async Task<bool> CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
+        public async Task CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
         {
             string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
-
-            int numRowsInserted = 0;
 
             try
             {
                 foreach (Seat seat in seats)
                 {
-                    numRowsInserted += await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
+                    await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
                 }
 
+                transaction.Commit();
             }
-            catch (Exception ex) { }
-
-            return numRowsInserted == seats.Count;
+            catch (Exception ex)
+            {
+                // Rollback transaction if an exception occurs
+                transaction.Rollback();
+                throw ex;
+            }
         }
+
+        /*
+            public async Task<bool> CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
+            {
+                string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
+
+                int numRowsInserted = 0;
+
+                try
+                {
+                    foreach (Seat seat in seats)
+                    {
+                        numRowsInserted += await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
+                    }
+
+                }
+                catch (Exception ex) { }
+
+                return numRowsInserted == seats.Count;
+            }
+       
+        */
+
     }
-
-
 }
 
 

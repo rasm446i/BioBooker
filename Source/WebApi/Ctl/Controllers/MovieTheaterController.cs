@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using System.Web.Http.Results;
 using System.Security.Cryptography.X509Certificates;
+using Newtonsoft.Json;
+using System;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -34,10 +36,13 @@ namespace BioBooker.WebApi.Ctl.Controllers
             if (newMovieTheater != null)
             {
                 wasInserted = await _movieTheaterBusiness.InsertMovieTheaterAsync(newMovieTheater);
+                Console.WriteLine($"Received MovieTheater: {JsonConvert.SerializeObject(newMovieTheater)}");
+
 
                 if (wasInserted)
                 {
                     return CreatedAtAction(nameof(Post), newMovieTheater);
+
                 }
                 else
                 {
