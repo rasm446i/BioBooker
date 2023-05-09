@@ -86,9 +86,6 @@ namespace BioBooker.WebApi.Dal
 
                     movieTheaterId = await connection.ExecuteScalarAsync<int>(insertQuery, newMovieTheater, transaction);
 
-                    // Add this line after retrieving the movieTheaterId
-                    Console.WriteLine($"MovieTheaterId: {movieTheaterId}");
-
                     if (newMovieTheater.Auditoriums != null && newMovieTheater.Auditoriums.Any())
                     {
                         foreach (var audi in newMovieTheater.Auditoriums)
@@ -100,7 +97,6 @@ namespace BioBooker.WebApi.Dal
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Exception: {ex.Message}\nStackTrace: {ex.StackTrace}");
                     transaction.Rollback();
 
                 }
@@ -213,7 +209,6 @@ namespace BioBooker.WebApi.Dal
             }
             catch (Exception ex)
             {
-                // Rollback transaction if an exception occurs
                 transaction.Rollback();
                 throw ex;
             }
