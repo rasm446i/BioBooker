@@ -15,13 +15,17 @@ namespace BioBooker.WinApp.Uil.Views
 {
     public partial class ViewMoviesView : Form
     {
+        private IConfiguration configuration;
         private IMoviesManager moviesManager;
 
         public ViewMoviesView(IConfiguration configuration)
         {
+            this.configuration = configuration;
             moviesManager = new MoviesManager(configuration);
             InitializeComponent();
             Load += ViewMoviesView_Load;
+            listView1.FullRowSelect = true;
+            listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
         }
 
         private async void ViewMoviesView_Load(object sender, EventArgs e)
@@ -100,12 +104,31 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
+        private void buttonDetails_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listView1.SelectedItems[0];
+                string title = selectedItem.SubItems[1].Text;
 
+              //  MovieDetailView movieDetailView = new MovieDetailView(title, configuration);
 
+               // movieDetailView.Show();
+            }
+        }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (listView1.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listView1.SelectedItems[0];
+                string title = selectedItem.SubItems[1].Text;
+                buttonDetails.Enabled = true;
+            } 
+            else
+            {
+                buttonDetails.Enabled = false;
+            }
         }
     }
 }

@@ -35,6 +35,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.buttonDetails = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxSearch
@@ -72,7 +73,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(206, 144);
+            this.buttonDelete.Location = new System.Drawing.Point(206, 202);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(91, 23);
             this.buttonDelete.TabIndex = 5;
@@ -98,11 +99,22 @@ namespace BioBooker.WinApp.Uil.Views
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             // 
+            // buttonDetails
+            // 
+            this.buttonDetails.Location = new System.Drawing.Point(206, 151);
+            this.buttonDetails.Name = "buttonDetails";
+            this.buttonDetails.Size = new System.Drawing.Size(91, 23);
+            this.buttonDetails.TabIndex = 9;
+            this.buttonDetails.Text = "Details";
+            this.buttonDetails.UseVisualStyleBackColor = true;
+            this.buttonDetails.Click += new System.EventHandler(this.buttonDetails_Click);
+            // 
             // ViewMoviesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonDetails);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonDelete);
@@ -125,5 +137,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Button buttonDetails;
     }
 }
