@@ -350,7 +350,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlOutputs.Name = "pnlOutputs";
             this.pnlOutputs.Size = new System.Drawing.Size(422, 392);
             this.pnlOutputs.TabIndex = 3;
-            this.pnlOutputs.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlOutputs_Paint);
             // 
             // pictureBox1
             // 

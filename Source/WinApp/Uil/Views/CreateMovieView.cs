@@ -72,7 +72,8 @@ public partial class CreateMovieView : Form
     }
 
 
-    //if there is selected NO subtitles then you can no longer check the subtitles languages
+    //If there is selected NO subtitles then you can no longer check the subtitles languages
+    //And unselects all selected subtitles subtitles languages
     private void comboBoxSubtitlesYesNo_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (comboBoxSubtitlesYesNo.SelectedItem.ToString() == "Yes")
@@ -342,14 +343,10 @@ public partial class CreateMovieView : Form
 
     }
 
+    // Returns the image path of the poster
     public string GetSelectedImagePath()
     {
         return selectedImagePath;
-    }
-
-    private void pnlOutputs_Paint(object sender, PaintEventArgs e)
-    {
-
     }
 }
 

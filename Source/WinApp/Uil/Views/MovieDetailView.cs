@@ -21,7 +21,7 @@ namespace BioBooker.WinApp.Uil.Views
         private IMoviesManager moviesManager;
         private Movie movie;
         private readonly string title;
-        private string hexImageData;
+
         public MovieDetailView(string title, IConfiguration configuration)
         {
             InitializeComponent();
@@ -32,18 +32,14 @@ namespace BioBooker.WinApp.Uil.Views
             Load += MovieDetailView_Load;
         }
 
-        public async Task<Movie> GetMovieByTitleAsync(string title)
-        {
-            return await moviesManager.GetMovieByTitleAsync(title);
-        }
-
+        // Retrieves the movie and displays the data and poster
         private async void MovieDetailView_Load(object sender, EventArgs e)
         {
             movie = await moviesManager.GetMovieByTitleAsync(title);
             if (movie != null)
             {
                 DisplayMovieDetails();
-                ShowMoviePoster();
+                //ShowMoviePoster();
             }
             else
             {
@@ -52,10 +48,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-
+        // Display the movie details in the form controls
         private async void DisplayMovieDetails()
         {
-            // Display the movie details in the form controls
             labelReleaseYear.Text = movie.ReleaseYear;
             labelRuntime.Text = movie.RuntimeMinutes.ToString();
             labelPremierDate.Text = movie.PremierDate.ToString();
@@ -67,62 +62,8 @@ namespace BioBooker.WinApp.Uil.Views
             labelActors.Text = movie.Actors;
             labelSubtitles.Text = movie.Subtitles.ToString();
             labelSubtitlesLanguage.Text = movie.SubtitlesLanguage;
+            pictureBox1.Image = Image.FromStream(new MemoryStream(movie.Poster.ImageData));
 
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        // USED TO SHOW THE POSTERS IN THE DATABASE
-        
-        private async void ShowMoviePoster()
-        {
-            string title =  labelTitle.Text;
-            Movie movie = await moviesManager.GetMovieByTitleAsync(title);
-
-            if (movie != null && movie.Poster != null)
-            {
-                byte[] imageData = movie.Poster.ImageData;
-                hexImageData = ConvertByteArrayToHex(imageData);
-                DisplayPoster();
-            }
-            else
-            {
-                MessageBox.Show("No poster found for the given movie title.");
-            }
-        }
-
-        private string ConvertByteArrayToHex(byte[] byteArray)
-        {
-            string hexString = BitConverter.ToString(byteArray);
-            return hexString.Replace("-", "");
-        }
-
-        private void DisplayPoster()
-        {
-            if (!string.IsNullOrEmpty(hexImageData))
-            {
-                byte[] imageData = ConvertHexToByteArray(hexImageData);
-                using (MemoryStream ms = new MemoryStream(imageData))
-                {
-                    pictureBox1.Image = Image.FromStream(ms);
-                }
-            }
-        }
-
-        private byte[] ConvertHexToByteArray(string hexString)
-        {
-            int length = hexString.Length;
-            byte[] byteArray = new byte[length / 2];
-
-            for (int i = 0; i < length; i += 2)
-            {
-                byteArray[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
-            }
-
-            return byteArray;
         }
     }
 }
