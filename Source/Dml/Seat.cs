@@ -19,5 +19,6 @@ namespace BioBooker.Dml
             SeatNumber = seatNumber;
             SeatRow = seatRow;
         }
+
     }
 }
