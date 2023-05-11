@@ -149,7 +149,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.textBoxSearch);
             this.Name = "ViewMoviesView";
             this.Text = "ViewMoviesView";
-            this.Load += new System.EventHandler(this.ViewMoviesView_Load_1);
             this.ResumeLayout(false);
             this.PerformLayout();
 

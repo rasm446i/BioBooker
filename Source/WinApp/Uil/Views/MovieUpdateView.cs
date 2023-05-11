@@ -147,57 +147,74 @@ namespace BioBooker.WinApp.Uil.Views
 
         }
 
+        private Movie CreateUpdatedMovie()
+        {
+            string title = txtTitle.Text;
+            string genre = comboBoxGenre.Text;
+            string actors = txtActors.Text;
+            string director = txtDirector.Text;
+            string language = comboBoxLanguage.Text;
+            string releaseYear = dateTimePickerReleaseYear.Value.ToString("yyyy-MM-dd");
+            byte subtitles = isThereSelectedSubtitles();
+            string subtitlesLanguage = getAllSubtitlesLanguages();
+            string mpaRatingEnum = comboBoxMpaRating.Text;
+            int runtimeHours = Int32.Parse(textBoxRunTime.Text);
+            string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
+            Poster updatedPoster = GetUpdatedPoster();
+
+            return new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, updatedPoster);
+        }
+
+        private Poster GetUpdatedPoster()
+        {
+            byte[] newImageData = null;
+            Poster updatedPoster;
+
+            // Check if a new image is selected
+            if (selectedImagePath != null && !selectedImagePath.Equals(preUpdatedMovie.Poster.PosterTitle))
+            {
+                string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
+                newImageData = File.ReadAllBytes(selectedImagePath);
+                updatedPoster = new Poster { PosterTitle = posterTitle, ImageData = newImageData };
+            }
+            else
+            {
+                // Use the existing poster
+                updatedPoster = preUpdatedMovie.Poster;
+            }
+
+            return updatedPoster;
+        }
+
         // Submits the update of the movie if all the validations go through
         private async void buttonSubmit_Click(object sender, EventArgs e)
         {
             if (validateAll())
             {
-                string title = txtTitle.Text;
-                string genre = comboBoxGenre.Text;
-                string actors = txtActors.Text;
-                string director = txtDirector.Text;
-                string language = comboBoxLanguage.Text;
-                string releaseYear = dateTimePickerReleaseYear.Value.ToString("yyyy-MM-dd");
-                byte subtitles = isThereSelectedSubtitles();
-                string subtitlesLanguage = getAllSubtitlesLanguages();
-                string mpaRatingEnum = comboBoxMpaRating.Text;
-                int runtimeHours = Int32.Parse(textBoxRunTime.Text);
-                string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
 
-                Poster updatedPoster;
-                byte[] newImageData = null;
+                Movie updatedMovie = CreateUpdatedMovie();
 
-                // Check if a new image is selected
-                if (selectedImagePath != null && !selectedImagePath.Equals(preUpdatedMovie.Poster.PosterTitle))
+
+                bool movieUpdated = await UpdateMovie(updatedMovie);
+
+                if(IsMovieChanged(updatedMovie))
                 {
-                    string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
-                    newImageData = File.ReadAllBytes(selectedImagePath);
-                    updatedPoster = new Poster { PosterTitle = posterTitle, ImageData = newImageData };
+                    MessageBox.Show("Nothing was changed.");
+                    this.Close();
+                    return;
                 }
-                else
-                {
-                    // Use the existing poster
-                    updatedPoster = preUpdatedMovie.Poster;
-                }
-
-                // Update the movie
-                Movie updatedMovie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, updatedPoster);
-
-                bool movieUpdated = await moviesManager.UpdateMovieByIdAsync(movieId, updatedMovie);
 
                 if (movieUpdated)
                 {
-                    // Check if a new image is selected
-                    if (newImageData != null)
+                    if (updatedMovie.Poster.ImageData != null)
                     {
                         MessageBox.Show("The movie and poster were updated.");
-                        
                     }
                     else
                     {
                         MessageBox.Show("The movie was updated.");
                     }
-                    
+
                 }
                 else
                 {
@@ -205,6 +222,17 @@ namespace BioBooker.WinApp.Uil.Views
                 }
                 this.Close();
             }
+        }
+
+        private bool IsMovieChanged(Movie updatedMovie)
+        {
+            bool isChanged = !updatedMovie.Equals(preUpdatedMovie);
+            return isChanged;
+        }
+
+        private async Task<bool> UpdateMovie(Movie updatedMovie)
+        {
+            return await moviesManager.UpdateMovieByIdAsync(movieId, updatedMovie);
         }
 
         // return 1 if there is selected yes to the movie having subtitles.
