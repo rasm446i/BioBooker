@@ -1,7 +1,6 @@
 using BioBooker.Dml;
 using BioBooker.Utl;
-using BioBooker.WebApi.Svl;
-using BioBooker.WinApp.Bll;
+using BioBooker.WinApp.Svl;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -10,28 +9,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace BioBooker.WinApp.UnitTests.Bll
+namespace BioBooker.WinApp.UnitTests.Svl
 {
-
-    public class MoviesManagerTests
+    public class MoviesServiceTest
     {
-        private MoviesManager moviesManager;
+        private MoviesService moviesService;
         private Base64EncodedImage utl;
         private IConfiguration configuration;
-
-        public MoviesManagerTests()
+        public MoviesServiceTest() 
         {
-            // Set up the configuration object with necessary configuration values
-
             utl = new Base64EncodedImage();
-            moviesManager = new MoviesManager(configuration);
+            moviesService= new MoviesService(configuration);
         }
 
         [Fact]
-        public async Task CreateMovie_WithValidData_ReturnsTrue()
+        public async Task InsertMovieAsync_WithValidData_ReturnsTrue()
         {
+
             // Arrange
-            var imagePath = @"INSERT IMAGE PATH";
+            var imagePath = @"insert image path";
 
             var imageData = utl.GenerateImageData(imagePath);
 
@@ -58,30 +54,16 @@ namespace BioBooker.WinApp.UnitTests.Bll
             };
 
             // Act
-            Movie createdMovie = moviesManager.CreateMovie(movie);
+            bool inserted = await moviesService.InsertMovieAsync(movie, poster);
 
             // Assert
-            Assert.NotNull(createdMovie);
-            Assert.NotSame(movie, createdMovie);
-            Assert.Equal(movie.Title, createdMovie.Title);
-            Assert.Equal(movie.Genre, createdMovie.Genre);
-            Assert.Equal(movie.Actors, createdMovie.Actors);
-            Assert.Equal(movie.Director, createdMovie.Director);
-            Assert.Equal(movie.Language, createdMovie.Language);
-            Assert.Equal(movie.ReleaseYear, createdMovie.ReleaseYear);
-            Assert.Equal(movie.Subtitles, createdMovie.Subtitles);
-            Assert.Equal(movie.SubtitlesLanguage, createdMovie.SubtitlesLanguage);
-            Assert.Equal(movie.MPARating, createdMovie.MPARating);
-            Assert.Equal(movie.RuntimeMinutes, createdMovie.RuntimeMinutes);
-            Assert.Equal(movie.PremierDate, createdMovie.PremierDate);
-            Assert.Equal(movie.Poster.PosterTitle, createdMovie.Poster.PosterTitle);
-            Assert.Equal(movie.Poster.ImageData, createdMovie.Poster.ImageData);
+            Assert.True(inserted);
         }
 
         [Fact]
-        public async Task CreateMovie_WithInvalidMovieData_ReturnsFalse()
+        public async Task InsertMovieAsync_WithInvalidMovieData_ReturnsFalse()
         {
-            //NEEDS BUSINESS LOGIC
+
             // Arrange
             var imagePath = @"INSERT IMAGE PATH";
 
@@ -110,13 +92,46 @@ namespace BioBooker.WinApp.UnitTests.Bll
             };
 
             // Act
-            Movie createdMovie = moviesManager.CreateMovie(movie);
+            bool inserted = await moviesService.InsertMovieAsync(movie, poster);
 
             // Assert
-            Assert.Null(createdMovie);
+            Assert.False(inserted);
         }
+
+        [Fact]
+        public async Task InsertMovieAsync_WithInvalidPosterData_ReturnsFalse()
+        {
+
+            // Arrange
+            var imagePath = @"INSERT IMAGE PATH";
+
+            var imageData = utl.GenerateImageData(imagePath);
+
+            var movie = new Movie
+            {
+                Title = "Test Movie70",
+                Genre = "Action",
+                Actors = "Actor 1, Actor 2",
+                Director = "Director Name",
+                Language = "English",
+                ReleaseYear = "2023-01-01",
+                Subtitles = 1,
+                SubtitlesLanguage = "English",
+                MPARating = "",
+                RuntimeMinutes = 120,
+                PremierDate = "2023-01-01",
+                Poster = new Poster("Test Movie Poster", imageData)
+            };
+
+            Poster poster = null;
+
+            // Act
+            bool inserted = await moviesService.InsertMovieAsync(movie, poster);
+
+            // Assert
+            Assert.False(inserted);
+        }
+
+
     }
 }
-
-
-
