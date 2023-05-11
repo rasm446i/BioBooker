@@ -197,7 +197,7 @@ namespace BioBooker.WinApp.Uil.Views
 
                 bool movieUpdated = await UpdateMovie(updatedMovie);
 
-                if(IsMovieChanged(updatedMovie))
+                if(!IsMovieChanged(updatedMovie) && !IsPosterChanged(updatedMovie.Poster, preUpdatedMovie.Poster))
                 {
                     MessageBox.Show("Nothing was changed.");
                     this.Close();
@@ -206,14 +206,7 @@ namespace BioBooker.WinApp.Uil.Views
 
                 if (movieUpdated)
                 {
-                    if (updatedMovie.Poster.ImageData != null)
-                    {
-                        MessageBox.Show("The movie and poster were updated.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("The movie was updated.");
-                    }
+                    MessageBox.Show("The movie was updated.");
 
                 }
                 else
@@ -226,8 +219,34 @@ namespace BioBooker.WinApp.Uil.Views
 
         private bool IsMovieChanged(Movie updatedMovie)
         {
-            bool isChanged = !updatedMovie.Equals(preUpdatedMovie);
+            bool isChanged =
+                !string.Equals(updatedMovie.Title, preUpdatedMovie.Title) ||
+                !string.Equals(updatedMovie.Actors, preUpdatedMovie.Actors) ||
+                !string.Equals(updatedMovie.Director, preUpdatedMovie.Director) ||
+                !string.Equals(updatedMovie.Language, preUpdatedMovie.Language) ||
+                !string.Equals(updatedMovie.ReleaseYear, preUpdatedMovie.ReleaseYear) ||
+                updatedMovie.Subtitles != preUpdatedMovie.Subtitles ||
+                !string.Equals(updatedMovie.SubtitlesLanguage, preUpdatedMovie.SubtitlesLanguage) ||
+                !string.Equals(updatedMovie.MPARating, preUpdatedMovie.MPARating) ||
+                updatedMovie.RuntimeMinutes != preUpdatedMovie.RuntimeMinutes ||
+                !string.Equals(updatedMovie.PremierDate, preUpdatedMovie.PremierDate) ||
+                IsPosterChanged(updatedMovie.Poster, preUpdatedMovie.Poster);
+
             return isChanged;
+        }
+
+        private bool IsPosterChanged(Poster poster1, Poster poster2)
+        {
+            if (poster1 == null && poster2 == null)
+            {
+                return true;
+            }
+            if(poster1 == null || poster2 == null)
+            {
+                return false;
+            }
+
+            return !poster1.ImageData.SequenceEqual(poster2.ImageData);
         }
 
         private async Task<bool> UpdateMovie(Movie updatedMovie)
