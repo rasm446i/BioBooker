@@ -38,5 +38,10 @@ namespace BioBooker.WebApi.Svl
             return await _moviesRepository.DeleteMovieByIdAsync(id);
         }
 
+        public async Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie)
+        {
+            return await _moviesRepository.UpdateMovieByIdAsync(id, updatedMovie);
+        }
+
     }
 }

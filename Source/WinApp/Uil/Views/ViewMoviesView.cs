@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -54,6 +55,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
 
             buttonSearch.Click += buttonSearch_Click;
+
+            buttonDelete.Enabled = false;
+            buttonDetails.Enabled = false;
         }
 
         private async void buttonSearch_Click(object sender, EventArgs e)
@@ -116,12 +120,46 @@ namespace BioBooker.WinApp.Uil.Views
                 ListViewItem selectedItem = listView1.SelectedItems[0];
                 string title = selectedItem.SubItems[1].Text;
                 buttonDetails.Enabled = true;
+                buttonDelete.Enabled = true;
             } 
             else
             {
                 buttonDetails.Enabled = false;
+                buttonDelete.Enabled = false;
             }
         }
+
+        private async void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("Are you sure you want to delete the selected movie?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    ListViewItem selectedItem = listView1.SelectedItems[0];
+                    int id = int.Parse(selectedItem.SubItems[0].Text);
+
+                    bool wasDeleted = await moviesManager.DeleteMovieByIdAsync(id);
+
+                    if (wasDeleted)
+                    {
+                        // Remove movie from list view
+                        listView1.Items.Remove(selectedItem);
+
+                        MessageBox.Show("Movie deleted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to delete the movie.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a movie to delete.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         private void ViewMoviesView_Load_1(object sender, EventArgs e)
         {
@@ -131,6 +169,19 @@ namespace BioBooker.WinApp.Uil.Views
         private void buttonClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonUpdate_Click(object sender, EventArgs e)
+        {
+            if(listView1.SelectedItems.Count > 0)
+            {
+                ListViewItem selectedItem = listView1.SelectedItems[0];
+                int id = int.Parse(selectedItem.SubItems[0].Text);
+                string title = selectedItem.SubItems[1].Text;
+
+                MovieUpdateView muv = new MovieUpdateView(id, title, configuration);
+                muv.Show();
+            }
         }
     }
 }

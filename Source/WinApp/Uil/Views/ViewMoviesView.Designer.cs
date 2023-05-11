@@ -37,6 +37,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.listView1 = new System.Windows.Forms.ListView();
             this.buttonDetails = new System.Windows.Forms.Button();
             this.labelNoMovieFound = new System.Windows.Forms.Label();
+            this.buttonUpdateMovie = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxSearch
@@ -80,6 +81,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonDelete.TabIndex = 5;
             this.buttonDelete.Text = "Delete movie";
             this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
             // buttonClose
             // 
@@ -120,11 +122,22 @@ namespace BioBooker.WinApp.Uil.Views
             this.labelNoMovieFound.Size = new System.Drawing.Size(0, 15);
             this.labelNoMovieFound.TabIndex = 10;
             // 
+            // buttonUpdateMovie
+            // 
+            this.buttonUpdateMovie.Location = new System.Drawing.Point(206, 249);
+            this.buttonUpdateMovie.Name = "buttonUpdateMovie";
+            this.buttonUpdateMovie.Size = new System.Drawing.Size(91, 23);
+            this.buttonUpdateMovie.TabIndex = 11;
+            this.buttonUpdateMovie.Text = "Update movie";
+            this.buttonUpdateMovie.UseVisualStyleBackColor = true;
+            this.buttonUpdateMovie.Click += new System.EventHandler(this.buttonUpdate_Click);
+            // 
             // ViewMoviesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonUpdateMovie);
             this.Controls.Add(this.labelNoMovieFound);
             this.Controls.Add(this.buttonDetails);
             this.Controls.Add(this.listView1);
@@ -152,5 +165,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button buttonDetails;
         private System.Windows.Forms.Label labelNoMovieFound;
+        private System.Windows.Forms.Button buttonUpdateMovie;
     }
 }

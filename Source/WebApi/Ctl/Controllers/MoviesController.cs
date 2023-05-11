@@ -87,4 +87,18 @@ public class MoviesController : ControllerBase
 
         return NotFound();
     }
+
+    [HttpPut("{id}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Put(int id, [FromBody] Movie updatedMovie)
+    {
+        bool wasUpdated = await _moviesManager.UpdateMovieByIdAsync(id, updatedMovie);
+
+        if (wasUpdated)
+        {
+            return Ok();
+        }
+
+        return NotFound();
+    }
 }

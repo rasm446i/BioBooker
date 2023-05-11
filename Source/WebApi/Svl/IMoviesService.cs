@@ -10,5 +10,6 @@ namespace BioBooker.WebApi.Svl
         public Task<Movie> GetMovieByTitleAsync(string title);
         public Task<bool> InsertMovieAsync(Movie movie);
         public Task<bool> DeleteMovieByIdAsync(int id);
+        public Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie);
     }
 }

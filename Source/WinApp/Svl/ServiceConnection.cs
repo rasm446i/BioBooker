@@ -47,14 +47,24 @@ namespace BioBooker.WinApp.Svl
             return response;
         }
 
-        public Task<HttpResponseMessage?> CallServicePut(StringContent postJson)
+        public async Task<HttpResponseMessage?> CallServicePut(string url, StringContent putData)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage? hrm = null;
+            if (url != null)
+            {
+                hrm = await HttpEnabler.PutAsync(url, putData);
+            }
+            return hrm;
         }
 
-        public Task<HttpResponseMessage?> CallServiceDelete(int id)
+        public async Task<HttpResponseMessage?> CallServiceDelete(string url, int id)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage? hrm = null;
+            if(url != null)
+            {
+                hrm = await HttpEnabler.DeleteAsync(url);
+            }
+            return hrm;
         }
 
     }

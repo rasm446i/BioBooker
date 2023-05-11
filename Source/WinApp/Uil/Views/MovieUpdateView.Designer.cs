@@ -1,6 +1,6 @@
 namespace BioBooker.WinApp.Uil.Views
 {
-    partial class CreateMovieView
+    partial class MovieUpdateView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,9 +28,6 @@ namespace BioBooker.WinApp.Uil.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnClose = new System.Windows.Forms.Button();
-            this.pnlButtons = new System.Windows.Forms.Panel();
-            this.buttonSubmit = new System.Windows.Forms.Button();
             this.pnlInputs = new System.Windows.Forms.Panel();
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
             this.dateTimePickerPremierDate = new System.Windows.Forms.DateTimePicker();
@@ -55,45 +52,18 @@ namespace BioBooker.WinApp.Uil.Views
             this.lblReleaseYear = new System.Windows.Forms.Label();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.btnAddPoster = new System.Windows.Forms.Button();
+            this.pnlButtons = new System.Windows.Forms.Panel();
+            this.buttonSubmit = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
+            this.btnChangePoster = new System.Windows.Forms.Button();
             this.pnlOutputs = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.pnlButtons.SuspendLayout();
             this.pnlInputs.SuspendLayout();
+            this.pnlButtons.SuspendLayout();
             this.pnlOutputs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // btnClose
-            // 
-            this.btnClose.Location = new System.Drawing.Point(745, 3);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(110, 25);
-            this.btnClose.TabIndex = 0;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // pnlButtons
-            // 
-            this.pnlButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlButtons.Controls.Add(this.buttonSubmit);
-            this.pnlButtons.Controls.Add(this.btnClose);
-            this.pnlButtons.Location = new System.Drawing.Point(12, 415);
-            this.pnlButtons.Name = "pnlButtons";
-            this.pnlButtons.Size = new System.Drawing.Size(860, 34);
-            this.pnlButtons.TabIndex = 1;
-            // 
-            // buttonSubmit
-            // 
-            this.buttonSubmit.Location = new System.Drawing.Point(629, 3);
-            this.buttonSubmit.Name = "buttonSubmit";
-            this.buttonSubmit.Size = new System.Drawing.Size(110, 25);
-            this.buttonSubmit.TabIndex = 1;
-            this.buttonSubmit.Text = "Submit";
-            this.buttonSubmit.UseVisualStyleBackColor = true;
-            this.buttonSubmit.Click += new System.EventHandler(this.buttonSubmit_Click);
             // 
             // pnlInputs
             // 
@@ -121,10 +91,10 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlInputs.Controls.Add(this.lblReleaseYear);
             this.pnlInputs.Controls.Add(this.txtTitle);
             this.pnlInputs.Controls.Add(this.lblTitle);
-            this.pnlInputs.Location = new System.Drawing.Point(6, 12);
+            this.pnlInputs.Location = new System.Drawing.Point(2, 12);
             this.pnlInputs.Name = "pnlInputs";
             this.pnlInputs.Size = new System.Drawing.Size(428, 392);
-            this.pnlInputs.TabIndex = 2;
+            this.pnlInputs.TabIndex = 3;
             // 
             // comboBoxLanguage
             // 
@@ -331,32 +301,61 @@ namespace BioBooker.WinApp.Uil.Views
             this.lblTitle.TabIndex = 0;
             this.lblTitle.Text = "Title";
             // 
-            // btnAddPoster
+            // pnlButtons
             // 
-            this.btnAddPoster.Location = new System.Drawing.Point(-1, 366);
-            this.btnAddPoster.Name = "btnAddPoster";
-            this.btnAddPoster.Size = new System.Drawing.Size(110, 25);
-            this.btnAddPoster.TabIndex = 9;
-            this.btnAddPoster.Text = "Add Poster";
-            this.btnAddPoster.UseVisualStyleBackColor = true;
-            this.btnAddPoster.Click += new System.EventHandler(this.btnAddPoster_Click);
+            this.pnlButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlButtons.Controls.Add(this.buttonSubmit);
+            this.pnlButtons.Controls.Add(this.btnClose);
+            this.pnlButtons.Location = new System.Drawing.Point(2, 410);
+            this.pnlButtons.Name = "pnlButtons";
+            this.pnlButtons.Size = new System.Drawing.Size(795, 34);
+            this.pnlButtons.TabIndex = 4;
+            // 
+            // buttonSubmit
+            // 
+            this.buttonSubmit.Location = new System.Drawing.Point(552, 4);
+            this.buttonSubmit.Name = "buttonSubmit";
+            this.buttonSubmit.Size = new System.Drawing.Size(122, 25);
+            this.buttonSubmit.TabIndex = 1;
+            this.buttonSubmit.Text = "Submit";
+            this.buttonSubmit.UseVisualStyleBackColor = true;
+            this.buttonSubmit.Click += new System.EventHandler(this.buttonSubmit_Click);
+            // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(668, 4);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(122, 25);
+            this.btnClose.TabIndex = 0;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnChangePoster
+            // 
+            this.btnChangePoster.Location = new System.Drawing.Point(3, 354);
+            this.btnChangePoster.Name = "btnChangePoster";
+            this.btnChangePoster.Size = new System.Drawing.Size(110, 25);
+            this.btnChangePoster.TabIndex = 9;
+            this.btnChangePoster.Text = "Change poster";
+            this.btnChangePoster.UseVisualStyleBackColor = true;
+            this.btnChangePoster.Click += new System.EventHandler(this.btnChangePoster_Click);
             // 
             // pnlOutputs
             // 
             this.pnlOutputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlOutputs.Controls.Add(this.pictureBox1);
-            this.pnlOutputs.Controls.Add(this.btnAddPoster);
-            this.pnlOutputs.Location = new System.Drawing.Point(450, 12);
+            this.pnlOutputs.Controls.Add(this.btnChangePoster);
+            this.pnlOutputs.Location = new System.Drawing.Point(436, 12);
             this.pnlOutputs.Name = "pnlOutputs";
-            this.pnlOutputs.Size = new System.Drawing.Size(422, 392);
-            this.pnlOutputs.TabIndex = 3;
-            this.pnlOutputs.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlOutputs_Paint);
+            this.pnlOutputs.Size = new System.Drawing.Size(358, 392);
+            this.pnlOutputs.TabIndex = 5;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Location = new System.Drawing.Point(3, 13);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(414, 335);
+            this.pictureBox1.Size = new System.Drawing.Size(350, 335);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 10;
             this.pictureBox1.TabStop = false;
@@ -365,19 +364,19 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // CreateMovieView
+            // MovieUpdateView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 461);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.pnlOutputs);
-            this.Controls.Add(this.pnlInputs);
             this.Controls.Add(this.pnlButtons);
-            this.Name = "CreateMovieView";
-            this.Text = "MovieView";
-            this.pnlButtons.ResumeLayout(false);
+            this.Controls.Add(this.pnlInputs);
+            this.Name = "MovieUpdateView";
+            this.Text = "MovieUpdateView";
             this.pnlInputs.ResumeLayout(false);
             this.pnlInputs.PerformLayout();
+            this.pnlButtons.ResumeLayout(false);
             this.pnlOutputs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -386,36 +385,36 @@ namespace BioBooker.WinApp.Uil.Views
 
         #endregion
 
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Panel pnlButtons;
         private System.Windows.Forms.Panel pnlInputs;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.TextBox txtTitle;
-        private System.Windows.Forms.Label lblReleaseYear;
-        private System.Windows.Forms.Label lblGenre;
-        private System.Windows.Forms.Label lblMpaaRating;
-        private System.Windows.Forms.Panel pnlOutputs;
-        private System.Windows.Forms.TextBox txtDirector;
-        private System.Windows.Forms.TextBox txtActors;
-        private System.Windows.Forms.Button btnAddPoster;
+        private System.Windows.Forms.ComboBox comboBoxLanguage;
+        private System.Windows.Forms.DateTimePicker dateTimePickerPremierDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerReleaseYear;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox comboBoxSubtitlesYesNo;
+        private System.Windows.Forms.ComboBox comboBoxGenre;
+        private System.Windows.Forms.ComboBox comboBoxMpaRating;
+        private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label labelPremierDate;
+        private System.Windows.Forms.Label labelRuntime;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBoxGenre;
-        private System.Windows.Forms.ComboBox comboBoxMpaRating;
-        private System.Windows.Forms.Label labelRuntime;
         private System.Windows.Forms.TextBox textBoxRunTime;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox comboBoxSubtitlesYesNo;
+        private System.Windows.Forms.TextBox txtDirector;
+        private System.Windows.Forms.TextBox txtActors;
+        private System.Windows.Forms.Label lblGenre;
+        private System.Windows.Forms.Label lblMpaaRating;
+        private System.Windows.Forms.Label lblReleaseYear;
+        private System.Windows.Forms.TextBox txtTitle;
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Panel pnlButtons;
         private System.Windows.Forms.Button buttonSubmit;
-        private System.Windows.Forms.DateTimePicker dateTimePickerPremierDate;
-        private System.Windows.Forms.DateTimePicker dateTimePickerReleaseYear;
-        private System.Windows.Forms.ComboBox comboBoxLanguage;
+        private System.Windows.Forms.Button btnClose;
+        private System.Windows.Forms.Button btnChangePoster;
+        private System.Windows.Forms.Panel pnlOutputs;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

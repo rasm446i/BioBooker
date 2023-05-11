@@ -92,5 +92,21 @@ namespace BioBooker.WinApp.Bll
             return deleted;
         }
 
+        // Updates a movie in the sql database by its ID.
+        // Returns a boolean value indicating whether the movie update was successful.
+        public async Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie)
+        {
+            bool updated;
+            try
+            {
+                updated = await _moviesService.UpdateMovieByIdAsync(id, updatedMovie);
+            }
+            catch
+            {
+                updated = false;
+            }
+            return updated;
+        }
+
     }
 }

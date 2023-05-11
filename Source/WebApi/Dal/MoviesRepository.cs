@@ -232,6 +232,97 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+        /// <summary>
+        /// Updates a movie in the database.
+        /// </summary>
+        /// <param name="id">The ID of the movie to update.</param>
+        /// <param name="updatedMovie">The updated movie.</param>
+        /// <returns>A task representing the asynchronous operation. The task result is true if the movie was updated successfully.</returns>
+        public async Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie)
+        {
+            ValidateMovie(updatedMovie);
+            bool movieExists = await CheckMovieExistsAsync(updatedMovie.Title, updatedMovie.ReleaseYear, updatedMovie.Director);
+            if (movieExists)
+            {
+                throw new InvalidOperationException("A movie with the same title, release year, and director already exists.");
+            }
+
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        updatedMovie.Id = id; // Set the ID of the updated movie
+                        await UpdateMovieAsync(connection, transaction, updatedMovie);
+                        await UpdatePosterAsync(connection, transaction, updatedMovie.Id, updatedMovie.Poster);
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Updates the data of a movie in the Movies table.
+        /// </summary>
+        /// <param name="connection">The SqlConnection object used for the database connection.</param>
+        /// <param name="transaction">The SqlTransaction object used for the database transaction.</param>
+        /// <param name="movie">The movie to update.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        private async Task UpdateMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
+        {
+            string sqlUpdateMovies = @"UPDATE Movies SET
+                                Title = @Title,
+                                Genre = @Genre,
+                                Actors = @Actors,
+                                Director = @Director,
+                                Language = @Language,
+                                ReleaseYear = @ReleaseYear,
+                                Subtitles = @Subtitles,
+                                SubtitlesLanguage = @SubtitlesLanguage,
+                                MPARating = @MPARating,
+                                RuntimeMinutes = @RuntimeMinutes,
+                                PremierDate = @PremierDate
+                              WHERE Id = @Id";
+
+            await connection.ExecuteAsync(sqlUpdateMovies, movie, transaction);
+        }
+
+        /// <summary>
+        /// Updates the data of a poster in the Posters table.
+        /// </summary>
+        /// <param name="connection">The SqlConnection object used for the database connection.</param>
+        /// <param name="transaction">The SqlTransaction object used for the database transaction.</param>
+        /// <param name="poster">The poster to update.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        private async Task UpdatePosterAsync(SqlConnection connection, SqlTransaction transaction, int movieId, Poster updatedPoster)
+        {
+            string sqlUpdatePosters = @"UPDATE Posters SET
+                                PosterTitle = @PosterTitle,
+                                ImageData = @ImageData
+                              WHERE MovieId = @MovieId";
+
+            var parameters = new
+            {
+                PosterTitle = updatedPoster.PosterTitle,
+                ImageData = updatedPoster.ImageData,
+                MovieId = movieId
+            };
+
+            await connection.ExecuteAsync(sqlUpdatePosters, parameters, transaction);
+        }
+
+
 
     }
 }

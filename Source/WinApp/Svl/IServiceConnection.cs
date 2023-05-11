@@ -15,8 +15,8 @@ namespace BioBooker.WinApp.Svl
 
         Task<HttpResponseMessage?> CallServiceGet(string url);
         Task<HttpResponseMessage?> CallServicePost(string url, StringContent postJson);
-        Task<HttpResponseMessage?> CallServicePut(StringContent postJson);
-        Task<HttpResponseMessage?> CallServiceDelete(int id);
-        
+        Task<HttpResponseMessage?> CallServiceDelete(string url, int id);
+        Task<HttpResponseMessage?> CallServicePut(string url, StringContent putData);
+
     }
 }

@@ -33,7 +33,7 @@ namespace BioBooker.WinApp.Svl
 
                 try
                 {
-                    HttpResponseMessage? response = await _serviceConnection.CallServiceDelete(id);
+                    HttpResponseMessage? response = await _serviceConnection.CallServiceDelete(url, id);
                     if (response != null && response.IsSuccessStatusCode)
                     {
                         deleted = true;
@@ -159,12 +159,40 @@ namespace BioBooker.WinApp.Svl
             }
             return changedOk;
         }
-        
 
-        public Task<bool> UpdateMovie(int id)
+
+        public async Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie)
         {
-            throw new NotImplementedException();
+            bool updated = false;
+
+            if (_serviceConnection != null)
+            {
+                string url = _serviceBaseUrl + "movies/" + id;
+
+                if (updatedMovie != null)
+                {
+                    try
+                    {
+                        var json = JsonConvert.SerializeObject(updatedMovie);
+                        var putData = new StringContent(json, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage? response = await _serviceConnection.CallServicePut(url, putData);
+                        if (response != null && response.IsSuccessStatusCode)
+                        {
+                            updated = true;
+                        }
+                    }
+                    catch
+                    {
+                        updated = false;
+                    }
+                }
+            }
+
+            return updated;
         }
+
+
     }
 
 

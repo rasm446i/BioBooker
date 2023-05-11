@@ -331,10 +331,15 @@ public partial class CreateMovieView : Form
 
     }
 
+    public string GetSelectedImagePath()
+    {
+        return selectedImagePath;
+    }
 
+    private void pnlOutputs_Paint(object sender, PaintEventArgs e)
+    {
 
-
-
+    }
 }
 
 
