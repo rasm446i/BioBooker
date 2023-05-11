@@ -145,7 +145,7 @@ namespace BioBooker.WebApi.Dal
             if (auditoriumId > 0)
             {
                 numRowsInserted = 1;
-                await CreateAndInsertSeats(auditorium.Seats, movieTheaterId, auditoriumId, connection, transaction);
+                await CreateAndInsertSeats(auditorium.Seats, auditoriumId, connection, transaction);
             }
             else
             {
@@ -156,7 +156,7 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-        public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
+        public async Task<bool> InsertSeats(List<Seat> seats, int auditoriumId)
             {
                 bool result = false;
                 using (var connection = new SqlConnection(_connectionString))
@@ -167,7 +167,7 @@ namespace BioBooker.WebApi.Dal
                     {
                         try
                         {
-                            await CreateAndInsertSeats(seats, movieTheaterId, auditoriumId, connection, transaction);
+                            await CreateAndInsertSeats(seats, auditoriumId, connection, transaction);
 
                             transaction.Commit();
                             result = true;
@@ -184,15 +184,15 @@ namespace BioBooker.WebApi.Dal
                 }
                 return result;
             }
-        public async Task CreateAndInsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
+        public async Task CreateAndInsertSeats(List<Seat> seats, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
         {
-            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId, movieTheaterId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId, @MovieTheaterId)";
+            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId)";
 
             try
             {
                 foreach (Seat seat in seats)
                 {
-                    await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId, MovieTheaterId = movieTheaterId }, transaction);
+                    await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId }, transaction);
                 }
 
                 transaction.Commit();

@@ -85,10 +85,10 @@ namespace BioBooker.WebApi.Ctl.Controllers
         }
 
         [HttpPost, Route("{id}/Auditoriums/{auditoriumId}/Seats")]
-        public async Task<IActionResult> Post(List<Seat> Seats, [FromRoute] int id, int auditoriumId)
+        public async Task<IActionResult> Post(List<Seat> Seats, [FromRoute] int auditoriumId)
         {
 
-            bool wasAdded = await _movieTheaterBusiness.InsertSeats(Seats, id, auditoriumId);
+            bool wasAdded = await _movieTheaterBusiness.InsertSeats(Seats, auditoriumId);
 
             if(!wasAdded)
             {
