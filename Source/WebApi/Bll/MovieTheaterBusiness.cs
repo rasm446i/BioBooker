@@ -1,5 +1,4 @@
 using BioBooker.Dml;
-using BioBooker.WebApi.Dal;
 using BioBooker.WebApi.Svl;
 using Microsoft.Extensions.Configuration;
 using System;
