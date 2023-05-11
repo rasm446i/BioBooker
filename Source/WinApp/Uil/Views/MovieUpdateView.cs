@@ -129,9 +129,14 @@ namespace BioBooker.WinApp.Uil.Views
                 checkedListBox1.Enabled = true;
             }
             else
+
             {
                 checkedListBox1.Enabled = false;
-                checkedListBox1.ClearSelected();
+                for (int i = 0; i < checkedListBox1.Items.Count; i++)
+                {
+                    checkedListBox1.SetItemChecked(i, false);
+                }
+
             }
         }
 
@@ -405,9 +410,6 @@ namespace BioBooker.WinApp.Uil.Views
             return wasOk;
 
         }
-
-
-
     }
 
 
