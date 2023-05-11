@@ -31,17 +31,30 @@ namespace BioBooker.WinApp.Uil.Views
             int amountOfRowsParseResult = int.Parse(amountOfRows);
             int seatsPerRowParseResult = int.Parse(seatsPerRow);
 
-            if (amountOfRowsParseResult < 1 || seatsPerRowParseResult < 1 && !String.IsNullOrEmpty(movieTheaterName))
+            if ((amountOfRowsParseResult < 1 || seatsPerRowParseResult < 1))
             {
                 MessageBox.Show("Amount of rows and seats per row must be higher than 0");
             }
+            else if (String.IsNullOrEmpty(movieTheaterName) || !ContainsOnlyLetters(movieTheaterName)) 
+            {
+            MessageBox.Show("Movie theater name can't be empty and must only contain letters");
+            }
             else
             {
-                await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInput(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult);
-                
+                await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInput(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult);  
             }
         }
 
-        
+        private bool ContainsOnlyLetters(string movieTheaterName)
+        {
+            foreach (char letter in movieTheaterName)
+            {
+                if(!char.IsLetter(letter))
+                {        
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 }
