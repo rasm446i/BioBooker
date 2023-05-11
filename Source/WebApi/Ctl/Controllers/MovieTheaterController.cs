@@ -100,6 +100,41 @@ namespace BioBooker.WebApi.Ctl.Controllers
             
         }
 
+        [HttpPost("{movieTheaterId}/auditoriums")]
+        public async Task<IActionResult> InsertAuditoriumToMovieTheater(int movieTheaterId, [FromBody] Auditorium newAuditorium)
+        {
+            if (ModelState.IsValid)
+            {
+                bool wasSaved = await _movieTheaterBusiness.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
+
+                if (wasSaved)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Failed to insert auditorium to movie theater.");
+                }
+            }
+            else
+            {
+                return BadRequest("Invalid input data.");
+            }
+        }
+
+        [HttpGet("Auditorium/{id}")]
+        public async Task<IActionResult> GetAuditoriumById(int id)
+        {
+            Auditorium foundAuditorium = await _movieTheaterBusiness.GetAuditoriumByIdAsync(id);
+
+            if (foundAuditorium == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(foundAuditorium);
+        }
+
     }
     
 }

@@ -28,6 +28,20 @@ namespace BioBooker.WebApi.Svl
             return wasInserted;
         }
 
+        public async Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
+        {
+            bool wasInserted;
+
+            wasInserted = await _movieTheaterDb.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
+
+            return wasInserted;
+        }
+        public async Task<Auditorium> GetAuditoriumByIdAsync(int auditoriumId)
+        {
+            Auditorium foundAuditorium = await _movieTheaterDb.GetAuditoriumByIdAsync(auditoriumId);
+
+            return foundAuditorium;
+        }
         public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
         {
           List<MovieTheater> movieTheaterList = await _movieTheaterDb.GetAllMovieTheatersAsync();

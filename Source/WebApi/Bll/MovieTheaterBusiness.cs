@@ -1,4 +1,5 @@
 using BioBooker.Dml;
+using BioBooker.WebApi.Dal;
 using BioBooker.WebApi.Svl;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -23,6 +24,20 @@ namespace BioBooker.WebApi.Bll
             bool wasInserted;
 
             wasInserted = await _movieTheaterServiceApi.InsertMovieTheaterAsync(newMovieTheater);
+
+            return wasInserted;
+        }
+        public async Task<Auditorium> GetAuditoriumByIdAsync(int auditoriumId)
+        {
+            Auditorium foundAuditorium = await _movieTheaterServiceApi.GetAuditoriumByIdAsync(auditoriumId);
+
+            return foundAuditorium;
+        }
+        public async Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
+        {
+            bool wasInserted;
+
+            wasInserted = await _movieTheaterServiceApi.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
 
             return wasInserted;
         }

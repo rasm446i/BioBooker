@@ -10,8 +10,7 @@ namespace BioBooker.Dml
     {
     public int Id { get; set; }
     public string Name { get; set; }
-
-        public List<Auditorium> Auditoriums { get; set; }
+    public List<Auditorium> Auditoriums { get; set; }
 
 
         public MovieTheater()
@@ -22,11 +21,6 @@ namespace BioBooker.Dml
         {
             Id = id;
             Name = name;    
-        }
-        //temp constructor
-        public MovieTheater(string name) 
-        { 
-            Name = name;
         }
         public MovieTheater(string name, Auditorium auditorium)
         {
@@ -41,6 +35,11 @@ namespace BioBooker.Dml
             }
             
 
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
 
 
