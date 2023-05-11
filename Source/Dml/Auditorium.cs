@@ -13,14 +13,16 @@ namespace BioBooker.Dml
         public int AuditoriumId { get; set; }
         public List<Seat> Seats { get; set; }
 
+        public List<Showing> Showings { get; set; }
+
         public Auditorium()
         {
             
         }
-        public Auditorium(List<Seat> seats)
+        public Auditorium(List<Seat> seats, List<Showing> showings)
         {
             Seats = seats;
-            
+            Showings = showings;
         }
 
     }
