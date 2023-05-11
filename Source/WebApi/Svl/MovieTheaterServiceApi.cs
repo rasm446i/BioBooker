@@ -43,9 +43,9 @@ namespace BioBooker.WebApi.Svl
 
         }
 
-        public async Task<bool> InsertSeats(List<Seat> seats, int movieTheaterId, int auditoriumId)
+        public async Task<bool> InsertSeats(List<Seat> seats, int auditoriumId)
         {
-            return await _movieTheaterDb.InsertSeats(seats, movieTheaterId, auditoriumId);
+            return await _movieTheaterDb.InsertSeats(seats, auditoriumId);
         }
     }
 }
