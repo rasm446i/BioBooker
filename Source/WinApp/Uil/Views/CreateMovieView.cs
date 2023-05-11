@@ -80,9 +80,14 @@ public partial class CreateMovieView : Form
             checkedListBox1.Enabled = true;
         }
         else
+
         {
             checkedListBox1.Enabled = false;
-            checkedListBox1.ClearSelected();
+            for(int i = 0; i < checkedListBox1.Items.Count; i++)
+            {
+                checkedListBox1.SetItemChecked(i, false);
+            }
+            
         }
     }
 
@@ -118,10 +123,16 @@ public partial class CreateMovieView : Form
 
             Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
 
+
             bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
-
-            MessageBox.Show("The movie was submitted.");
-
+            if(inserted)
+            {
+                MessageBox.Show("The movie was submitted.");
+            } 
+            else
+            {
+                MessageBox.Show("The movie was not submitted, make sure the fields are filled correctly.");
+            }
             this.Close();
         }
     }

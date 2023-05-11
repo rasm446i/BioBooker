@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BioBooker.WebApi.Bll
 {
-    public class MoviesManager
+    public class MoviesManager : IMoviesManager
     {
         private readonly IMoviesService _moviesService;
 

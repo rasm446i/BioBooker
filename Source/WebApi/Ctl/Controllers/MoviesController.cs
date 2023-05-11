@@ -14,7 +14,7 @@ public class MoviesController : ControllerBase
 {
 
     private readonly IConfiguration _configuration;
-    private readonly MoviesManager _moviesManager;
+    private readonly IMoviesManager _moviesManager;
 
     // Constructor
     public MoviesController(IConfiguration inConfiguration)
