@@ -29,6 +29,7 @@ namespace BioBooker.WinApp.Uil.Views
             listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
         }
 
+        // Loads all the movies and disables the buttons if no movie is selected in the list view
         private async void ViewMoviesView_Load(object sender, EventArgs e)
         {
 
@@ -56,10 +57,13 @@ namespace BioBooker.WinApp.Uil.Views
 
             buttonSearch.Click += buttonSearch_Click;
 
+            // Disables the buttons when no movie is selected
             buttonDelete.Enabled = false;
             buttonDetails.Enabled = false;
+            buttonUpdateMovie.Enabled = false;
         }
 
+        // Searches for a movie 
         private async void buttonSearch_Click(object sender, EventArgs e)
         {
             listView1.Items.Clear();
@@ -69,7 +73,7 @@ namespace BioBooker.WinApp.Uil.Views
 
             Movie matchingMovie = await moviesManager.GetMovieByTitleAsync(searchQuery);
 
-            if (matchingMovie != null)
+            if (matchingMovie != null && matchingMovie.Title.Contains(searchQuery))
             {
                 listView1.Items.Clear();
                 var item = new ListViewItem(matchingMovie.Id.ToString());
@@ -100,6 +104,7 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
+        // Opens MovieDetailView when you select a movie in the list view and press the detail button
         private void buttonDetails_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -112,7 +117,7 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-
+        // Enables the buttons whenever an item is selected in the list view, also disables when no item is selected
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -121,14 +126,18 @@ namespace BioBooker.WinApp.Uil.Views
                 string title = selectedItem.SubItems[1].Text;
                 buttonDetails.Enabled = true;
                 buttonDelete.Enabled = true;
+                buttonUpdateMovie.Enabled = true;
             } 
             else
             {
                 buttonDetails.Enabled = false;
                 buttonDelete.Enabled = false;
+                buttonUpdateMovie.Enabled = false;
             }
         }
 
+        // Deletes the movie selected when pressing the delete button.
+        // A dialog will pop up requiring a confirmation from the user
         private async void buttonDelete_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -160,17 +169,13 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-
-        private void ViewMoviesView_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
+        // Closes the view
         private void buttonClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Opens a new view to update the selected movie
         private void buttonUpdate_Click(object sender, EventArgs e)
         {
             if(listView1.SelectedItems.Count > 0)
