@@ -1,6 +1,10 @@
-﻿namespace BioBooker.WebApi.Dal
+using BioBooker.Dml;
+using System.Threading.Tasks;
+
+namespace BioBooker.WebApi.Dal
 {
     public interface IShowingRepository
     {
+        Task<bool> AddShowingAsync(Showing showing);
     }
 }

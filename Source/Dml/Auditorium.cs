@@ -19,10 +19,9 @@ namespace BioBooker.Dml
         {
             
         }
-        public Auditorium(List<Seat> seats, List<Showing> showings)
+        public Auditorium(List<Seat> seats)
         {
             Seats = seats;
-            Showings = showings;
         }
 
     }

@@ -29,13 +29,14 @@ namespace BioBooker.WebApi.Dal
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
 
-                using (var transaction = connection.BeginTransaction())
+                using (var transaction = await connection.BeginTransactionAsync())
                 {
                     try
                     {
-                       await InsertShowingAsync(connection, transaction, showing);
+                        result = await InsertShowingAsync(showing, connection, transaction);
+                        transaction.Commit();
                     }
                     catch (Exception ex)
                     {
@@ -45,31 +46,23 @@ namespace BioBooker.WebApi.Dal
                     }
                 }
             }
+
             return result;
         }
 
-
-        public async Task<bool> InsertShowingAsync(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
+        public async Task<bool> InsertShowingAsync(Showing showing, IDbConnection connection, IDbTransaction transaction)
         {
             int numRowsInserted = 0;
 
-            string insertQuery = @"INSERT INTO Showings (Date, StartTime, EndTime, AuditoriumId, MovieId) 
-                                 VALUES (@Date, @StartTime, @EndTime, @AuditoriumId, @MovieÍd); SELECT CAST(SCOPE_IDENTITY() as int)";
+            string insertQuery = "INSERT INTO Showings (Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES (@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId)";
 
-            int auditoriumId = await connection.ExecuteScalarAsync<int>(insertQuery, new { ShowingId = movieTheaterId }, transaction);
-
-            if (auditoriumId > 0)
-            {
-                numRowsInserted = 1;
-                await CreateAndInsertSeats(auditorium.Seats, auditoriumId, connection, transaction);
-            }
-            else
-            {
-                numRowsInserted = 0;
-            }
+            numRowsInserted = await connection.ExecuteAsync(insertQuery, showing, transaction);
 
             return numRowsInserted > 0;
         }
+
+
+
 
 
 
