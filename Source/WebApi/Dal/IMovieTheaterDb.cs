@@ -13,7 +13,7 @@ namespace BioBooker.WebApi.Dal
         public Task<List<MovieTheater>> GetAllMovieTheatersAsync();
         public Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id);
         public Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium);
-        public Task<bool> InsertSeats(List<Seat> seats, int auditoriumId);
-        public Task<Auditorium> GetAuditoriumByIdAsync(int auditoriumId);
+        public Task<bool> InsertSeatsAsync(List<Seat> seats, int auditoriumId);
+        public Task<Auditorium> GetAuditoriumByNameAndMovieTheaterIdAsync(string auditoriumName, int movieTheaterId);
     }
 }

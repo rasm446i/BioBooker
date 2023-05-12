@@ -18,43 +18,61 @@ namespace BioBooker.WinApp.Uil.Views
         private async void btnCreateAuditorium_Click(object sender, EventArgs e)
         {
             // Get the data from the form
-            int seatRows = int.Parse(txtSeatRows.Text);
-            int seatNumbers = int.Parse(txtSeatNumbers.Text);
+            string seatRows = txtSeatRows.Text;
+            string seatNumbers = txtSeatNumbers.Text;
+            string auditoriumName = txtAuditoriumName.Text;
 
-            if (IsValidInput(seatRows, seatNumbers))
+            //Try to parse input from row and seat
+            int seatRowsParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatRows);
+            int seatNumbersParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatNumbers);
+
+            //Validate auditorium name
+            bool isValidAuditoriumName = MovieTheaterController.IsValidAuditoriumNameInputAndNotEmpty(auditoriumName);
+
+            //Validate that the parsed results and auditorium name are valid
+            if (IsValidSeatsAndRowsInput(seatRowsParseResult) && IsValidSeatsAndRowsInput(seatNumbersParseResult) && isValidAuditoriumName)
             {
                 // Generate the seats for the auditorium using the controller method
-                List<Seat> seats = MovieTheaterController.GetGeneratedSeats(seatRows, seatNumbers);
+                List<Seat> seats = MovieTheaterController.GetGeneratedSeats(seatRowsParseResult, seatNumbersParseResult);
 
-                // Create a new auditorium with the generated seats
-                Auditorium newAuditorium = new Auditorium(seats);
+                // Create a new auditorium with the generated seats and auditorium name by using the CreateAuditorium method in the MovieTheaterController
+                MovieTheaterController movieTheaterController = new MovieTheaterController();
+                Auditorium newAuditorium = movieTheaterController.CreateAuditorium(seats, auditoriumName);
 
                 // Add the new auditorium to the selected movie theater
                 selectedMovieTheater.Auditoriums.Add(newAuditorium);
 
                 // Save changes in the database
-                MovieTheaterController movieTheaterController = new MovieTheaterController();
-                await movieTheaterController.AddAuditoriumToMovieTheaterAsync(selectedMovieTheater.Id, newAuditorium);
+                bool wasInserted = await movieTheaterController.AddAuditoriumToMovieTheaterAsync(selectedMovieTheater.Id, newAuditorium);
+
+                if (wasInserted)
+                {
+                    MessageBox.Show(newAuditorium.Name + " was added to " + selectedMovieTheater.Name);
+                }
+                else
+                {
+                    MessageBox.Show(newAuditorium.Name + " was not inserted into the database");
+                }
             }
 
 
         }
 
-        private bool IsValidInput(int seatRows, int seatNumbers)
+        private bool IsValidSeatsAndRowsInput(int input)
         {
-            // Check if either seatRows or seatNumbers is less than 1
-            if ((seatRows < 1 || seatNumbers < 1))
+            if (input == -1)
             {
-                // Display a message box indicating that the input is invalid
-                MessageBox.Show("Amount of rows and seats per row must be higher than 0");
-
-                // Return false to indicate that the input is not valid
+                MessageBox.Show("Amount of rows and seats must be an integer");
                 return false;
             }
-
-            // Return true to indicate that the input is valid
+            else if (input <= 0)
+            {
+                MessageBox.Show("Seats and Rows must be higher than 0");
+                return false;
+            }
             return true;
         }
+
 
     }
 

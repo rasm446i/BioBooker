@@ -106,9 +106,9 @@ namespace BioBooker.WinApp.Uil.Views
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(403, 103);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 15);
+            this.label2.Size = new System.Drawing.Size(152, 15);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Antal seat numbers";
+            this.label2.Text = "Antal seat numbers per row";
             // 
             // label3
             // 

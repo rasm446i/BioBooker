@@ -15,16 +15,16 @@ namespace BioBooker.WinApp.Bll
         {
             _movieTheaterService = new MovieTheaterService();
         }
-        public async Task<bool> CreateMovieTheater(string movieTheaterName, List<Seat> seats)
+        public async Task<bool> CreateMovieTheaterAndInsertAsync(string movieTheaterName, List<Seat> seats, string auditoriumName)
         {
             bool wasInserted;
             try
             {
-                // Create a new auditorium using the provided seat list
-                Auditorium newAuditorium = await CreateAuditorium(seats);
+                // Create a new auditorium using the provided seat list and auditorium name
+                Auditorium newAuditorium = CreateAuditorium(seats, auditoriumName);
 
                 // Create a new movie theater with the provided name and the created auditorium
-                MovieTheater newMovieTheater = new MovieTheater(movieTheaterName, newAuditorium);
+                MovieTheater newMovieTheater = CreateMovieTheater(movieTheaterName, newAuditorium);
 
                 // Insert the new movie theater into the database asynchronously
                 wasInserted = await InsertMovieTheaterAsync(newMovieTheater);
@@ -44,9 +44,14 @@ namespace BioBooker.WinApp.Bll
 
             return wasInserted;
         }
-        public async Task<Auditorium> CreateAuditorium(List<Seat> seats)
+        public Auditorium CreateAuditorium(List<Seat> seats, string auditoriumName)
         {
-            return await Task.FromResult(new Auditorium(seats));
+            return new Auditorium(seats, auditoriumName);
+        }
+
+        public MovieTheater CreateMovieTheater(string movieTheaterName, Auditorium newAuditorium)
+        {
+            return new MovieTheater(movieTheaterName, newAuditorium);
         }
 
         public async Task<List<MovieTheater>> GetMovieTheatersAsync()
@@ -56,7 +61,7 @@ namespace BioBooker.WinApp.Bll
 
         public async Task<bool> AddAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
         {
-            bool wasInserted = await _movieTheaterService.InsertAuditoriumToMovieTheater(movieTheaterId, newAuditorium);
+            bool wasInserted = await _movieTheaterService.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
             
             return wasInserted;
         }

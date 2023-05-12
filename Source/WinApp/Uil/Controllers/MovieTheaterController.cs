@@ -1,7 +1,10 @@
 using BioBooker.Dml;
 using BioBooker.WinApp.Bll;
+using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Controllers
 {
@@ -13,13 +16,13 @@ namespace BioBooker.WinApp.Uil.Controllers
             movieTheaterBusinessController = new MovieTheaterBusinessController();
         }
 
-        public async Task<bool> CreateSeatsAndMovieTheaterFromUserInput(string movieTheaterName, int amountOfRows, int seatsPerRow)
+        public async Task<bool> CreateSeatsAndMovieTheaterFromUserInputAsync(string movieTheaterName, int amountOfRows, int seatsPerRow, string auditoriumName)
         {
             // Generate seats based on the provided amount of rows and seats per row
             List<Seat> generatedSeats = GetGeneratedSeats(amountOfRows, seatsPerRow);
 
-            // Create a movie theater with the provided name and generated seats
-            bool wasInserted = await movieTheaterBusinessController.CreateMovieTheater(movieTheaterName, generatedSeats);
+            // Create a movie theater with the provided name, generated seats and auditorium name
+            bool wasInserted = await movieTheaterBusinessController.CreateMovieTheaterAndInsertAsync(movieTheaterName, generatedSeats, auditoriumName);
 
             // Return the result indicating whether the movie theater and seats were successfully created and inserted
             return wasInserted;
@@ -46,7 +49,6 @@ namespace BioBooker.WinApp.Uil.Controllers
             return seats;
         }
 
-
         public async Task<List<MovieTheater>> GetMovieTheaterListAsync()
         {
             return await movieTheaterBusinessController.GetMovieTheatersAsync();
@@ -58,6 +60,96 @@ namespace BioBooker.WinApp.Uil.Controllers
 
             return wasInserted;
         }
+
+        public static bool IsValidRowsAndSeatsInput(int seatRows, int seatNumbers)
+        {
+            // Check if either seatRows or seatNumbers is less than 1
+            if ((seatRows < 1 || seatNumbers < 1))
+            {
+
+                // Return false to indicate that the input is not valid
+                return false;
+            }
+
+            // Return true to indicate that the input is valid
+            return true;
+        }
+
+        public static bool IsOnlyLettersAndNotEmpty(string movieTheaterName)
+        {
+            if (!String.IsNullOrEmpty(movieTheaterName))
+            {
+                foreach (char character in movieTheaterName)
+                {
+                    if (!char.IsLetter(character) && !char.IsWhiteSpace(character))
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static bool IsValidAuditoriumNameInputAndNotEmpty(string auditoriumName)
+        {
+            // Makes sure the auditorium isn't empty
+            if (!String.IsNullOrEmpty(auditoriumName))
+            {
+                string input = auditoriumName;
+                bool hasWhitespaceBetweenLettersAndDigits = false;
+
+                // Iterates through the characters of the auditorium name
+                for (int currentIndex = 1; currentIndex < input.Length - 1; currentIndex++)
+                {
+                    // Stores the current, preceding and succeeding characters
+                    char currentChar = input[currentIndex];
+                    char precedingChar = input[currentIndex - 1];
+                    char succeedingChar = input[currentIndex + 1];
+
+                    // Checks if the current character is a whitespace and its preceding and succeeding characters are a letter and a digit respectively
+                    if (char.IsLetter(precedingChar) && char.IsDigit(succeedingChar) && currentChar == ' ')
+                    {
+                        hasWhitespaceBetweenLettersAndDigits = true;
+                        // If so, it sets hasWhitespaceBetweenLettersAndDigits to true and breaks the loop
+                        break;
+                    }
+                    else
+                    {
+                        // If not, it sets hasWhitespaceBetweenLettersAndDigits to false
+                        hasWhitespaceBetweenLettersAndDigits = false;
+                    }
+
+                }
+                // Returns true or false based on hasWhitespaceBetweenLettersAndDigits
+                return hasWhitespaceBetweenLettersAndDigits;
+
+            }
+            else
+            {
+                MessageBox.Show("Auditorium name can't be empty");
+                return false;
+            }
+        }
+
+        public Auditorium CreateAuditorium(List<Seat> seats, string AuditoriumName)
+        {
+            return movieTheaterBusinessController.CreateAuditorium(seats, AuditoriumName);
+
+        }
+        public static int TryParseRowAndSeatInput(string input)
+        {
+            if (!int.TryParse(input, out int result))
+            {
+                return -1;
+            }
+            return result;
+        }
+
 
     }
 

@@ -2,7 +2,6 @@ using BioBooker.Dml;
 using BioBooker.WinApp.Uil.Controllers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -10,12 +9,13 @@ namespace BioBooker.WinApp.Uil.Views
 {
     public partial class ShowAuditoriumsView : Form
     {
-        MovieTheaterController movieTheaterController;
+        private MovieTheaterController movieTheaterController;
         public ShowAuditoriumsView()
         {
             InitializeComponent();
             movieTheaterController = new MovieTheaterController();
             AddMovieTheatersToListBoxAsync();
+            ListBoxOfAuditoriums.Sorted = true;
 
         }
 
@@ -34,17 +34,16 @@ namespace BioBooker.WinApp.Uil.Views
 
         private void ListBoxOfMovieTheaters_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Clear the listbox of auditoriums when changing index
+            // Clear the listbox of auditoriums when changing index
             ListBoxOfAuditoriums.Items.Clear();
-            
-            //Get the selected movie theater
+
+            // Get the selected movie theater
             MovieTheater selectedMovieTheater = (MovieTheater)ListBoxOfMovieTheaters.SelectedItem;
 
-            //Check if a movie theater is selected
-            if(selectedMovieTheater != null)
+            // Check if a movie theater is selected
+            if (selectedMovieTheater != null)
             {
-                //Add the auditoriums of the selected movie theater to the list box of auditoriums
-
+                // Add the auditoriums of the selected movie theater to the list box of auditoriums
                 foreach (Auditorium auditorium in selectedMovieTheater.Auditoriums)
                 {
                     ListBoxOfAuditoriums.Items.Add(auditorium);
@@ -61,10 +60,27 @@ namespace BioBooker.WinApp.Uil.Views
             // Check if an auditorium is selected
             if (selectedAuditorium != null)
             {
-                // Calculate the seat information
-                int seatRows = selectedAuditorium.Seats.Max(s => s.SeatRow);
-                int seatNumbers = selectedAuditorium.Seats.Max(s => s.SeatNumber);
+                // Store seat information
+                int seatRows = 0;
+                int seatNumbers = 0;
                 int totalSeats = selectedAuditorium.Seats.Count;
+
+                //Calculate seat information
+                foreach (Seat seat in selectedAuditorium.Seats)
+                {
+                    // Check if the current seat's SeatRow is greater than the current max seatRows
+                    if (seat.SeatRow > seatRows)
+                    {
+                        // Update seatRows with the new maximum SeatRow value
+                        seatRows = seat.SeatRow;
+                    }
+                    // Check if the current seat's SeatNumber is greater than the current max seatNumbers
+                    if (seat.SeatNumber > seatNumbers)
+                    {
+                        // Update seatNumbers with the new maximum SeatNumber value
+                        seatNumbers = seat.SeatNumber;
+                    }
+                }
 
                 // Update the text fields with the seat information
                 lblSeatRows.Text = seatRows.ToString();

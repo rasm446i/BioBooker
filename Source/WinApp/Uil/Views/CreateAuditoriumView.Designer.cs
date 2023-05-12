@@ -33,11 +33,13 @@ namespace BioBooker.WinApp.Uil.Views
             this.lblSeatRows = new System.Windows.Forms.Label();
             this.txtSeatNumbers = new System.Windows.Forms.TextBox();
             this.lblSeatNumbers = new System.Windows.Forms.Label();
+            this.txtAuditoriumName = new System.Windows.Forms.TextBox();
+            this.lblAuditoriumName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnCreateAuditorium
             // 
-            this.btnCreateAuditorium.Location = new System.Drawing.Point(22, 235);
+            this.btnCreateAuditorium.Location = new System.Drawing.Point(22, 207);
             this.btnCreateAuditorium.Name = "btnCreateAuditorium";
             this.btnCreateAuditorium.Size = new System.Drawing.Size(126, 23);
             this.btnCreateAuditorium.TabIndex = 0;
@@ -77,11 +79,29 @@ namespace BioBooker.WinApp.Uil.Views
             this.lblSeatNumbers.TabIndex = 4;
             this.lblSeatNumbers.Text = "Seat numbers";
             // 
+            // txtAuditoriumName
+            // 
+            this.txtAuditoriumName.Location = new System.Drawing.Point(171, 68);
+            this.txtAuditoriumName.Name = "txtAuditoriumName";
+            this.txtAuditoriumName.Size = new System.Drawing.Size(100, 23);
+            this.txtAuditoriumName.TabIndex = 5;
+            // 
+            // lblAuditoriumName
+            // 
+            this.lblAuditoriumName.AutoSize = true;
+            this.lblAuditoriumName.Location = new System.Drawing.Point(171, 41);
+            this.lblAuditoriumName.Name = "lblAuditoriumName";
+            this.lblAuditoriumName.Size = new System.Drawing.Size(101, 15);
+            this.lblAuditoriumName.TabIndex = 6;
+            this.lblAuditoriumName.Text = "Auditorium name";
+            // 
             // CreateAuditoriumView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblAuditoriumName);
+            this.Controls.Add(this.txtAuditoriumName);
             this.Controls.Add(this.lblSeatNumbers);
             this.Controls.Add(this.txtSeatNumbers);
             this.Controls.Add(this.lblSeatRows);
@@ -101,5 +121,7 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Label lblSeatRows;
         private System.Windows.Forms.TextBox txtSeatNumbers;
         private System.Windows.Forms.Label lblSeatNumbers;
+        private System.Windows.Forms.TextBox txtAuditoriumName;
+        private System.Windows.Forms.Label lblAuditoriumName;
     }
 }

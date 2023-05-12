@@ -35,6 +35,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.btnCreateMovieTheater = new System.Windows.Forms.Button();
             this.lblMovieTheaterName = new System.Windows.Forms.Label();
             this.txtBoxMovieTheaterName = new System.Windows.Forms.TextBox();
+            this.txtBoxAuditoriumName = new System.Windows.Forms.TextBox();
+            this.lblAuditoriumName = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtBoxAmountOfRows
@@ -95,11 +97,29 @@ namespace BioBooker.WinApp.Uil.Views
             this.txtBoxMovieTheaterName.Size = new System.Drawing.Size(100, 23);
             this.txtBoxMovieTheaterName.TabIndex = 6;
             // 
-            // CreateAuditoriumView
+            // txtBoxAuditoriumName
+            // 
+            this.txtBoxAuditoriumName.Location = new System.Drawing.Point(209, 104);
+            this.txtBoxAuditoriumName.Name = "txtBoxAuditoriumName";
+            this.txtBoxAuditoriumName.Size = new System.Drawing.Size(101, 23);
+            this.txtBoxAuditoriumName.TabIndex = 7;
+            // 
+            // lblAuditoriumName
+            // 
+            this.lblAuditoriumName.AutoSize = true;
+            this.lblAuditoriumName.Location = new System.Drawing.Point(209, 86);
+            this.lblAuditoriumName.Name = "lblAuditoriumName";
+            this.lblAuditoriumName.Size = new System.Drawing.Size(101, 15);
+            this.lblAuditoriumName.TabIndex = 8;
+            this.lblAuditoriumName.Text = "Auditorium name";
+            // 
+            // CreateMovieTheaterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lblAuditoriumName);
+            this.Controls.Add(this.txtBoxAuditoriumName);
             this.Controls.Add(this.txtBoxMovieTheaterName);
             this.Controls.Add(this.lblMovieTheaterName);
             this.Controls.Add(this.btnCreateMovieTheater);
@@ -107,11 +127,10 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.lblSeatsPerRow);
             this.Controls.Add(this.lblAmountOfRows);
             this.Controls.Add(this.txtBoxAmountOfRows);
-            this.Name = "CreateAuditoriumView";
+            this.Name = "CreateMovieTheaterView";
             this.Text = "CreateAuditoriumView";
             this.ResumeLayout(false);
             this.PerformLayout();
-         
 
         }
 
@@ -124,6 +143,7 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Button btnCreateMovieTheater;
         private System.Windows.Forms.Label lblMovieTheaterName;
         private System.Windows.Forms.TextBox txtBoxMovieTheaterName;
-       
+        private System.Windows.Forms.TextBox txtBoxAuditoriumName;
+        private System.Windows.Forms.Label lblAuditoriumName;
     }
 }

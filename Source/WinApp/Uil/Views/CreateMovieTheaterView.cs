@@ -1,5 +1,6 @@
 using BioBooker.WinApp.Uil.Controllers;
 using System;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Views
@@ -18,55 +19,59 @@ namespace BioBooker.WinApp.Uil.Views
             string movieTheaterName = txtBoxMovieTheaterName.Text;
             string amountOfRows = txtBoxAmountOfRows.Text;
             string seatsPerRow = txtBoxSeatsPerRow.Text;
+            string auditoriumName = txtBoxAuditoriumName.Text;
 
-            int amountOfRowsParseResult = int.Parse(amountOfRows);
-            int seatsPerRowParseResult = int.Parse(seatsPerRow);
+            int amountOfRowsParseResult = MovieTheaterController.TryParseRowAndSeatInput(amountOfRows);
+            int seatsPerRowParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatsPerRow);
+
+            bool isValidMovieTheaterName = MovieTheaterController.IsOnlyLettersAndNotEmpty(movieTheaterName);
+            bool isValidAuditoriumName = MovieTheaterController.IsValidAuditoriumNameInputAndNotEmpty(auditoriumName);
 
             bool wasInserted;
 
-
-            if (IsValidInput(amountOfRowsParseResult, seatsPerRowParseResult, movieTheaterName))
+            if(IsValidSeatsAndRowsInput(amountOfRowsParseResult) && IsValidSeatsAndRowsInput(seatsPerRowParseResult))
             {
-                wasInserted = await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInput(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult);
-                if (wasInserted)
+                if (!isValidMovieTheaterName)
                 {
-                    MessageBox.Show("Movie Theater has been created and inserted into the database");
+                    MessageBox.Show("Movie theater name can't be empty and must only contain letters");
+
+                }
+                if (!isValidAuditoriumName)
+                {
+                    MessageBox.Show("Auditorium name can't be empty. Furthermore it must only contain letters, numbers and have a space between them. Like this: Auditorium 1");
+
                 }
                 else
                 {
-                    MessageBox.Show("Server error occurred: Movie Theater has NOT been created and inserted into the database");
+                    wasInserted = await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInputAsync(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult, auditoriumName);
+                    if (wasInserted)
+                    {
+                        MessageBox.Show(movieTheaterName + " has been created and inserted into the database");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Server error occurred: " + movieTheaterName + " has NOT been created and inserted into the database");
+                    }
                 }
             }
+           
 
         }
-        private bool IsValidInput(int amountOfRowsParseResult, int seatsPerRowParseResult, string movieTheaterName)
+
+        private bool IsValidSeatsAndRowsInput(int input)
         {
-
-            if ((amountOfRowsParseResult < 1 || seatsPerRowParseResult < 1))
+            if(input == -1)
             {
-                MessageBox.Show("Amount of rows and seats per row must be higher than 0");
+                MessageBox.Show("Amount of rows and seats must be an integer");
                 return false;
-
             }
-            else if (String.IsNullOrEmpty(movieTheaterName) || !IsOnlyLetters(movieTheaterName))
+            else if (input <= 0)
             {
-                MessageBox.Show("Movie theater name can't be empty and must only contain letters");
+                MessageBox.Show("Seats and Rows must be higher than 0");
                 return false;
-
             }
             return true;
         }
 
-        private bool IsOnlyLetters(string movieTheaterName)
-        {
-            foreach (char character in movieTheaterName)
-            {
-                if (!char.IsLetter(character) && !char.IsWhiteSpace(character))
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
     }
 }

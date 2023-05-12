@@ -1,15 +1,11 @@
 using BioBooker.Dml;
 using BioBooker.WebApi.Bll;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Cryptography.X509Certificates;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -34,8 +30,6 @@ namespace BioBooker.WebApi.Ctl.Controllers
             if (newMovieTheater != null)
             {
                 wasInserted = await _movieTheaterBusiness.InsertMovieTheaterAsync(newMovieTheater);
-                Console.WriteLine($"Received MovieTheater: {JsonConvert.SerializeObject(newMovieTheater)}");
-
 
                 if (wasInserted)
                 {
@@ -88,16 +82,17 @@ namespace BioBooker.WebApi.Ctl.Controllers
         public async Task<IActionResult> Post(List<Seat> Seats, [FromRoute] int auditoriumId)
         {
 
-            bool wasAdded = await _movieTheaterBusiness.InsertSeats(Seats, auditoriumId);
+            bool wasAdded = await _movieTheaterBusiness.InsertSeatsAsync(Seats, auditoriumId);
 
-            if(!wasAdded)
+            if (!wasAdded)
             {
                 return NotFound();
-            } else
+            }
+            else
             {
                 return CreatedAtAction(nameof(Post), Seats);
             }
-            
+
         }
 
         [HttpPost("{movieTheaterId}/auditoriums")]
@@ -109,8 +104,9 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
                 if (wasSaved)
                 {
-                    return Ok();
+                    return CreatedAtAction(nameof(InsertAuditoriumToMovieTheater), new { movieTheaterId, id = newAuditorium.AuditoriumId }, newAuditorium);
                 }
+
                 else
                 {
                     return BadRequest("Failed to insert auditorium to movie theater.");
@@ -122,19 +118,25 @@ namespace BioBooker.WebApi.Ctl.Controllers
             }
         }
 
-        [HttpGet("Auditorium/{id}")]
-        public async Task<IActionResult> GetAuditoriumById(int id)
+        [HttpGet("{movieTheaterId}/auditoriums/{auditoriumName}")]
+        public async Task<IActionResult> GetAuditoriumByNameAndMovieTheaterId([FromRoute] int movieTheaterId, [FromRoute] string auditoriumName)
         {
-            Auditorium foundAuditorium = await _movieTheaterBusiness.GetAuditoriumByIdAsync(id);
-
-            if (foundAuditorium == null)
+            if (string.IsNullOrEmpty(auditoriumName))
             {
-                return NotFound();
+                return BadRequest("Auditorium name must not be empty");
             }
 
-            return Ok(foundAuditorium);
+                Auditorium foundAuditorium = await _movieTheaterBusiness.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
+                if (foundAuditorium == null)
+                {
+                    return NotFound();
+                }
+                return Ok(foundAuditorium);
+            }
         }
 
+
+
     }
-    
+
 }

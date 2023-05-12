@@ -1,7 +1,9 @@
 using BioBooker.Dml;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,7 +103,7 @@ namespace BioBooker.WinApp.Svl
             throw new NotImplementedException();
         }
 
-        public async Task<bool> InsertAuditoriumToMovieTheater(int movieTheaterId, Auditorium newAuditorium)
+        public async Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
         {
             bool wasSaved = false;
             string url = $"{_serviceBaseUrl}/{movieTheaterId}/auditoriums";
@@ -120,8 +122,8 @@ namespace BioBooker.WinApp.Svl
                     // Call the service to insert the auditorium
                     var response = await _serviceConnection.CallServicePost(url, postData);
 
-                    // Check if the response indicates a successful save
-                    wasSaved = response != null && response.IsSuccessStatusCode;
+                    // Check if the response indicates a successful creation
+                    wasSaved = response != null && response.StatusCode == HttpStatusCode.Created;
                 }
                 catch (Exception ex)
                 {
