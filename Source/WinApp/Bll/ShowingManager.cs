@@ -14,6 +14,7 @@ namespace BioBooker.WinApp.Bll
 
         private readonly IShowingService _showingService;
 
+
         //Constructor
         public ShowingManager(IConfiguration configuration)
         {
@@ -45,6 +46,28 @@ namespace BioBooker.WinApp.Bll
             Showing newShowing = new Showing(showing.Date, showing.StartTime, showing.EndTime, showing.AuditoriumId, showing.MovieId);
 
             return newShowing;
+        }
+
+        public async Task<bool> InsertReservationByShowingId(int showingId, SeatReservation reservation)
+        {
+            bool reserved;
+            try
+            {
+                reserved = await _showingService.InsertReservationAsync(showingId, reservation);
+            }
+            catch
+            {
+                reserved = false;
+            }
+            return reserved;
+        }
+
+        public SeatReservation CreateReservation(SeatReservation reservation, Showing showing)
+        {
+            SeatReservation newReservation = new SeatReservation(showing.AuditoriumId, reservation.SeatRow, reservation.SeatNumber);
+            
+
+            return newReservation;
         }
     }
 }

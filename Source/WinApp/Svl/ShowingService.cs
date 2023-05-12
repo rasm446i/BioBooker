@@ -25,6 +25,45 @@ namespace BioBooker.WinApp.Svl
 
         }
 
+        public Task<bool> InsertReservationAsync(int showingId, SeatReservation reservation)
+        {
+            bool reservedOk = false;
+            if (_serviceConnection != null)
+            {
+                // _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
+                string url = _serviceBaseUrl + "showings";
+
+                if (reservation != null)
+                {
+                    try
+                    {
+                        var json = JsonConvert.SerializeObject(reservation);
+                        var postData = new StringContent(json, Encoding.UTF8, "application/json");
+
+                        HttpResponseMessage? response = await _serviceConnection.CallServicePost(url, postData);
+                        if (response != null)
+                        {
+
+                            if (response.IsSuccessStatusCode)
+                            {
+                                reservedOk = true;
+                                //await _controller.InsertMovieAsync(movie);
+                            }
+                            else
+                            {
+                                reservedOk = false;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        reservedOk = false;
+                    }
+                }
+            }
+            return reservedOk;
+        }
+
         public async Task<bool> InsertShowingAsync(Showing showing)
         {
 
