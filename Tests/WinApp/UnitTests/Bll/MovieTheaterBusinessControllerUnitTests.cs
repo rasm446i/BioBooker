@@ -12,9 +12,10 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         public class AuditoriumTests
         {
             [Fact]
-            public async Task CreateAuditoriumWithSeats()
+            public void CreateAuditoriumWithSeats()
             {
                 // Arrange
+                string auditoriumName = "Aalborg Bio";
                 MovieTheaterBusinessController _movieTheaterBusinessController = new MovieTheaterBusinessController();
                 List<Seat> seats = new List<Seat>
                 {
@@ -27,9 +28,10 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 
 
                 // Act
-               Auditorium auditorium = await _movieTheaterBusinessController.CreateAuditorium(seats);
+               Auditorium auditorium = _movieTheaterBusinessController.CreateAuditorium(seats, auditoriumName);
 
                 // Assert
+                Assert.Equal(auditoriumName, auditorium.Name);
                 Assert.Equal(seats.Count, auditorium.Seats.Count);
                 Assert.Equal(seats[0].SeatNumber, auditorium.Seats[0].SeatNumber);
                 Assert.Equal(seats[0].SeatRow, auditorium.Seats[0].SeatRow);

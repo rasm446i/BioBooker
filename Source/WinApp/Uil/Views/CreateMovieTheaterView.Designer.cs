@@ -43,37 +43,39 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.txtBoxAmountOfRows.Location = new System.Drawing.Point(12, 37);
             this.txtBoxAmountOfRows.Name = "txtBoxAmountOfRows";
-            this.txtBoxAmountOfRows.Size = new System.Drawing.Size(100, 23);
+            this.txtBoxAmountOfRows.Size = new System.Drawing.Size(124, 23);
             this.txtBoxAmountOfRows.TabIndex = 0;
             // 
             // lblAmountOfRows
             // 
             this.lblAmountOfRows.AutoSize = true;
-            this.lblAmountOfRows.Location = new System.Drawing.Point(12, 9);
+            this.lblAmountOfRows.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblAmountOfRows.Location = new System.Drawing.Point(12, 14);
             this.lblAmountOfRows.Name = "lblAmountOfRows";
-            this.lblAmountOfRows.Size = new System.Drawing.Size(93, 15);
+            this.lblAmountOfRows.Size = new System.Drawing.Size(124, 20);
             this.lblAmountOfRows.TabIndex = 1;
             this.lblAmountOfRows.Text = "Amount of rows";
             // 
             // lblSeatsPerRow
             // 
             this.lblSeatsPerRow.AutoSize = true;
+            this.lblSeatsPerRow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblSeatsPerRow.Location = new System.Drawing.Point(12, 86);
             this.lblSeatsPerRow.Name = "lblSeatsPerRow";
-            this.lblSeatsPerRow.Size = new System.Drawing.Size(77, 15);
+            this.lblSeatsPerRow.Size = new System.Drawing.Size(104, 20);
             this.lblSeatsPerRow.TabIndex = 2;
             this.lblSeatsPerRow.Text = "Seats per row";
             // 
             // txtBoxSeatsPerRow
             // 
-            this.txtBoxSeatsPerRow.Location = new System.Drawing.Point(12, 104);
+            this.txtBoxSeatsPerRow.Location = new System.Drawing.Point(12, 109);
             this.txtBoxSeatsPerRow.Name = "txtBoxSeatsPerRow";
-            this.txtBoxSeatsPerRow.Size = new System.Drawing.Size(100, 23);
+            this.txtBoxSeatsPerRow.Size = new System.Drawing.Size(124, 23);
             this.txtBoxSeatsPerRow.TabIndex = 3;
             // 
             // btnCreateMovieTheater
             // 
-            this.btnCreateMovieTheater.Location = new System.Drawing.Point(12, 155);
+            this.btnCreateMovieTheater.Location = new System.Drawing.Point(12, 172);
             this.btnCreateMovieTheater.Name = "btnCreateMovieTheater";
             this.btnCreateMovieTheater.Size = new System.Drawing.Size(140, 23);
             this.btnCreateMovieTheater.TabIndex = 4;
@@ -84,32 +86,34 @@ namespace BioBooker.WinApp.Uil.Views
             // lblMovieTheaterName
             // 
             this.lblMovieTheaterName.AutoSize = true;
-            this.lblMovieTheaterName.Location = new System.Drawing.Point(209, 9);
+            this.lblMovieTheaterName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblMovieTheaterName.Location = new System.Drawing.Point(200, 14);
             this.lblMovieTheaterName.Name = "lblMovieTheaterName";
-            this.lblMovieTheaterName.Size = new System.Drawing.Size(113, 15);
+            this.lblMovieTheaterName.Size = new System.Drawing.Size(150, 20);
             this.lblMovieTheaterName.TabIndex = 5;
             this.lblMovieTheaterName.Text = "Movie theater name";
             // 
             // txtBoxMovieTheaterName
             // 
-            this.txtBoxMovieTheaterName.Location = new System.Drawing.Point(209, 37);
+            this.txtBoxMovieTheaterName.Location = new System.Drawing.Point(200, 37);
             this.txtBoxMovieTheaterName.Name = "txtBoxMovieTheaterName";
-            this.txtBoxMovieTheaterName.Size = new System.Drawing.Size(100, 23);
+            this.txtBoxMovieTheaterName.Size = new System.Drawing.Size(150, 23);
             this.txtBoxMovieTheaterName.TabIndex = 6;
             // 
             // txtBoxAuditoriumName
             // 
-            this.txtBoxAuditoriumName.Location = new System.Drawing.Point(209, 104);
+            this.txtBoxAuditoriumName.Location = new System.Drawing.Point(200, 109);
             this.txtBoxAuditoriumName.Name = "txtBoxAuditoriumName";
-            this.txtBoxAuditoriumName.Size = new System.Drawing.Size(101, 23);
+            this.txtBoxAuditoriumName.Size = new System.Drawing.Size(150, 23);
             this.txtBoxAuditoriumName.TabIndex = 7;
             // 
             // lblAuditoriumName
             // 
             this.lblAuditoriumName.AutoSize = true;
-            this.lblAuditoriumName.Location = new System.Drawing.Point(209, 86);
+            this.lblAuditoriumName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblAuditoriumName.Location = new System.Drawing.Point(200, 86);
             this.lblAuditoriumName.Name = "lblAuditoriumName";
-            this.lblAuditoriumName.Size = new System.Drawing.Size(101, 15);
+            this.lblAuditoriumName.Size = new System.Drawing.Size(133, 20);
             this.lblAuditoriumName.TabIndex = 8;
             this.lblAuditoriumName.Text = "Auditorium name";
             // 

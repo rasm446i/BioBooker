@@ -126,17 +126,15 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return BadRequest("Auditorium name must not be empty");
             }
 
-                Auditorium foundAuditorium = await _movieTheaterBusiness.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
-                if (foundAuditorium == null)
-                {
-                    return NotFound();
-                }
-                return Ok(foundAuditorium);
+            Auditorium foundAuditorium = await _movieTheaterBusiness.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
+            if (foundAuditorium == null)
+            {
+                return NotFound();
             }
+            return Ok(foundAuditorium);
         }
-
-
-
     }
 
 }
+
+

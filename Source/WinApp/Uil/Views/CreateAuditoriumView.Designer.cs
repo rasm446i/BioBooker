@@ -39,9 +39,10 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // btnCreateAuditorium
             // 
-            this.btnCreateAuditorium.Location = new System.Drawing.Point(22, 207);
+            this.btnCreateAuditorium.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCreateAuditorium.Location = new System.Drawing.Point(22, 226);
             this.btnCreateAuditorium.Name = "btnCreateAuditorium";
-            this.btnCreateAuditorium.Size = new System.Drawing.Size(126, 23);
+            this.btnCreateAuditorium.Size = new System.Drawing.Size(133, 29);
             this.btnCreateAuditorium.TabIndex = 0;
             this.btnCreateAuditorium.Text = "Create Auditorium";
             this.btnCreateAuditorium.UseVisualStyleBackColor = true;
@@ -49,7 +50,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // txtSeatRows
             // 
-            this.txtSeatRows.Location = new System.Drawing.Point(22, 68);
+            this.txtSeatRows.Location = new System.Drawing.Point(27, 68);
             this.txtSeatRows.Name = "txtSeatRows";
             this.txtSeatRows.Size = new System.Drawing.Size(100, 23);
             this.txtSeatRows.TabIndex = 1;
@@ -57,25 +58,27 @@ namespace BioBooker.WinApp.Uil.Views
             // lblSeatRows
             // 
             this.lblSeatRows.AutoSize = true;
-            this.lblSeatRows.Location = new System.Drawing.Point(22, 41);
+            this.lblSeatRows.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblSeatRows.Location = new System.Drawing.Point(27, 41);
             this.lblSeatRows.Name = "lblSeatRows";
-            this.lblSeatRows.Size = new System.Drawing.Size(57, 15);
+            this.lblSeatRows.Size = new System.Drawing.Size(77, 20);
             this.lblSeatRows.TabIndex = 2;
             this.lblSeatRows.Text = "Seat rows";
             // 
             // txtSeatNumbers
             // 
-            this.txtSeatNumbers.Location = new System.Drawing.Point(22, 147);
+            this.txtSeatNumbers.Location = new System.Drawing.Point(22, 146);
             this.txtSeatNumbers.Name = "txtSeatNumbers";
-            this.txtSeatNumbers.Size = new System.Drawing.Size(100, 23);
+            this.txtSeatNumbers.Size = new System.Drawing.Size(105, 23);
             this.txtSeatNumbers.TabIndex = 3;
             // 
             // lblSeatNumbers
             // 
             this.lblSeatNumbers.AutoSize = true;
-            this.lblSeatNumbers.Location = new System.Drawing.Point(22, 129);
+            this.lblSeatNumbers.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblSeatNumbers.Location = new System.Drawing.Point(22, 114);
             this.lblSeatNumbers.Name = "lblSeatNumbers";
-            this.lblSeatNumbers.Size = new System.Drawing.Size(79, 15);
+            this.lblSeatNumbers.Size = new System.Drawing.Size(105, 20);
             this.lblSeatNumbers.TabIndex = 4;
             this.lblSeatNumbers.Text = "Seat numbers";
             // 
@@ -83,15 +86,16 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.txtAuditoriumName.Location = new System.Drawing.Point(171, 68);
             this.txtAuditoriumName.Name = "txtAuditoriumName";
-            this.txtAuditoriumName.Size = new System.Drawing.Size(100, 23);
+            this.txtAuditoriumName.Size = new System.Drawing.Size(133, 23);
             this.txtAuditoriumName.TabIndex = 5;
             // 
             // lblAuditoriumName
             // 
             this.lblAuditoriumName.AutoSize = true;
+            this.lblAuditoriumName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lblAuditoriumName.Location = new System.Drawing.Point(171, 41);
             this.lblAuditoriumName.Name = "lblAuditoriumName";
-            this.lblAuditoriumName.Size = new System.Drawing.Size(101, 15);
+            this.lblAuditoriumName.Size = new System.Drawing.Size(133, 20);
             this.lblAuditoriumName.TabIndex = 6;
             this.lblAuditoriumName.Text = "Auditorium name";
             // 
