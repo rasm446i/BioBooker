@@ -38,6 +38,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnAddAuditorium = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblFoundMovieTheater
@@ -71,25 +73,28 @@ namespace BioBooker.WinApp.Uil.Views
             // lblSeatRows
             // 
             this.lblSeatRows.AutoSize = true;
+            this.lblSeatRows.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblSeatRows.Location = new System.Drawing.Point(403, 77);
             this.lblSeatRows.Name = "lblSeatRows";
-            this.lblSeatRows.Size = new System.Drawing.Size(0, 15);
+            this.lblSeatRows.Size = new System.Drawing.Size(0, 20);
             this.lblSeatRows.TabIndex = 6;
             // 
             // lblSeatNumbers
             // 
             this.lblSeatNumbers.AutoSize = true;
+            this.lblSeatNumbers.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblSeatNumbers.Location = new System.Drawing.Point(403, 138);
             this.lblSeatNumbers.Name = "lblSeatNumbers";
-            this.lblSeatNumbers.Size = new System.Drawing.Size(0, 15);
+            this.lblSeatNumbers.Size = new System.Drawing.Size(0, 20);
             this.lblSeatNumbers.TabIndex = 7;
             // 
             // lblTotalSeats
             // 
             this.lblTotalSeats.AutoSize = true;
+            this.lblTotalSeats.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblTotalSeats.Location = new System.Drawing.Point(403, 192);
             this.lblTotalSeats.Name = "lblTotalSeats";
-            this.lblTotalSeats.Size = new System.Drawing.Size(0, 15);
+            this.lblTotalSeats.Size = new System.Drawing.Size(0, 20);
             this.lblTotalSeats.TabIndex = 8;
             // 
             // label1
@@ -133,11 +138,33 @@ namespace BioBooker.WinApp.Uil.Views
             this.btnAddAuditorium.UseVisualStyleBackColor = true;
             this.btnAddAuditorium.Click += new System.EventHandler(this.btnAddAuditorium_Click);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(28, 19);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(117, 20);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Movie Theaters";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(248, 19);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(97, 20);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Auditoriums";
+            // 
             // ShowAuditoriumsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.btnAddAuditorium);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -166,5 +193,7 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnAddAuditorium;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
