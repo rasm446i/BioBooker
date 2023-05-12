@@ -10,46 +10,21 @@ namespace BioBooker.Dml
 
     public class Showing
     {
-        public Movie Movie { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+        public int AuditoriumId { get; set; }
+        public int MovieId { get; set; }
+        public List<SeatReservation> SeatReservations { get; set; }
 
-        public List<Seat> Seats { get; set; }
-
-
-        //Constructor
-        public Showing()
+        public Showing(DateTime date, TimeSpan startTime, TimeSpan endTime, int auditoriumId, int movieId)
         {
-
+            Date = date;
+            StartTime = startTime;
+            EndTime = endTime;
+            AuditoriumId = auditoriumId;
+            MovieId = movieId;
+            SeatReservations = new List<SeatReservation>();
         }
-        //Constructor
-        public Showing(Movie movie, List<Seat> seats) 
-        { 
-            Movie = movie;
-            Seats = seats;
-        }
-
-
-        // loops through the list of seats until it finds the specific seat in that specific seatRow
-        // then tries too booked the seat
-        public bool BookSeat(int rowNumber, int seatNumber)
-        {
-            Seat seat;
-            bool wasBooked = false;
-            foreach (Seat s in Seats)
-            {
-                if (s.SeatRow == rowNumber && s.SeatNumber == seatNumber)
-                {
-                    seat = s;
-                    if (seat != null && seat.IsAvailable)
-                    {
-                        seat.IsAvailable = false;
-                        wasBooked= true;
-                        break;
-                    }
-                }
-            }
-
-            return wasBooked;
-        }
-
     }
 }

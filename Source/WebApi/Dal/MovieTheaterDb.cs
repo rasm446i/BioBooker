@@ -186,13 +186,13 @@ namespace BioBooker.WebApi.Dal
             }
         public async Task CreateAndInsertSeats(List<Seat> seats, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
         {
-            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId)";
+            string insertQuery = @"INSERT INTO Seats (SeatNumber, SeatRow, AuditoriumId) VALUES(@SeatNumber, @SeatRow, @AuditoriumId)";
 
             try
             {
                 foreach (Seat seat in seats)
                 {
-                    await connection.ExecuteAsync(insertQuery, new { IsAvailable = seat.IsAvailable, SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId }, transaction);
+                    await connection.ExecuteAsync(insertQuery, new { SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId }, transaction);
                 }
 
                 transaction.Commit();

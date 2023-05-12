@@ -12,20 +12,23 @@ namespace BioBooker.WinApp.Bll
     public class ShowingManager : IShowingManager
     {
 
-        private readonly IShowingService _ShowingService;
+        private readonly IShowingService _showingService;
+
+        //Constructor
         public ShowingManager(IConfiguration configuration)
         {
-            _ShowingService = new ShowingService(configuration);
+            _showingService = new ShowingService(configuration);
         }
 
-        // Creates a movie and inserts it along with the associated poster into the sql database.
-        // Returns a boolean value indicating whether the movie insertion was successful.
-        public async Task<bool> CreateAndInsertShowingAsync(Auditorium auditorium, Showing showing)
+
+        public async Task<bool> CreateAndInsertShowingAsync(Showing showing)
         {
             bool inserted;
             try
             {
+                Showing createdShowing = CreateShowing(showing);
 
+                inserted = await _showingService.InsertShowingAsync(showing);
             }
             catch
             {
@@ -37,9 +40,9 @@ namespace BioBooker.WinApp.Bll
 
 
 
-        public Movie CreateMovie(Showing showing, Auditorium auditorium)
+        public Showing CreateShowing(Showing showing)
         {
-            Showing newShowing = new Showing(showing.movie, auditorium.Seats);
+            Showing newShowing = new Showing(showing.Date, showing.StartTime, showing.EndTime, showing.AuditoriumId, showing.MovieId);
 
             return newShowing;
         }

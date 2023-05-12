@@ -27,7 +27,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         [Fact]
         public async Task CreateAndInsertMovieAsync_InsertsAndRetrievesMovie()
         {
-            var imagePath = @"INSERT IMAGE PATH";
+            var imagePath = @"C:\Users\Visti\Desktop\Dyring.png";
 
             var imageData = utl.GenerateImageData(imagePath);
 

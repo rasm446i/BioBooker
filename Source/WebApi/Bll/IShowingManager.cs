@@ -1,10 +1,11 @@
-﻿using BioBooker.Dml;
+using BioBooker.Dml;
 using System.Threading.Tasks;
 
-namespace BioBooker.WinApp.Svl
+namespace BioBooker.WebApi.Bll
 {
-    public interface IShowingService
+    public interface IShowingManager
     {
+
         Task<bool> InsertShowingAsync(Showing showing);
     }
 }

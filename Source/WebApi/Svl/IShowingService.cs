@@ -1,7 +1,7 @@
-﻿using BioBooker.Dml;
+using BioBooker.Dml;
 using System.Threading.Tasks;
 
-namespace BioBooker.WinApp.Svl
+namespace BioBooker.WebApi.Svl
 {
     public interface IShowingService
     {
