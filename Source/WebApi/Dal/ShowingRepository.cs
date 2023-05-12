@@ -54,7 +54,7 @@ namespace BioBooker.WebApi.Dal
         {
             int numRowsInserted = 0;
 
-            string insertQuery = "INSERT INTO Showings (Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES (@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId)";
+            string insertQuery = "INSERT INTO Showing (Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES (@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId)";
 
             numRowsInserted = await connection.ExecuteAsync(insertQuery, showing, transaction);
 

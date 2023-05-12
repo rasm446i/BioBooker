@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
+    [Route("showings")]
+    [ApiController]
+
     public class ShowingController: ControllerBase
     {
         private readonly IConfiguration _configuration;

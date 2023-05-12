@@ -102,7 +102,7 @@ namespace BioBooker.WebApi.Dal
                 }
 
                 return movieTheaterId >= 0;
-            }
+        }
 
             public async Task<bool> InsertAuditorium(Auditorium auditorium, int movieTheaterId)
             {
@@ -134,6 +134,7 @@ namespace BioBooker.WebApi.Dal
                 return result;
 
             }
+
         public async Task<bool> CreateAndInsertAuditorium(Auditorium auditorium, int movieTheaterId, IDbConnection connection, IDbTransaction transaction)
         {
             int numRowsInserted = 0;
