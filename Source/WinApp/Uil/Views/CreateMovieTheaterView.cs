@@ -1,6 +1,5 @@
 using BioBooker.WinApp.Uil.Controllers;
 using System;
-using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Views
@@ -21,57 +20,44 @@ namespace BioBooker.WinApp.Uil.Views
             string seatsPerRow = txtBoxSeatsPerRow.Text;
             string auditoriumName = txtBoxAuditoriumName.Text;
 
-            int amountOfRowsParseResult = MovieTheaterController.TryParseRowAndSeatInput(amountOfRows);
+            int seatRowsParseResult = MovieTheaterController.TryParseRowAndSeatInput(amountOfRows);
             int seatsPerRowParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatsPerRow);
 
             bool isValidMovieTheaterName = MovieTheaterController.IsOnlyLettersAndNotEmpty(movieTheaterName);
             bool isValidAuditoriumName = MovieTheaterController.IsValidAuditoriumNameInputAndNotEmpty(auditoriumName);
 
-            bool wasInserted;
+            bool wasInserted = false;
 
-            if(IsValidSeatsAndRowsInput(amountOfRowsParseResult) && IsValidSeatsAndRowsInput(seatsPerRowParseResult))
+            if (seatRowsParseResult >= 0 && seatsPerRowParseResult >= 0 && isValidMovieTheaterName && isValidAuditoriumName)
+            {
+                wasInserted = await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInputAsync(movieTheaterName, seatRowsParseResult, seatsPerRowParseResult, auditoriumName);
+
+                if (wasInserted)
+                {
+                    MessageBox.Show(movieTheaterName + " has been created and inserted into the database");
+                }
+                else
+                {
+                    MessageBox.Show("A server error occurred. " + movieTheaterName + " has NOT been created and inserted into the database");
+                }
+            }
+            else
             {
                 if (!isValidMovieTheaterName)
                 {
                     MessageBox.Show("Movie theater name can't be empty and must only contain letters");
-
                 }
-                if (!isValidAuditoriumName)
+                else if (!isValidAuditoriumName)
                 {
-                    MessageBox.Show("Auditorium name can't be empty. Furthermore it must only contain letters, numbers and have a space between them. Like this: Auditorium 1");
-
+                    MessageBox.Show("Auditorium name can't be empty. It must only contain letters, numbers, and have a space between them. For example: Auditorium 1");
                 }
                 else
                 {
-                    wasInserted = await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInputAsync(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult, auditoriumName);
-                    if (wasInserted)
-                    {
-                        MessageBox.Show(movieTheaterName + " has been created and inserted into the database");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Server error occurred: " + movieTheaterName + " has NOT been created and inserted into the database");
-                    }
+                    MessageBox.Show("Amount of rows and seats must be an integer and higher than 0");
                 }
             }
-           
-
         }
 
-        private bool IsValidSeatsAndRowsInput(int input)
-        {
-            if(input == -1)
-            {
-                MessageBox.Show("Amount of rows and seats must be an integer");
-                return false;
-            }
-            else if (input <= 0)
-            {
-                MessageBox.Show("Seats and Rows must be higher than 0");
-                return false;
-            }
-            return true;
-        }
 
     }
 }

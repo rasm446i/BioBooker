@@ -109,7 +109,7 @@ namespace BioBooker.WinApp.Uil.Views
                 CreateAuditoriumView createAuditoriumView = new CreateAuditoriumView(selectedMovieTheater);
                 createAuditoriumView.ShowDialog();
 
-                // Refresh the auditorium list
+                // Refresh the auditorium list to add newly created auditorium
                 ListBoxOfAuditoriums.Items.Clear();
                 foreach (Auditorium auditorium in selectedMovieTheater.Auditoriums)
                 {
