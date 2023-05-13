@@ -12,7 +12,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         public class AuditoriumTests
         {
             [Fact]
-            public void CreateAuditoriumWithSeats()
+            public void TestCreateAuditorium_AssignsAuditoriumNameAndSeatsCorrectly_WhenGivenValidInputs()
             {
                 // Arrange
                 string auditoriumName = "Aalborg Bio";
@@ -21,8 +21,8 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
                 {
                 //left is seat number & right is seat row
                 new Seat(1, 1),
-                new Seat(1, 2),
                 new Seat(2, 1),
+                new Seat(1, 2),
                 new Seat(2, 2)
                  };
 
