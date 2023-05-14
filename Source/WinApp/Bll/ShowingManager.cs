@@ -48,12 +48,12 @@ namespace BioBooker.WinApp.Bll
             return newShowing;
         }
 
-        public async Task<bool> InsertReservationByShowingId(int showingId, SeatReservation reservation)
+        public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
         {
             bool reserved;
             try
             {
-                reserved = await _showingService.InsertReservationAsync(showingId, reservation);
+                reserved = await _showingService.InsertReservationAsync(reservation);
             }
             catch
             {
@@ -62,9 +62,9 @@ namespace BioBooker.WinApp.Bll
             return reserved;
         }
 
-        public SeatReservation CreateReservation(SeatReservation reservation, Showing showing)
+        public SeatReservation CreateReservation(SeatReservation reservation)
         {
-            SeatReservation newReservation = new SeatReservation(showing.AuditoriumId, reservation.SeatRow, reservation.SeatNumber);
+            SeatReservation newReservation = new SeatReservation(reservation.AuditoriumId, reservation.SeatRow, reservation.SeatNumber, reservation.ShowingId);
             
 
             return newReservation;

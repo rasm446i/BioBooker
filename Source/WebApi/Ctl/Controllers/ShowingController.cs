@@ -43,9 +43,10 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
         [HttpPost("{showingId}/reservations")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateReservation(int showingId, [FromBody] SeatReservation reservation)
+        public async Task<IActionResult> Post([FromBody] SeatReservation reservation)
         {
-            bool reserved = await _showingManager.InsertReservationByShowingId(showingId, reservation);
+            bool reserved = await _showingManager.InsertReservationByShowingId(reservation);
+
 
             if (reserved)
             {

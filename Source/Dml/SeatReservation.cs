@@ -14,11 +14,12 @@ namespace BioBooker.Dml
         public int SeatNumber { get; set; }
         public int ShowingId { get; set; }
 
-        public SeatReservation(int auditoriumId, int seatRow, int seatNumber)
+        public SeatReservation(int auditoriumId, int seatRow, int seatNumber, int showingId)
         {
             AuditoriumId = auditoriumId;
             SeatRow = seatRow;
             SeatNumber = seatNumber;
+            ShowingId = showingId;
         }
     }
 }

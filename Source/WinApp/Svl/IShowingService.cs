@@ -6,6 +6,6 @@ namespace BioBooker.WinApp.Svl
     public interface IShowingService
     {
         Task<bool> InsertShowingAsync(Showing showing);
-        Task<bool> InsertReservationAsync(int showingId, SeatReservation reservation);
+        Task<bool> InsertReservationAsync(SeatReservation reservation);
     }
 }

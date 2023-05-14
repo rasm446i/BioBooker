@@ -25,8 +25,9 @@ namespace BioBooker.WinApp.Svl
 
         }
 
-        public async Task<bool> InsertReservationAsync(int showingId, SeatReservation reservation)
+        public async Task<bool> InsertReservationAsync(SeatReservation reservation)
         {
+            int showingId = reservation.ShowingId;
             bool reservedOk = false;
             if (_serviceConnection != null)
             {

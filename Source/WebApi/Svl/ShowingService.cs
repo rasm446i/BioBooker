@@ -26,9 +26,9 @@ namespace BioBooker.WebApi.Svl
             return await _showingRepository.AddShowingAsync(showing);
         }
 
-        public async Task<bool> InsertReservationByShowingId(int showingId, SeatReservation reservation)
+        public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
         {
-            return await _showingRepository.InsertReservationByShowingId(showingId, reservation);
+            return await _showingRepository.InsertReservationByShowingId(reservation);
         }
     }
 }
