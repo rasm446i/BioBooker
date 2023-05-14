@@ -14,6 +14,7 @@
     <ItemGroup>
         <ProjectReference Include="..\..\..\Source\Dml\BioBooker.Dml.csproj" />
         <ProjectReference Include="..\..\..\Source\Utl\BioBooker.Utl.csproj" />
+        <ProjectReference Include="..\..\..\Source\WinApp\Bll\BioBooker.WinApp.Bll.csproj" />
         <ProjectReference Include="..\..\..\Source\WinApp\Svl\BioBooker.WinApp.Svl.csproj" />
     </ItemGroup>
     <ItemGroup>

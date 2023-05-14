@@ -28,7 +28,7 @@ namespace BioBooker.WinApp.Uil.Views
 
             bool wasInserted = false;
 
-            if (seatRowsParseResult >= 0 && seatsPerRowParseResult >= 0 && isValidMovieTheaterName && isValidAuditoriumName)
+            if (seatRowsParseResult > 0 && seatsPerRowParseResult >= 1 && isValidMovieTheaterName && isValidAuditoriumName)
             {
                 wasInserted = await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInputAsync(movieTheaterName, seatRowsParseResult, seatsPerRowParseResult, auditoriumName);
 
@@ -53,7 +53,7 @@ namespace BioBooker.WinApp.Uil.Views
                 }
                 else
                 {
-                    MessageBox.Show("Amount of rows and seats must be an integer and higher than 0");
+                    MessageBox.Show("There must be at least 1 row with more than 1 seat. Input must be an integer too.");
                 }
             }
         }

@@ -10,6 +10,11 @@ namespace BioBooker.WinApp.UnitTests.Uil.Controllers
 
     public class MovieTheaterControllerTests
     {
+        private readonly MovieTheaterController _movieTheaterController;
+        public MovieTheaterControllerTests()
+        {
+            _movieTheaterController = new MovieTheaterController();
+        }
         [Fact]
         public void TestGetGeneratedSeatsFromMovieTheaterController_CreatesCorrectAmountOfSeats()
         {
@@ -197,5 +202,33 @@ namespace BioBooker.WinApp.UnitTests.Uil.Controllers
             //assert
             Assert.True(result);
         }
+
+        [Fact]
+        public void CreateAuditorium_ValidInput_CreatesAuditorium()
+        {
+            //arrange
+            string auditoriumName = "Movie Theater";
+            List<Seat> seats = new List<Seat>
+            {
+            //left is seat number & right is seat row
+            new Seat(1, 1),
+            new Seat(2, 1),
+            new Seat(1, 2),
+            new Seat(2, 2)
+             };
+
+            //act
+            Auditorium newAuditorium = _movieTheaterController.CreateAuditorium(seats, auditoriumName);
+
+            //assert
+            Assert.Equal(auditoriumName, newAuditorium.Name);
+            Assert.Equal(seats.Count, newAuditorium.Seats.Count);
+            for (int seatIndex = 0; seatIndex < seats.Count; seatIndex++)
+            {
+                Assert.Equal(seats[seatIndex].SeatNumber, newAuditorium.Seats[seatIndex].SeatNumber);
+                Assert.Equal(seats[seatIndex].SeatRow, newAuditorium.Seats[seatIndex].SeatRow);
+            }
+        }
+
     }
 }

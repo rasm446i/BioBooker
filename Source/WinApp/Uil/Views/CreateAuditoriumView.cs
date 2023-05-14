@@ -30,7 +30,7 @@ namespace BioBooker.WinApp.Uil.Views
             bool isValidAuditoriumName = MovieTheaterController.IsValidAuditoriumNameInputAndNotEmpty(auditoriumName);
 
             // Validate that the parsed results and auditorium name are valid
-            if ((seatRowsParseResult != -1 && seatRowsParseResult > 0) && (seatsPerRowParseResult != -1 && seatsPerRowParseResult > 0) && isValidAuditoriumName)
+            if (seatRowsParseResult > 0 && seatsPerRowParseResult > 1 && isValidAuditoriumName)
             {
                 // Generate the seats for the auditorium
                 List<Seat> seats = MovieTheaterController.GetGeneratedSeats(seatRowsParseResult, seatsPerRowParseResult);
@@ -62,7 +62,7 @@ namespace BioBooker.WinApp.Uil.Views
                 }
                 else
                 {
-                    MessageBox.Show("Amount of rows and seats must be an integer and higher than 0");
+                    MessageBox.Show("There must be at least 1 row with more than 1 seat. Input must be an integer too.");
                 }
             }
         }
