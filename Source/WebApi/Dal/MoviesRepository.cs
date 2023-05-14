@@ -144,11 +144,12 @@ namespace BioBooker.WebApi.Dal
                 await connection.OpenAsync();
                 var parameters = new { Title = title };
                 var movie = await connection.QueryFirstOrDefaultAsync<Movie>(sqlQuery, parameters);
-                DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
-                movie.ReleaseYear = releaseYear.ToString("yyyy-MM-dd");
 
-                DateTime premierDate = DateTime.Parse(movie.PremierDate);
-                movie.PremierDate = premierDate.ToString("yyyy-MM-dd");
+                // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
+                movie.ReleaseYear = movie.ReleaseYear.ToString();
+
+                //DateTime premierDate = DateTime.Parse(movie.PremierDate);
+                movie.PremierDate = movie.PremierDate.ToString();
 
                 if (movie != null)
                 {
@@ -182,11 +183,11 @@ namespace BioBooker.WebApi.Dal
 
                 foreach (var movie in movies)
                 {
-                    DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
-                    movie.ReleaseYear = releaseYear.ToString("yyyy-MM-dd");
+                   // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
+                    movie.ReleaseYear = movie.ReleaseYear.ToString();
 
-                    DateTime premierDate = DateTime.Parse(movie.PremierDate);
-                    movie.PremierDate = premierDate.ToString("yyyy-MM-dd");
+                    //DateTime premierDate = DateTime.Parse(movie.PremierDate);
+                    movie.PremierDate = movie.PremierDate.ToString();
 
                     // Retrieve the poster for each movie
                     string sqlPosterQuery = "SELECT * FROM Posters WHERE MovieId = @MovieId";
