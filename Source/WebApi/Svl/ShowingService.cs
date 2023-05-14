@@ -9,21 +9,26 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Svl
 {
-    public class ShowingService:IShowingService
+    public class ShowingService : IShowingService
     {
 
-            private readonly IShowingRepository _showingRepository;
+        private readonly IShowingRepository _showingRepository;
 
-            public ShowingService(IConfiguration configuration)
-            {
+        public ShowingService(IConfiguration configuration)
+        {
             _showingRepository = new ShowingRepository(configuration);
-            }
+        }
 
 
 
-            public async Task<bool> InsertShowingAsync(Showing showing)
-            {
-                return await _showingRepository.AddShowingAsync(showing);
-            }
+        public async Task<bool> InsertShowingAsync(Showing showing)
+        {
+            return await _showingRepository.AddShowingAsync(showing);
+        }
+
+        public async Task<bool> InsertReservationByShowingId(int showingId, SeatReservation reservation)
+        {
+            return await _showingRepository.InsertReservationByShowingId(showingId, reservation);
+        }
     }
 }

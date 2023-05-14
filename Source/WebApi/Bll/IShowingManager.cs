@@ -7,5 +7,7 @@ namespace BioBooker.WebApi.Bll
     {
 
         Task<bool> InsertShowingAsync(Showing showing);
+
+        public Task<bool> InsertReservationByShowingId(int showingId, SeatReservation reservation);
     }
 }

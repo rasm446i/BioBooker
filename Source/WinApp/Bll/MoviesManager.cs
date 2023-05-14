@@ -104,6 +104,7 @@ namespace BioBooker.WinApp.Bll
             catch
             {
                 updated = false;
+                
             }
             return updated;
         }

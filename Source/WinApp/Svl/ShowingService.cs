@@ -25,13 +25,12 @@ namespace BioBooker.WinApp.Svl
 
         }
 
-        public Task<bool> InsertReservationAsync(int showingId, SeatReservation reservation)
+        public async Task<bool> InsertReservationAsync(int showingId, SeatReservation reservation)
         {
             bool reservedOk = false;
             if (_serviceConnection != null)
             {
-                // _serviceConnection.UseUrl += _serviceConnection.BaseUrl + "movies/";
-                string url = _serviceBaseUrl + "showings";
+                string url = _serviceBaseUrl + $"showings/{showingId}/reservations";
 
                 if (reservation != null)
                 {
@@ -40,19 +39,14 @@ namespace BioBooker.WinApp.Svl
                         var json = JsonConvert.SerializeObject(reservation);
                         var postData = new StringContent(json, Encoding.UTF8, "application/json");
 
-                        HttpResponseMessage? response = await _serviceConnection.CallServicePost(url, postData);
-                        if (response != null)
+                        HttpResponseMessage response = await _serviceConnection.CallServicePost(url, postData);
+                        if (response.IsSuccessStatusCode)
                         {
-
-                            if (response.IsSuccessStatusCode)
-                            {
-                                reservedOk = true;
-                                //await _controller.InsertMovieAsync(movie);
-                            }
-                            else
-                            {
-                                reservedOk = false;
-                            }
+                            reservedOk = true;
+                        }
+                        else
+                        {
+                            reservedOk = false;
                         }
                     }
                     catch
@@ -63,6 +57,7 @@ namespace BioBooker.WinApp.Svl
             }
             return reservedOk;
         }
+
 
         public async Task<bool> InsertShowingAsync(Showing showing)
         {

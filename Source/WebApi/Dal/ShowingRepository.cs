@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Dal
 {
-    public class ShowingRepository: IShowingRepository
+    public class ShowingRepository : IShowingRepository
     {
         private readonly string _connectionString;
 
@@ -113,5 +113,79 @@ namespace BioBooker.WebApi.Dal
                 throw ex;
             }
         }
+
+        public async Task<bool> InsertReservationByShowingId(int showingId, SeatReservation reservation)
+        {
+            bool result = false;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                using (var transaction = await connection.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        await InsertReservationAsync(showingId, reservation, connection, transaction);
+                        transaction.Commit();
+                        result = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        transaction.Rollback();
+                        result = false;
+                    }
+                }
+            }
+            return result;
+        }
+
+        // ADD IsReserved TO SEATS COLUMN??
+        public async Task InsertReservationAsync(int showingId, SeatReservation reservation, IDbConnection connection, IDbTransaction transaction)
+        {
+            int numRowsInserted = 0;
+
+            // Check if the seat is available
+            bool isSeatAvailable = await IsSeatAvailableAsync(reservation.SeatNumber, reservation.SeatRow, reservation.AuditoriumId);
+
+            if (!isSeatAvailable)
+            {
+                throw new Exception("The seat is already reserved.");
+            }
+
+            string insertQuery = "INSERT INTO Reservation (ShowingId, SeatNumber, SeatRow) VALUES (@ShowingId, @SeatNumber, @SeatRow)";
+
+            numRowsInserted = await connection.ExecuteAsync(insertQuery, new { ShowingId = showingId, SeatNumber = reservation.SeatNumber, SeatRow = reservation.SeatRow }, transaction);
+
+            if (numRowsInserted > 0)
+            {
+                // Update the IsReserved flag for the reserved seat
+                await connection.ExecuteAsync("UPDATE Seats SET IsReserved = 1 WHERE SeatNumber = @SeatNumber AND SeatRow = @SeatRow AND AuditoriumId = @AuditoriumId", new { SeatNumber = reservation.SeatNumber, SeatRow = reservation.SeatRow, AuditoriumId = reservation.AuditoriumId }, transaction);
+            }
+            else
+            {
+                // Failed to insert reservation
+                throw new Exception("Failed to insert reservation.");
+            }
+        }
+
+
+        // Checking seat availability before reservation
+        public async Task<bool> IsSeatAvailableAsync(int seatNumber, int seatRow, int auditoriumId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                string query = "SELECT IsReserved FROM Seats WHERE SeatNumber = @SeatNumber AND SeatRow = @SeatRow AND AuditoriumId = @AuditoriumId";
+
+                bool isAvailable = await connection.QuerySingleOrDefaultAsync<bool>(query, new { SeatNumber = seatNumber, SeatRow = seatRow, AuditoriumId = auditoriumId });
+
+                return !isAvailable;
+            }
+        }
+
     }
+
+
 }

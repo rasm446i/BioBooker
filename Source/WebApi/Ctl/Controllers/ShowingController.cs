@@ -41,8 +41,21 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return inserted;
         }
 
+        [HttpPost("{showingId}/reservations")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateReservation(int showingId, [FromBody] SeatReservation reservation)
+        {
+            bool reserved = await _showingManager.InsertReservationByShowingId(showingId, reservation);
 
-
+            if (reserved)
+            {
+                return Ok();
+            }
+            else
+            {
+                return StatusCode(500);
+            }
+        }
 
 
 
