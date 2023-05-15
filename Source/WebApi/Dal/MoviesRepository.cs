@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Dapper;
 using System.Transactions;
 using System.Reflection;
+using System.Globalization;
 
 namespace BioBooker.WebApi.Dal
 {
@@ -101,8 +102,8 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation. The task result is the ID of the inserted movie.</returns>
         private async Task<int> InsertMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
         {
-            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARating, RuntimeMinutes, PremierDate)
-                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARating, @RuntimeMinutes, @PremierDate);
+            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARating, RuntimeMinutes)
+                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARating, @RuntimeMinutes);
                               SELECT SCOPE_IDENTITY();";
 
             return await connection.ExecuteScalarAsync<int>(sqlInsertMovies, movie, transaction);
@@ -145,14 +146,20 @@ namespace BioBooker.WebApi.Dal
                 var parameters = new { Title = title };
                 var movie = await connection.QueryFirstOrDefaultAsync<Movie>(sqlQuery, parameters);
 
-                // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
-                movie.ReleaseYear = movie.ReleaseYear.ToString();
-
-                //DateTime premierDate = DateTime.Parse(movie.PremierDate);
-                movie.PremierDate = movie.PremierDate.ToString();
+                //movie.ReleaseYear = movie.ReleaseYear.ToString();
 
                 if (movie != null)
                 {
+                    // Format the ReleaseYear
+                    if (!string.IsNullOrEmpty(movie.ReleaseYear))
+                    {
+                        int index = movie.ReleaseYear.IndexOf(" ");
+                        if (index != -1)
+                        {
+                            movie.ReleaseYear = movie.ReleaseYear.Substring(0, index);
+                        }
+                    }
+
                     // Retrieve the poster for the movie
                     string sqlPosterQuery = @"SELECT * FROM Posters WHERE MovieId = @MovieId";
                     var posterParameters = new { MovieId = movie.Id };
@@ -185,9 +192,6 @@ namespace BioBooker.WebApi.Dal
                 {
                    // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
                     movie.ReleaseYear = movie.ReleaseYear.ToString();
-
-                    //DateTime premierDate = DateTime.Parse(movie.PremierDate);
-                    movie.PremierDate = movie.PremierDate.ToString();
 
                     // Retrieve the poster for each movie
                     string sqlPosterQuery = "SELECT * FROM Posters WHERE MovieId = @MovieId";
@@ -293,7 +297,6 @@ namespace BioBooker.WebApi.Dal
                                 SubtitlesLanguage = @SubtitlesLanguage,
                                 MPARating = @MPARating,
                                 RuntimeMinutes = @RuntimeMinutes,
-                                PremierDate = @PremierDate
                               WHERE Id = @Id";
 
             await connection.ExecuteAsync(sqlUpdateMovies, movie, transaction);

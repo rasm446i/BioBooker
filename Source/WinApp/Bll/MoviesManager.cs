@@ -38,7 +38,7 @@ namespace BioBooker.WinApp.Bll
         // Creates a new instance of the Movie class based on the provided movie object and returns it.
         public Movie CreateMovie(Movie movie)
         {
-            Movie newMovie = new Movie(movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Language, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARating, movie.RuntimeMinutes, movie.PremierDate, movie.Poster);
+            Movie newMovie = new Movie(movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Language, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARating, movie.RuntimeMinutes, movie.Poster);
 
             return newMovie;
         }

@@ -48,16 +48,22 @@ namespace BioBooker.WinApp.Uil.Views
             preUpdatedMovie = await moviesManager.GetMovieByTitleAsync(movieTitle);
             if (preUpdatedMovie != null)
             {
+
                 // Populate the textboxes, poster, and comboboxes with pre-updated movie data
                 txtTitle.Text = preUpdatedMovie.Title;
                 comboBoxGenre.SelectedItem = preUpdatedMovie.Genre;
                 txtActors.Text = preUpdatedMovie.Actors;
                 txtDirector.Text = preUpdatedMovie.Director;
                 comboBoxLanguage.SelectedItem = preUpdatedMovie.Language;
-                dateTimePickerReleaseYear.Value = DateTime.Parse(preUpdatedMovie.ReleaseYear);
+
+                if (DateTime.TryParse(preUpdatedMovie.ReleaseYear, out DateTime releaseYear))
+                    dateTimePickerReleaseYear.Value = releaseYear;
+
                 comboBoxMpaRating.SelectedItem = preUpdatedMovie.MPARating;
                 textBoxRunTime.Text = preUpdatedMovie.RuntimeMinutes.ToString();
-                dateTimePickerPremierDate.Value = DateTime.Parse(preUpdatedMovie.PremierDate);
+                comboBoxMpaRating.SelectedItem = preUpdatedMovie.MPARating;
+                textBoxRunTime.Text = preUpdatedMovie.RuntimeMinutes.ToString();
+
                 pictureBox1.Image = Image.FromStream(new MemoryStream(preUpdatedMovie.Poster.ImageData));
 
                 if (preUpdatedMovie.Subtitles == 1)
@@ -149,20 +155,25 @@ namespace BioBooker.WinApp.Uil.Views
 
         private Movie CreateUpdatedMovie()
         {
+
             string title = txtTitle.Text;
             string genre = comboBoxGenre.Text;
             string actors = txtActors.Text;
             string director = txtDirector.Text;
             string language = comboBoxLanguage.Text;
-            string releaseYear = dateTimePickerReleaseYear.Value.ToString("yyyy-MM-dd");
+            string releaseYear;
+            if (DateTime.TryParse(dateTimePickerReleaseYear.Text, out DateTime releaseYearDate))
+                releaseYear = releaseYearDate.ToString("yyyy-MM-dd");
+            else
+                releaseYear = "";
             byte subtitles = isThereSelectedSubtitles();
             string subtitlesLanguage = getAllSubtitlesLanguages();
             string mpaRatingEnum = comboBoxMpaRating.Text;
             int runtimeHours = Int32.Parse(textBoxRunTime.Text);
-            string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
+
             Poster updatedPoster = GetUpdatedPoster();
 
-            return new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, updatedPoster);
+            return new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, updatedPoster);
         }
 
         private Poster GetUpdatedPoster()
@@ -171,7 +182,7 @@ namespace BioBooker.WinApp.Uil.Views
             Poster updatedPoster;
 
             // Check if a new image is selected
-            if (selectedImagePath != null && !selectedImagePath.Equals(preUpdatedMovie.Poster.PosterTitle))
+            if (selectedImagePath != null && !selectedImagePath.Equals(preUpdatedMovie.Poster.PosterTitle, StringComparison.OrdinalIgnoreCase))
             {
                 string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
                 newImageData = File.ReadAllBytes(selectedImagePath);
@@ -185,6 +196,7 @@ namespace BioBooker.WinApp.Uil.Views
 
             return updatedPoster;
         }
+
 
         // Submits the update of the movie if all the validations go through
         private async void buttonSubmit_Click(object sender, EventArgs e)
@@ -229,25 +241,26 @@ namespace BioBooker.WinApp.Uil.Views
                 !string.Equals(updatedMovie.SubtitlesLanguage, preUpdatedMovie.SubtitlesLanguage) ||
                 !string.Equals(updatedMovie.MPARating, preUpdatedMovie.MPARating) ||
                 updatedMovie.RuntimeMinutes != preUpdatedMovie.RuntimeMinutes ||
-                !string.Equals(updatedMovie.PremierDate, preUpdatedMovie.PremierDate) ||
                 IsPosterChanged(updatedMovie.Poster, preUpdatedMovie.Poster);
-
             return isChanged;
         }
+
 
         private bool IsPosterChanged(Poster poster1, Poster poster2)
         {
             if (poster1 == null && poster2 == null)
             {
-                return true;
+                return false; // No change in posters
             }
-            if(poster1 == null || poster2 == null)
+            if (poster1 == null || poster2 == null)
             {
-                return false;
+                return true; // One of the posters is null, so there is a change
             }
 
-            return !poster1.ImageData.SequenceEqual(poster2.ImageData);
+            return !string.Equals(poster1.PosterTitle, poster2.PosterTitle, StringComparison.OrdinalIgnoreCase)
+                || !poster1.ImageData.SequenceEqual(poster2.ImageData);
         }
+
 
         private async Task<bool> UpdateMovie(Movie updatedMovie)
         {
@@ -297,7 +310,7 @@ namespace BioBooker.WinApp.Uil.Views
         public bool validateAll()
         {
             bool wasOk = false;
-            if (validateSubs() && validatePremierAndReleaseDate() && validateRuntime() && validateAllRequiredInputs())
+            if (validateSubs() && validateRuntime() && validateAllRequiredInputs())
             {
                 wasOk = true;
             }
@@ -326,23 +339,6 @@ namespace BioBooker.WinApp.Uil.Views
 
             return wasOk;
 
-        }
-
-
-        // checks if the Premier Date is selected to be before the Release Date.
-        // The logic is that you can not show a movie for the first time(premier date), if it is not released yet.
-        public bool validatePremierAndReleaseDate()
-        {
-            bool wasOk = true;
-
-            if (dateTimePickerPremierDate.Value.Date < dateTimePickerReleaseYear.Value.Date)
-            {
-                MessageBox.Show("Premier Date is the first date the movie can be shown. We cannot show a movie before it is released.");
-
-                wasOk = false;
-            }
-
-            return wasOk;
         }
 
         //checks if input in runtime contains anything else than whole numbers.
@@ -410,22 +406,6 @@ namespace BioBooker.WinApp.Uil.Views
             if (string.IsNullOrEmpty(releaseYear))
             {
                 MessageBox.Show("Please select a ReleaseDate.");
-                wasOk = false;
-            }
-
-            // Validate Premier date
-            string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
-            if (string.IsNullOrEmpty(premierDate))
-            {
-                MessageBox.Show("Please select a Premier date.");
-                wasOk = false;
-            }
-
-            // Validate subtitlesYesOrNO
-            string subtitlesYesOrNo = comboBoxSubtitlesYesNo.Text;
-            if (string.IsNullOrEmpty(premierDate))
-            {
-                MessageBox.Show("Please select if the movie has subtitles");
                 wasOk = false;
             }
 

@@ -16,7 +16,7 @@ public class Movie
 
     }
 
-    public Movie(string title, string genre, string actors, string director, string language, string releaseYear, byte subtitles, string subtitlesLanguage, string mpaRatingEnum, int runtimeMinutes, string premierDate, Poster poster)
+    public Movie(string title, string genre, string actors, string director, string language, string releaseYear, byte subtitles, string subtitlesLanguage, string mpaRatingEnum, int runtimeMinutes, Poster poster)
     {
         Title = title;
         Genre = genre;
@@ -28,7 +28,6 @@ public class Movie
         SubtitlesLanguage = subtitlesLanguage;
         MPARating = mpaRatingEnum;
         RuntimeMinutes = runtimeMinutes;
-        PremierDate = premierDate;
         Poster = poster;
     }
 
@@ -46,7 +45,6 @@ public class Movie
     public string SubtitlesLanguage { get; set; }
     public string MPARating { get; set; }
     public int RuntimeMinutes { get; set; }
-    public string PremierDate { get; set; }
     public Poster Poster { get; set; }
     
 }

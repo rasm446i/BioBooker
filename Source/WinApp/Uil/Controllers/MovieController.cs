@@ -96,12 +96,6 @@ namespace BioBooker.WinApp.Uil.Controllers
                 errors.Add("Please select a Release Date.");
             }
 
-            // Validate Premier date
-            if (string.IsNullOrEmpty(movie.PremierDate))
-            {
-                errors.Add("Please select a Premier date.");
-            }
-
             // Validate subtitles
             if (movie.Subtitles == null)
             {

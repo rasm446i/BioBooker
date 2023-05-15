@@ -53,7 +53,6 @@ namespace BioBooker.WinApp.Uil.Views
         {
             labelReleaseYear.Text = movie.ReleaseYear;
             labelRuntime.Text = movie.RuntimeMinutes.ToString();
-            labelPremierDate.Text = movie.PremierDate.ToString();
             labelLanguage.Text = movie.Language;
             labelTitle.Text = movie.Title;
             labelMPA.Text = movie.MPARating;

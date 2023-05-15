@@ -43,7 +43,6 @@ namespace BioBooker.WinApp.UnitTests.Svl
                 SubtitlesLanguage = "English",
                 MPARating = "PG-13",
                 RuntimeMinutes = 120,
-                PremierDate = "2023-01-01",
                 Poster = new Poster("Test Movie Poster", imageData)
             };
 
@@ -74,14 +73,13 @@ namespace BioBooker.WinApp.UnitTests.Svl
                 Title = "Test Movie70",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
-                Director = "Director Name",
+                Director = "Director Name", 
                 Language = "English",
                 ReleaseYear = "2023-01-01",
                 Subtitles = 1,
                 SubtitlesLanguage = "English",
                 MPARating = "",
                 RuntimeMinutes = 120,
-                PremierDate = "2023-01-01",
                 Poster = new Poster("Test Movie Poster", imageData)
             };
 
@@ -119,7 +117,6 @@ namespace BioBooker.WinApp.UnitTests.Svl
                 SubtitlesLanguage = "English",
                 MPARating = "",
                 RuntimeMinutes = 120,
-                PremierDate = "2023-01-01",
                 Poster = new Poster("Test Movie Poster", imageData)
             };
 

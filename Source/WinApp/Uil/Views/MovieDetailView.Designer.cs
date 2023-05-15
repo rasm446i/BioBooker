@@ -42,7 +42,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.label11 = new System.Windows.Forms.Label();
             this.labelReleaseYear = new System.Windows.Forms.Label();
             this.labelRuntime = new System.Windows.Forms.Label();
-            this.labelPremierDate = new System.Windows.Forms.Label();
             this.labelLanguage = new System.Windows.Forms.Label();
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelMPA = new System.Windows.Forms.Label();
@@ -62,7 +61,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-
             // 
             // label1
             // 
@@ -84,17 +82,15 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(40, 188);
+            this.label3.Location = new System.Drawing.Point(0, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 15);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Premier date";
+            this.label3.Size = new System.Drawing.Size(100, 23);
+            this.label3.TabIndex = 23;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(40, 266);
+            this.label4.Location = new System.Drawing.Point(40, 189);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(59, 15);
             this.label4.TabIndex = 4;
@@ -103,7 +99,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(40, 346);
+            this.label5.Location = new System.Drawing.Point(40, 269);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(29, 15);
             this.label5.TabIndex = 5;
@@ -112,7 +108,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(154, 39);
+            this.label6.Location = new System.Drawing.Point(42, 345);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 15);
             this.label6.TabIndex = 6;
@@ -121,7 +117,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(154, 117);
+            this.label7.Location = new System.Drawing.Point(161, 40);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(38, 15);
             this.label7.TabIndex = 7;
@@ -130,7 +126,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(154, 188);
+            this.label8.Location = new System.Drawing.Point(161, 116);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(49, 15);
             this.label8.TabIndex = 8;
@@ -139,7 +135,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(154, 266);
+            this.label9.Location = new System.Drawing.Point(161, 189);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(41, 15);
             this.label9.TabIndex = 9;
@@ -148,7 +144,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(154, 346);
+            this.label10.Location = new System.Drawing.Point(161, 269);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(52, 15);
             this.label10.TabIndex = 10;
@@ -157,7 +153,7 @@ namespace BioBooker.WinApp.Uil.Views
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(293, 39);
+            this.label11.Location = new System.Drawing.Point(159, 345);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(104, 15);
             this.label11.TabIndex = 11;
@@ -181,19 +177,10 @@ namespace BioBooker.WinApp.Uil.Views
             this.labelRuntime.TabIndex = 13;
             this.labelRuntime.Text = "Release year";
             // 
-            // labelPremierDate
-            // 
-            this.labelPremierDate.AutoSize = true;
-            this.labelPremierDate.Location = new System.Drawing.Point(40, 215);
-            this.labelPremierDate.Name = "labelPremierDate";
-            this.labelPremierDate.Size = new System.Drawing.Size(71, 15);
-            this.labelPremierDate.TabIndex = 14;
-            this.labelPremierDate.Text = "Release year";
-            // 
             // labelLanguage
             // 
             this.labelLanguage.AutoSize = true;
-            this.labelLanguage.Location = new System.Drawing.Point(40, 292);
+            this.labelLanguage.Location = new System.Drawing.Point(40, 215);
             this.labelLanguage.Name = "labelLanguage";
             this.labelLanguage.Size = new System.Drawing.Size(71, 15);
             this.labelLanguage.TabIndex = 15;
@@ -202,7 +189,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelTitle
             // 
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Location = new System.Drawing.Point(40, 372);
+            this.labelTitle.Location = new System.Drawing.Point(40, 295);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(71, 15);
             this.labelTitle.TabIndex = 16;
@@ -211,7 +198,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelMPA
             // 
             this.labelMPA.AutoSize = true;
-            this.labelMPA.Location = new System.Drawing.Point(152, 66);
+            this.labelMPA.Location = new System.Drawing.Point(40, 372);
             this.labelMPA.Name = "labelMPA";
             this.labelMPA.Size = new System.Drawing.Size(71, 15);
             this.labelMPA.TabIndex = 17;
@@ -220,7 +207,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelGenre
             // 
             this.labelGenre.AutoSize = true;
-            this.labelGenre.Location = new System.Drawing.Point(152, 143);
+            this.labelGenre.Location = new System.Drawing.Point(159, 66);
             this.labelGenre.Name = "labelGenre";
             this.labelGenre.Size = new System.Drawing.Size(71, 15);
             this.labelGenre.TabIndex = 18;
@@ -229,7 +216,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelDirector
             // 
             this.labelDirector.AutoSize = true;
-            this.labelDirector.Location = new System.Drawing.Point(154, 215);
+            this.labelDirector.Location = new System.Drawing.Point(161, 143);
             this.labelDirector.Name = "labelDirector";
             this.labelDirector.Size = new System.Drawing.Size(71, 15);
             this.labelDirector.TabIndex = 19;
@@ -238,7 +225,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelActors
             // 
             this.labelActors.AutoSize = true;
-            this.labelActors.Location = new System.Drawing.Point(152, 292);
+            this.labelActors.Location = new System.Drawing.Point(159, 215);
             this.labelActors.Name = "labelActors";
             this.labelActors.Size = new System.Drawing.Size(71, 15);
             this.labelActors.TabIndex = 20;
@@ -247,7 +234,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelSubtitles
             // 
             this.labelSubtitles.AutoSize = true;
-            this.labelSubtitles.Location = new System.Drawing.Point(154, 372);
+            this.labelSubtitles.Location = new System.Drawing.Point(161, 295);
             this.labelSubtitles.Name = "labelSubtitles";
             this.labelSubtitles.Size = new System.Drawing.Size(71, 15);
             this.labelSubtitles.TabIndex = 21;
@@ -256,7 +243,7 @@ namespace BioBooker.WinApp.Uil.Views
             // labelSubtitlesLanguage
             // 
             this.labelSubtitlesLanguage.AutoSize = true;
-            this.labelSubtitlesLanguage.Location = new System.Drawing.Point(293, 66);
+            this.labelSubtitlesLanguage.Location = new System.Drawing.Point(159, 372);
             this.labelSubtitlesLanguage.Name = "labelSubtitlesLanguage";
             this.labelSubtitlesLanguage.Size = new System.Drawing.Size(71, 15);
             this.labelSubtitlesLanguage.TabIndex = 22;
@@ -275,7 +262,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.labelMPA);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.labelLanguage);
-            this.Controls.Add(this.labelPremierDate);
             this.Controls.Add(this.labelRuntime);
             this.Controls.Add(this.labelReleaseYear);
             this.Controls.Add(this.label11);
@@ -314,7 +300,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label labelReleaseYear;
         private System.Windows.Forms.Label labelRuntime;
-        private System.Windows.Forms.Label labelPremierDate;
         private System.Windows.Forms.Label labelLanguage;
         private System.Windows.Forms.Label labelTitle;
         private System.Windows.Forms.Label labelMPA;

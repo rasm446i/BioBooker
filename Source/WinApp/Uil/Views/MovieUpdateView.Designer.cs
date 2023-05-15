@@ -30,7 +30,6 @@ namespace BioBooker.WinApp.Uil.Views
         {
             this.pnlInputs = new System.Windows.Forms.Panel();
             this.comboBoxLanguage = new System.Windows.Forms.ComboBox();
-            this.dateTimePickerPremierDate = new System.Windows.Forms.DateTimePicker();
             this.dateTimePickerReleaseYear = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxSubtitlesYesNo = new System.Windows.Forms.ComboBox();
@@ -38,7 +37,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.comboBoxMpaRating = new System.Windows.Forms.ComboBox();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.labelPremierDate = new System.Windows.Forms.Label();
             this.labelRuntime = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -69,7 +67,6 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.pnlInputs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlInputs.Controls.Add(this.comboBoxLanguage);
-            this.pnlInputs.Controls.Add(this.dateTimePickerPremierDate);
             this.pnlInputs.Controls.Add(this.dateTimePickerReleaseYear);
             this.pnlInputs.Controls.Add(this.label5);
             this.pnlInputs.Controls.Add(this.comboBoxSubtitlesYesNo);
@@ -77,7 +74,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.pnlInputs.Controls.Add(this.comboBoxMpaRating);
             this.pnlInputs.Controls.Add(this.checkedListBox1);
             this.pnlInputs.Controls.Add(this.label8);
-            this.pnlInputs.Controls.Add(this.labelPremierDate);
             this.pnlInputs.Controls.Add(this.labelRuntime);
             this.pnlInputs.Controls.Add(this.label4);
             this.pnlInputs.Controls.Add(this.label3);
@@ -99,17 +95,10 @@ namespace BioBooker.WinApp.Uil.Views
             // comboBoxLanguage
             // 
             this.comboBoxLanguage.FormattingEnabled = true;
-            this.comboBoxLanguage.Location = new System.Drawing.Point(3, 265);
+            this.comboBoxLanguage.Location = new System.Drawing.Point(3, 194);
             this.comboBoxLanguage.Name = "comboBoxLanguage";
             this.comboBoxLanguage.Size = new System.Drawing.Size(123, 23);
             this.comboBoxLanguage.TabIndex = 35;
-            // 
-            // dateTimePickerPremierDate
-            // 
-            this.dateTimePickerPremierDate.Location = new System.Drawing.Point(3, 197);
-            this.dateTimePickerPremierDate.Name = "dateTimePickerPremierDate";
-            this.dateTimePickerPremierDate.Size = new System.Drawing.Size(123, 23);
-            this.dateTimePickerPremierDate.TabIndex = 34;
             // 
             // dateTimePickerReleaseYear
             // 
@@ -172,16 +161,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.label8.TabIndex = 25;
             this.label8.Text = "Director";
             // 
-            // labelPremierDate
-            // 
-            this.labelPremierDate.AutoSize = true;
-            this.labelPremierDate.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.labelPremierDate.Location = new System.Drawing.Point(4, 166);
-            this.labelPremierDate.Name = "labelPremierDate";
-            this.labelPremierDate.Size = new System.Drawing.Size(101, 20);
-            this.labelPremierDate.TabIndex = 22;
-            this.labelPremierDate.Text = "Premier Date";
-            // 
             // labelRuntime
             // 
             this.labelRuntime.AutoSize = true;
@@ -226,7 +205,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(3, 242);
+            this.label1.Location = new System.Drawing.Point(3, 171);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 20);
             this.label1.TabIndex = 16;
@@ -286,7 +265,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(3, 338);
+            this.txtTitle.Location = new System.Drawing.Point(3, 267);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(125, 23);
             this.txtTitle.TabIndex = 1;
@@ -295,7 +274,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lblTitle.Location = new System.Drawing.Point(4, 315);
+            this.lblTitle.Location = new System.Drawing.Point(4, 244);
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(40, 20);
             this.lblTitle.TabIndex = 0;
@@ -368,6 +347,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.pnlOutputs);
             this.Controls.Add(this.pnlButtons);
@@ -387,7 +367,6 @@ namespace BioBooker.WinApp.Uil.Views
 
         private System.Windows.Forms.Panel pnlInputs;
         private System.Windows.Forms.ComboBox comboBoxLanguage;
-        private System.Windows.Forms.DateTimePicker dateTimePickerPremierDate;
         private System.Windows.Forms.DateTimePicker dateTimePickerReleaseYear;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox comboBoxSubtitlesYesNo;
@@ -395,7 +374,6 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.ComboBox comboBoxMpaRating;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label labelPremierDate;
         private System.Windows.Forms.Label labelRuntime;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

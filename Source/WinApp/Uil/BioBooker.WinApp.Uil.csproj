@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+      <None Remove="Views\3dapyik4.zs1~" />
+    </ItemGroup>
+    <ItemGroup>
         <Folder Include="Controllers\" />
         <Folder Include="ViewModels\" />
     </ItemGroup>

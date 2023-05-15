@@ -47,7 +47,6 @@ namespace BioBooker.WinApp.UnitTests.Bll
                 SubtitlesLanguage = "English",
                 MPARating = "PG-13",
                 RuntimeMinutes = 120,
-                PremierDate = "2023-01-01",
                 Poster = new Poster("Test Movie Poster", imageData)
             };
 
@@ -73,7 +72,6 @@ namespace BioBooker.WinApp.UnitTests.Bll
             Assert.Equal(movie.SubtitlesLanguage, createdMovie.SubtitlesLanguage);
             Assert.Equal(movie.MPARating, createdMovie.MPARating);
             Assert.Equal(movie.RuntimeMinutes, createdMovie.RuntimeMinutes);
-            Assert.Equal(movie.PremierDate, createdMovie.PremierDate);
             Assert.Equal(movie.Poster.PosterTitle, createdMovie.Poster.PosterTitle);
             Assert.Equal(movie.Poster.ImageData, createdMovie.Poster.ImageData);
         }
@@ -99,7 +97,6 @@ namespace BioBooker.WinApp.UnitTests.Bll
                 SubtitlesLanguage = "English",
                 MPARating = "",
                 RuntimeMinutes = 120,
-                PremierDate = "2023-01-01",
                 Poster = new Poster("Test Movie Poster", imageData)
             };
 

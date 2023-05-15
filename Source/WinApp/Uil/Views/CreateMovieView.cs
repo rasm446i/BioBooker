@@ -112,7 +112,6 @@ public partial class CreateMovieView : Form
             string releaseYear = dateTimePickerReleaseYear.Value.ToString("yyyy-MM-dd");
             string mpaRatingEnum = comboBoxMpaRating.Text;
             int runtimeHours = Int32.Parse(textBoxRunTime.Text);
-            string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
             Image image = pictureBox1.Image;
             string posterTitle = Path.GetFileNameWithoutExtension(selectedImagePath);
             byte[] imageData = File.ReadAllBytes(selectedImagePath);
@@ -122,7 +121,7 @@ public partial class CreateMovieView : Form
 
             Poster poster = new Poster(posterTitle, imageData);
 
-            Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, premierDate, poster);
+            Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, poster);
 
 
             bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
@@ -182,7 +181,7 @@ public partial class CreateMovieView : Form
     public bool validateAll()
     {
         bool wasOk = false;
-        if (validateSubs() && validatePremierAndReleaseDate() && validateRuntime()&& validateAllRequiredInputs())
+        if (validateSubs() && validateRuntime()&& validateAllRequiredInputs())
         {
             wasOk = true;
         }
@@ -213,22 +212,6 @@ public partial class CreateMovieView : Form
 
     }
 
-
-    // checks if the Premier Date is selected to be before the Release Date.
-    // The logic is that you can not show a movie for the first time(premier date), if it is not released yet.
-    public bool validatePremierAndReleaseDate()
-    {
-        bool wasOk = true;
-
-        if (dateTimePickerPremierDate.Value.Date < dateTimePickerReleaseYear.Value.Date)
-        {
-            MessageBox.Show("Premier Date is the first date the movie can be shown. We cannot show a movie before it is released.");
-
-            wasOk = false;
-        }
-
-        return wasOk;
-    }
 
     //checks if input in runtime contains anything else than whole numbers.
     public bool validateRuntime()
@@ -295,22 +278,6 @@ public partial class CreateMovieView : Form
         if (string.IsNullOrEmpty(releaseYear))
         {
             MessageBox.Show("Please select a ReleaseDate.");
-            wasOk = false;
-        }
-
-        // Validate Premier date
-        string premierDate = dateTimePickerPremierDate.Value.ToString("yyyy-MM-dd");
-        if (string.IsNullOrEmpty(premierDate))
-        {
-            MessageBox.Show("Please select a Premier date.");
-            wasOk = false;
-        }
-
-        // Validate subtitlesYesOrNO
-        string subtitlesYesOrNo = comboBoxSubtitlesYesNo.Text;
-        if (string.IsNullOrEmpty(premierDate))
-        {
-            MessageBox.Show("Please select if the movie has subtitles");
             wasOk = false;
         }
 
