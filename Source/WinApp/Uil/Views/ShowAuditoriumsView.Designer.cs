@@ -103,9 +103,9 @@ namespace BioBooker.WinApp.Uil.Views
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label1.Location = new System.Drawing.Point(403, 45);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(118, 20);
+            this.label1.Size = new System.Drawing.Size(77, 20);
             this.label1.TabIndex = 9;
-            this.label1.Text = "Antal seat rows";
+            this.label1.Text = "Seat rows";
             // 
             // label2
             // 
@@ -113,9 +113,9 @@ namespace BioBooker.WinApp.Uil.Views
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(403, 103);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(204, 20);
+            this.label2.Size = new System.Drawing.Size(163, 20);
             this.label2.TabIndex = 10;
-            this.label2.Text = "Antal seat numbers per row";
+            this.label2.Text = "Seat numbers per row";
             // 
             // label3
             // 
@@ -123,9 +123,9 @@ namespace BioBooker.WinApp.Uil.Views
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(403, 166);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(117, 20);
+            this.label3.Size = new System.Drawing.Size(162, 20);
             this.label3.TabIndex = 11;
-            this.label3.Text = "Antal seats i alt";
+            this.label3.Text = "Total amount of seats";
             // 
             // btnAddAuditorium
             // 

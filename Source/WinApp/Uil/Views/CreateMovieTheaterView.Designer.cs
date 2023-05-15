@@ -132,7 +132,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.lblAmountOfRows);
             this.Controls.Add(this.txtBoxAmountOfRows);
             this.Name = "CreateMovieTheaterView";
-            this.Text = "CreateAuditoriumView";
+            this.Text = "CreateMovieTheaterView";
             this.ResumeLayout(false);
             this.PerformLayout();
 

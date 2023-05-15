@@ -39,11 +39,13 @@ namespace BioBooker.WinApp.Uil.Views
                 MovieTheaterController movieTheaterController = new MovieTheaterController();
                 Auditorium newAuditorium = movieTheaterController.CreateAuditorium(seats, auditoriumName);
 
-                var isAdded = MovieTheaterController.AuditoriumAlreadyAdded(newAuditorium, _selectedMovieTheater.Auditoriums);
-                if (!isAdded)
+                // Check if the selected movie theater already contains the auditorium that is trying to be inserted
+                var isAlreadyAdded = MovieTheaterController.AuditoriumAlreadyAdded(newAuditorium, _selectedMovieTheater.Auditoriums);
+                if (!isAlreadyAdded)
                 {
                     // Add the new auditorium to the selected movie theater
                     _selectedMovieTheater.Auditoriums.Add(newAuditorium);
+
                 }
 
                 // Save changes in the database
@@ -52,6 +54,11 @@ namespace BioBooker.WinApp.Uil.Views
                 if (wasInserted)
                 {
                     MessageBox.Show(newAuditorium.Name + " was added to " + _selectedMovieTheater.Name);
+                    
+                    //Reset text fields after successful insertion
+                    txtSeatRows.Text = string.Empty;
+                    txtSeatNumbers.Text = string.Empty;
+                    txtAuditoriumName.Text = string.Empty;
                 }
                 else
                 {

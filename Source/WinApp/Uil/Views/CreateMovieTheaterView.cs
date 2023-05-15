@@ -42,6 +42,12 @@ namespace BioBooker.WinApp.Uil.Views
                 if (wasInserted)
                 {
                     MessageBox.Show(movieTheaterName + " has been created and inserted into the database");
+
+                    //Reset text fields after successful insertion
+                    txtBoxMovieTheaterName.Text = string.Empty;
+                    txtBoxAmountOfRows.Text = string.Empty;
+                    txtBoxSeatsPerRow.Text = string.Empty;
+                    txtBoxAuditoriumName.Text = string.Empty;
                 }
                 else
                 {
@@ -63,6 +69,7 @@ namespace BioBooker.WinApp.Uil.Views
                     MessageBox.Show("There must be at least 1 row with more than 1 seat. Input must be an integer too.");
                 }
             }
+
         }
 
 
