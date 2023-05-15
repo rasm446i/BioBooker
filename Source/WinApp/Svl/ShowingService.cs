@@ -25,6 +25,32 @@ namespace BioBooker.WinApp.Svl
 
         }
 
+        public async Task<List<Showing>> GetAllShowingsAsync()
+        {
+            List<Showing> showings = null;
+
+            if (_serviceConnection != null)
+            {
+                string url = _serviceBaseUrl + "showings/";
+
+                try
+                {
+                    HttpResponseMessage? response = await _serviceConnection.CallServiceGet(url);
+                    if (response != null && response.IsSuccessStatusCode)
+                    {
+                        string json = await response.Content.ReadAsStringAsync();
+                        showings = JsonConvert.DeserializeObject<List<Showing>>(json);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+
+            return showings;
+        }
+
         public async Task<bool> InsertReservationAsync(SeatReservation reservation)
         {
             int showingId = reservation.ShowingId;

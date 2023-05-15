@@ -58,7 +58,21 @@ namespace BioBooker.WebApi.Ctl.Controllers
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        // Retrieves all showings from the database using the GetAllShowingsAsync() method in Showing.
+        // Returns Ok(showings) if showings are found, otherwise returns NotFound().
+        public async Task<IActionResult> Get()
+        {
+            List<Showing> showings = await _showingManager.GetAllShowingsAsync();
 
+            if (showings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(showings);
+        }
 
     }
 }

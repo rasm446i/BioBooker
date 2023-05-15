@@ -10,6 +10,7 @@ namespace BioBooker.Dml
 
     public class Showing
     {
+        public int ShowingId { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
