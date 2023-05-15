@@ -1,6 +1,6 @@
 ﻿namespace BioBooker.WinApp.Uil.Views
 {
-    partial class CreateShowingView
+    partial class ShowingDetailView
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,8 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.labelAuditorium = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxSearchShowing = new System.Windows.Forms.TextBox();
+            this.labelNoShowingsFound = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonUpdate
@@ -65,6 +66,7 @@
             this.buttonCreate.TabIndex = 2;
             this.buttonCreate.Text = "Create";
             this.buttonCreate.UseVisualStyleBackColor = true;
+            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
             // 
             // buttonDelete
             // 
@@ -83,6 +85,7 @@
             this.buttonSearch.TabIndex = 4;
             this.buttonSearch.Text = "Search";
             this.buttonSearch.UseVisualStyleBackColor = true;
+            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // listView1
             // 
@@ -108,19 +111,29 @@
             this.labelAuditorium.TabIndex = 8;
             this.labelAuditorium.Text = "Auditorium: ";
             // 
-            // textBox1
+            // textBoxSearchShowing
             // 
-            this.textBox1.Location = new System.Drawing.Point(114, 304);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(141, 23);
-            this.textBox1.TabIndex = 9;
+            this.textBoxSearchShowing.Location = new System.Drawing.Point(114, 304);
+            this.textBoxSearchShowing.Name = "textBoxSearchShowing";
+            this.textBoxSearchShowing.PlaceholderText = "Title...";
+            this.textBoxSearchShowing.Size = new System.Drawing.Size(141, 23);
+            this.textBoxSearchShowing.TabIndex = 9;
+            // 
+            // labelNoShowingsFound
+            // 
+            this.labelNoShowingsFound.AutoSize = true;
+            this.labelNoShowingsFound.Location = new System.Drawing.Point(116, 287);
+            this.labelNoShowingsFound.Name = "labelNoShowingsFound";
+            this.labelNoShowingsFound.Size = new System.Drawing.Size(0, 15);
+            this.labelNoShowingsFound.TabIndex = 10;
             // 
             // CreateShowingView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.labelNoShowingsFound);
+            this.Controls.Add(this.textBoxSearchShowing);
             this.Controls.Add(this.labelAuditorium);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.listView1);
@@ -146,6 +159,7 @@
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label labelAuditorium;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxSearchShowing;
+        private System.Windows.Forms.Label labelNoShowingsFound;
     }
 }

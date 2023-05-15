@@ -1,3 +1,4 @@
+using BioBooker.Dml;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,14 +11,24 @@ using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Views
 {
-    public partial class CreateShowingView : Form
+    public partial class ShowingDetailView : Form
     {
 
         private int auditoriumId;
-        public CreateShowingView(int auditoriumId)
+        public ShowingDetailView(int auditoriumId)
         {
             InitializeComponent();
             this.auditoriumId = auditoriumId;
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+ 
+        }
+
+        private void buttonCreate_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
