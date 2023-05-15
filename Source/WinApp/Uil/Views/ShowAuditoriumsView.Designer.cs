@@ -40,6 +40,8 @@ namespace BioBooker.WinApp.Uil.Views
             this.btnAddAuditorium = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonAddShowing = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lblFoundMovieTheater
@@ -158,11 +160,32 @@ namespace BioBooker.WinApp.Uil.Views
             this.label5.TabIndex = 14;
             this.label5.Text = "Auditoriums";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddShowing
+            // 
+            this.buttonAddShowing.Location = new System.Drawing.Point(259, 321);
+            this.buttonAddShowing.Name = "buttonAddShowing";
+            this.buttonAddShowing.Size = new System.Drawing.Size(109, 23);
+            this.buttonAddShowing.TabIndex = 16;
+            this.buttonAddShowing.Text = "Add Showing";
+            this.buttonAddShowing.UseVisualStyleBackColor = true;
+            this.buttonAddShowing.Click += new System.EventHandler(this.buttonAddShowing_Click);
+            // 
             // ShowAuditoriumsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.buttonAddShowing);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnAddAuditorium);
@@ -195,5 +218,7 @@ namespace BioBooker.WinApp.Uil.Views
         private System.Windows.Forms.Button btnAddAuditorium;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonAddShowing;
     }
 }
