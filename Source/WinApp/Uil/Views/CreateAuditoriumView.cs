@@ -2,46 +2,78 @@ using BioBooker.Dml;
 using BioBooker.WinApp.Uil.Controllers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BioBooker.WinApp.Uil.Views
 {
     public partial class CreateAuditoriumView : Form
     {
-        MovieTheaterController movieTheaterController;
-        public CreateAuditoriumView()
+        private MovieTheater _selectedMovieTheater;
+        public CreateAuditoriumView(MovieTheater movieTheater)
         {
             InitializeComponent();
-            movieTheaterController = new MovieTheaterController();
+            _selectedMovieTheater = movieTheater;
         }
 
         private async void btnCreateAuditorium_Click(object sender, EventArgs e)
         {
-            string movieTheaterName = txtBoxMovieTheaterName.Text;
-            string amountOfRows = txtBoxAmountOfRows.Text;
-            string seatsPerRow = txtBoxSeatsPerRow.Text;
+            // Get the data from the textboxes
+            string seatRows = txtSeatRows.Text;
+            string seatNumbers = txtSeatNumbers.Text;
+            string auditoriumName = txtAuditoriumName.Text;
 
-            int amountOfRowsParseResult = int.Parse(amountOfRows);
-            int seatsPerRowParseResult = int.Parse(seatsPerRow);
+            // Try to parse input from row and seat
+            int seatRowsParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatRows);
+            int seatsPerRowParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatNumbers);
 
-            if (amountOfRowsParseResult < 1 || seatsPerRowParseResult < 1 && !String.IsNullOrEmpty(movieTheaterName))
+            // Validate auditorium name
+            bool isValidAuditoriumName = MovieTheaterController.IsValidAuditoriumNameInputAndNotEmpty(auditoriumName);
+
+            // Validate that the parsed results and auditorium name are valid
+            if (seatRowsParseResult > 0 && seatsPerRowParseResult > 1 && isValidAuditoriumName)
             {
-                MessageBox.Show("Amount of rows and seats per row must be higher than 0");
+                // Generate the seats for the auditorium
+                List<Seat> seats = MovieTheaterController.GetGeneratedSeats(seatRowsParseResult, seatsPerRowParseResult);
+
+                // Create a new auditorium with the generated seats and auditorium name
+                MovieTheaterController movieTheaterController = new MovieTheaterController();
+                Auditorium newAuditorium = movieTheaterController.CreateAuditorium(seats, auditoriumName);
+
+                var isAdded = MovieTheaterController.AuditoriumAlreadyAdded(newAuditorium, _selectedMovieTheater.Auditoriums);
+                if (!isAdded)
+                {
+                    // Add the new auditorium to the selected movie theater
+                    _selectedMovieTheater.Auditoriums.Add(newAuditorium);
+                }
+
+                // Save changes in the database
+                bool wasInserted = await movieTheaterController.AddAuditoriumToMovieTheaterAsync(_selectedMovieTheater.Id, newAuditorium);
+
+                if (wasInserted)
+                {
+                    MessageBox.Show(newAuditorium.Name + " was added to " + _selectedMovieTheater.Name);
+                }
+                else
+                {
+                    MessageBox.Show(newAuditorium.Name + " was not inserted into the database");
+                }
             }
             else
             {
-                await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInput(movieTheaterName, amountOfRowsParseResult, seatsPerRowParseResult);
-                
+                if (!isValidAuditoriumName)
+                {
+                    MessageBox.Show("Auditorium name can't be empty. The name has to contain letters and numbers with a space between them like so: Auditorium 1");
+                }
+                else
+                {
+                    MessageBox.Show("There must be at least 1 row with more than 1 seat. Input must be an integer too.");
+                }
             }
         }
 
-        
+
+
     }
+
 }
+

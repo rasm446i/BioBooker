@@ -26,6 +26,20 @@ namespace BioBooker.WebApi.Bll
 
             return wasInserted;
         }
+        public async Task<Auditorium> GetAuditoriumByNameAndMovieTheaterIdAsync(string auditoriumName, int movieTheaterId)
+        {
+            Auditorium foundAuditorium = await _movieTheaterServiceApi.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
+
+            return foundAuditorium;
+        }
+        public async Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
+        {
+            bool wasInserted;
+
+            wasInserted = await _movieTheaterServiceApi.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
+
+            return wasInserted;
+        }
 
         public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
         {
@@ -39,9 +53,9 @@ namespace BioBooker.WebApi.Bll
             return await _movieTheaterServiceApi.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
         }
 
-        public async Task<bool> InsertSeats(List<Seat> seats, int auditoriumId)
+        public async Task<bool> InsertSeatsAsync(List<Seat> seats, int auditoriumId)
         {
-            return await _movieTheaterServiceApi.InsertSeats(seats, auditoriumId);
+            return await _movieTheaterServiceApi.InsertSeatsAsync(seats, auditoriumId);
         }
     }
 }

@@ -28,85 +28,89 @@ namespace BioBooker.WinApp.Uil.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtBoxAmountOfRows = new System.Windows.Forms.TextBox();
-            this.lblAmountOfRows = new System.Windows.Forms.Label();
-            this.lblSeatsPerRow = new System.Windows.Forms.Label();
-            this.txtBoxSeatsPerRow = new System.Windows.Forms.TextBox();
             this.btnCreateAuditorium = new System.Windows.Forms.Button();
-            this.lblMovieTheaterName = new System.Windows.Forms.Label();
-            this.txtBoxMovieTheaterName = new System.Windows.Forms.TextBox();
+            this.txtSeatRows = new System.Windows.Forms.TextBox();
+            this.lblSeatRows = new System.Windows.Forms.Label();
+            this.txtSeatNumbers = new System.Windows.Forms.TextBox();
+            this.lblSeatNumbers = new System.Windows.Forms.Label();
+            this.txtAuditoriumName = new System.Windows.Forms.TextBox();
+            this.lblAuditoriumName = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // txtBoxAmountOfRows
-            // 
-            this.txtBoxAmountOfRows.Location = new System.Drawing.Point(12, 37);
-            this.txtBoxAmountOfRows.Name = "txtBoxAmountOfRows";
-            this.txtBoxAmountOfRows.Size = new System.Drawing.Size(100, 23);
-            this.txtBoxAmountOfRows.TabIndex = 0;
-            // 
-            // lblAmountOfRows
-            // 
-            this.lblAmountOfRows.AutoSize = true;
-            this.lblAmountOfRows.Location = new System.Drawing.Point(12, 9);
-            this.lblAmountOfRows.Name = "lblAmountOfRows";
-            this.lblAmountOfRows.Size = new System.Drawing.Size(93, 15);
-            this.lblAmountOfRows.TabIndex = 1;
-            this.lblAmountOfRows.Text = "Amount of rows";
-            // 
-            // lblSeatsPerRow
-            // 
-            this.lblSeatsPerRow.AutoSize = true;
-            this.lblSeatsPerRow.Location = new System.Drawing.Point(12, 86);
-            this.lblSeatsPerRow.Name = "lblSeatsPerRow";
-            this.lblSeatsPerRow.Size = new System.Drawing.Size(77, 15);
-            this.lblSeatsPerRow.TabIndex = 2;
-            this.lblSeatsPerRow.Text = "Seats per row";
-            // 
-            // txtBoxSeatsPerRow
-            // 
-            this.txtBoxSeatsPerRow.Location = new System.Drawing.Point(12, 104);
-            this.txtBoxSeatsPerRow.Name = "txtBoxSeatsPerRow";
-            this.txtBoxSeatsPerRow.Size = new System.Drawing.Size(100, 23);
-            this.txtBoxSeatsPerRow.TabIndex = 3;
             // 
             // btnCreateAuditorium
             // 
-            this.btnCreateAuditorium.Location = new System.Drawing.Point(12, 167);
+            this.btnCreateAuditorium.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btnCreateAuditorium.Location = new System.Drawing.Point(22, 226);
             this.btnCreateAuditorium.Name = "btnCreateAuditorium";
-            this.btnCreateAuditorium.Size = new System.Drawing.Size(116, 23);
-            this.btnCreateAuditorium.TabIndex = 4;
-            this.btnCreateAuditorium.Text = "Create auditorium";
+            this.btnCreateAuditorium.Size = new System.Drawing.Size(133, 29);
+            this.btnCreateAuditorium.TabIndex = 0;
+            this.btnCreateAuditorium.Text = "Create Auditorium";
             this.btnCreateAuditorium.UseVisualStyleBackColor = true;
             this.btnCreateAuditorium.Click += new System.EventHandler(this.btnCreateAuditorium_Click);
             // 
-            // lblMovieTheaterName
+            // txtSeatRows
             // 
-            this.lblMovieTheaterName.AutoSize = true;
-            this.lblMovieTheaterName.Location = new System.Drawing.Point(209, 9);
-            this.lblMovieTheaterName.Name = "lblMovieTheaterName";
-            this.lblMovieTheaterName.Size = new System.Drawing.Size(113, 15);
-            this.lblMovieTheaterName.TabIndex = 5;
-            this.lblMovieTheaterName.Text = "Movie theater name";
+            this.txtSeatRows.Location = new System.Drawing.Point(27, 68);
+            this.txtSeatRows.Name = "txtSeatRows";
+            this.txtSeatRows.Size = new System.Drawing.Size(100, 23);
+            this.txtSeatRows.TabIndex = 1;
             // 
-            // txtBoxMovieTheaterName
+            // lblSeatRows
             // 
-            this.txtBoxMovieTheaterName.Location = new System.Drawing.Point(209, 37);
-            this.txtBoxMovieTheaterName.Name = "txtBoxMovieTheaterName";
-            this.txtBoxMovieTheaterName.Size = new System.Drawing.Size(100, 23);
-            this.txtBoxMovieTheaterName.TabIndex = 6;
+            this.lblSeatRows.AutoSize = true;
+            this.lblSeatRows.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblSeatRows.Location = new System.Drawing.Point(27, 41);
+            this.lblSeatRows.Name = "lblSeatRows";
+            this.lblSeatRows.Size = new System.Drawing.Size(77, 20);
+            this.lblSeatRows.TabIndex = 2;
+            this.lblSeatRows.Text = "Seat rows";
+            // 
+            // txtSeatNumbers
+            // 
+            this.txtSeatNumbers.Location = new System.Drawing.Point(22, 146);
+            this.txtSeatNumbers.Name = "txtSeatNumbers";
+            this.txtSeatNumbers.Size = new System.Drawing.Size(105, 23);
+            this.txtSeatNumbers.TabIndex = 3;
+            // 
+            // lblSeatNumbers
+            // 
+            this.lblSeatNumbers.AutoSize = true;
+            this.lblSeatNumbers.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblSeatNumbers.Location = new System.Drawing.Point(22, 114);
+            this.lblSeatNumbers.Name = "lblSeatNumbers";
+            this.lblSeatNumbers.Size = new System.Drawing.Size(105, 20);
+            this.lblSeatNumbers.TabIndex = 4;
+            this.lblSeatNumbers.Text = "Seat numbers";
+            // 
+            // txtAuditoriumName
+            // 
+            this.txtAuditoriumName.Location = new System.Drawing.Point(171, 68);
+            this.txtAuditoriumName.Name = "txtAuditoriumName";
+            this.txtAuditoriumName.Size = new System.Drawing.Size(133, 23);
+            this.txtAuditoriumName.TabIndex = 5;
+            // 
+            // lblAuditoriumName
+            // 
+            this.lblAuditoriumName.AutoSize = true;
+            this.lblAuditoriumName.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblAuditoriumName.Location = new System.Drawing.Point(171, 41);
+            this.lblAuditoriumName.Name = "lblAuditoriumName";
+            this.lblAuditoriumName.Size = new System.Drawing.Size(133, 20);
+            this.lblAuditoriumName.TabIndex = 6;
+            this.lblAuditoriumName.Text = "Auditorium name";
             // 
             // CreateAuditoriumView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.txtBoxMovieTheaterName);
-            this.Controls.Add(this.lblMovieTheaterName);
+            this.Controls.Add(this.lblAuditoriumName);
+            this.Controls.Add(this.txtAuditoriumName);
+            this.Controls.Add(this.lblSeatNumbers);
+            this.Controls.Add(this.txtSeatNumbers);
+            this.Controls.Add(this.lblSeatRows);
+            this.Controls.Add(this.txtSeatRows);
             this.Controls.Add(this.btnCreateAuditorium);
-            this.Controls.Add(this.txtBoxSeatsPerRow);
-            this.Controls.Add(this.lblSeatsPerRow);
-            this.Controls.Add(this.lblAmountOfRows);
-            this.Controls.Add(this.txtBoxAmountOfRows);
             this.Name = "CreateAuditoriumView";
             this.Text = "CreateAuditoriumView";
             this.ResumeLayout(false);
@@ -116,12 +120,12 @@ namespace BioBooker.WinApp.Uil.Views
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtBoxAmountOfRows;
-        private System.Windows.Forms.Label lblAmountOfRows;
-        private System.Windows.Forms.Label lblSeatsPerRow;
-        private System.Windows.Forms.TextBox txtBoxSeatsPerRow;
         private System.Windows.Forms.Button btnCreateAuditorium;
-        private System.Windows.Forms.Label lblMovieTheaterName;
-        private System.Windows.Forms.TextBox txtBoxMovieTheaterName;
+        private System.Windows.Forms.TextBox txtSeatRows;
+        private System.Windows.Forms.Label lblSeatRows;
+        private System.Windows.Forms.TextBox txtSeatNumbers;
+        private System.Windows.Forms.Label lblSeatNumbers;
+        private System.Windows.Forms.TextBox txtAuditoriumName;
+        private System.Windows.Forms.Label lblAuditoriumName;
     }
 }

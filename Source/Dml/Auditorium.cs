@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BioBooker.Dml
 {
@@ -12,6 +13,7 @@ namespace BioBooker.Dml
         public int MovieTheaterId { get; set; }
         public int AuditoriumId { get; set; }
         public List<Seat> Seats { get; set; }
+        public string Name { get; set; }
 
         public List<Showing> Showings { get; set; }
 
@@ -19,10 +21,15 @@ namespace BioBooker.Dml
         {
             
         }
-        public Auditorium(List<Seat> seats)
+
+        public Auditorium(List<Seat> seats, string name)
         {
             Seats = seats;
+            Name = name;
         }
-
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

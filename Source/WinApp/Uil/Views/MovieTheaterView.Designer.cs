@@ -28,25 +28,37 @@ namespace BioBooker.WinApp.Uil.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnCreateAuditorium = new System.Windows.Forms.Button();
+            this.btnCreateMovieTheater = new System.Windows.Forms.Button();
+            this.btnCreateAuditoriums = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnCreateAuditorium
+            // btnCreateMovieTheater
             // 
-            this.btnCreateAuditorium.Location = new System.Drawing.Point(55, 56);
-            this.btnCreateAuditorium.Name = "btnCreateAuditorium";
-            this.btnCreateAuditorium.Size = new System.Drawing.Size(121, 23);
-            this.btnCreateAuditorium.TabIndex = 0;
-            this.btnCreateAuditorium.Text = "Create Auditorium";
-            this.btnCreateAuditorium.UseVisualStyleBackColor = true;
-            this.btnCreateAuditorium.Click += new System.EventHandler(this.btnCreateAuditorium_Click);
+            this.btnCreateMovieTheater.Location = new System.Drawing.Point(112, 97);
+            this.btnCreateMovieTheater.Name = "btnCreateMovieTheater";
+            this.btnCreateMovieTheater.Size = new System.Drawing.Size(138, 23);
+            this.btnCreateMovieTheater.TabIndex = 0;
+            this.btnCreateMovieTheater.Text = "Create Movie Theater";
+            this.btnCreateMovieTheater.UseVisualStyleBackColor = true;
+            this.btnCreateMovieTheater.Click += new System.EventHandler(this.btnCreateMovieTheater_Click);
+            // 
+            // btnCreateAuditoriums
+            // 
+            this.btnCreateAuditoriums.Location = new System.Drawing.Point(280, 97);
+            this.btnCreateAuditoriums.Name = "btnCreateAuditoriums";
+            this.btnCreateAuditoriums.Size = new System.Drawing.Size(119, 23);
+            this.btnCreateAuditoriums.TabIndex = 1;
+            this.btnCreateAuditoriums.Text = "Show auditoriums";
+            this.btnCreateAuditoriums.UseVisualStyleBackColor = true;
+            this.btnCreateAuditoriums.Click += new System.EventHandler(this.btnCreateAuditoriums_Click);
             // 
             // MovieTheaterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnCreateAuditorium);
+            this.Controls.Add(this.btnCreateAuditoriums);
+            this.Controls.Add(this.btnCreateMovieTheater);
             this.Name = "MovieTheaterView";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -55,6 +67,7 @@ namespace BioBooker.WinApp.Uil.Views
 
         #endregion
 
-        private System.Windows.Forms.Button btnCreateAuditorium;
+        private System.Windows.Forms.Button btnCreateMovieTheater;
+        private System.Windows.Forms.Button btnCreateAuditoriums;
     }
 }
