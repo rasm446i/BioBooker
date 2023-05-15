@@ -22,6 +22,14 @@ namespace BioBooker.WebApi.Ctl.Controllers
             _movieTheaterBusiness = new MovieTheaterBusiness(_configuration);
 
         }
+        /**
+         * Inserts a new movie theater
+         * 
+         * @param newMovieTheater The new movie theater to be inserted
+         * @returns 201 Created If created movie object was insterted
+         * @returns 400 Bad Request if the movie theater is null
+         * @returns 500 Internal Server Error if the insertion fails
+         */
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MovieTheater newMovieTheater)
         {

@@ -8,7 +8,6 @@ namespace BioBooker.Dml
 {
     public class Seat
     {
-      public bool IsAvailable { get; set; } = true;
       public int SeatNumber { get; set; }
       public int SeatRow { get; set; }
 
