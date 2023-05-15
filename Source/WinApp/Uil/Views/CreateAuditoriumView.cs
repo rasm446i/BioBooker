@@ -39,8 +39,12 @@ namespace BioBooker.WinApp.Uil.Views
                 MovieTheaterController movieTheaterController = new MovieTheaterController();
                 Auditorium newAuditorium = movieTheaterController.CreateAuditorium(seats, auditoriumName);
 
-                // Add the new auditorium to the selected movie theater
-                _selectedMovieTheater.Auditoriums.Add(newAuditorium);
+                var isAdded = MovieTheaterController.AuditoriumAlreadyAdded(newAuditorium, _selectedMovieTheater.Auditoriums);
+                if (!isAdded)
+                {
+                    // Add the new auditorium to the selected movie theater
+                    _selectedMovieTheater.Auditoriums.Add(newAuditorium);
+                }
 
                 // Save changes in the database
                 bool wasInserted = await movieTheaterController.AddAuditoriumToMovieTheaterAsync(_selectedMovieTheater.Id, newAuditorium);

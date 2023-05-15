@@ -125,6 +125,22 @@ namespace BioBooker.WinApp.Uil.Controllers
             return result;
         }
 
+        public static bool AuditoriumAlreadyAdded(Auditorium auditorium, List<Auditorium> audiList)
+        {
+            var insertName = auditorium.Name;
+
+            foreach (var audi in audiList)
+            {
+                if (audi.Name == insertName)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        }
+
 
     }
 
