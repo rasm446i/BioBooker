@@ -62,58 +62,6 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-
-
-
-
-        public async Task<bool> InsertSeats(List<Seat> seats, int auditoriumId)
-        {
-            bool result = false;
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                using (var transaction = await connection.BeginTransactionAsync())
-                {
-                    try
-                    {
-                        await CreateAndInsertSeats(seats, auditoriumId, connection, transaction);
-
-                        transaction.Commit();
-                        result = true;
-
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        transaction.Rollback();
-                        result = false;
-                    }
-                }
-            }
-            return result;
-        }
-        public async Task CreateAndInsertSeats(List<Seat> seats, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
-        {
-            string insertQuery = @"INSERT INTO Seats (SeatNumber, SeatRow, AuditoriumId) VALUES(@SeatNumber, @SeatRow, @AuditoriumId)";
-
-            try
-            {
-                foreach (Seat seat in seats)
-                {
-                    await connection.ExecuteAsync(insertQuery, new { SeatNumber = seat.SeatNumber, SeatRow = seat.SeatRow, AuditoriumId = auditoriumId }, transaction);
-                }
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                throw ex;
-            }
-        }
-
         public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
         {
             bool result = false;
@@ -149,7 +97,7 @@ namespace BioBooker.WebApi.Dal
 
             try
             {
-                string insertQuery = "INSERT INTO Reservation (ShowingId, SeatNumber, SeatRow, AuditoriumId) VALUES (@ShowingId, @SeatNumber, @SeatRow, @AuditoriumId)";
+                string insertQuery = "INSERT INTO SeatReservation (ShowingId, SeatNumber, SeatRow, AuditoriumId) VALUES (@ShowingId, @SeatNumber, @SeatRow, @AuditoriumId)";
 
                 numRowsInserted = await connection.ExecuteAsync(insertQuery, new { ShowingId = reservation.ShowingId, SeatNumber = reservation.SeatNumber, SeatRow = reservation.SeatRow, AuditoriumId = reservation.AuditoriumId }, transaction);
             }
