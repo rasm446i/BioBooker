@@ -50,6 +50,18 @@ namespace BioBooker.WebApi.Dal
             return result;
         }
 
+        public async Task<List<Showing>> GetAllShowingsAsync()
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                string selectQuery = "SELECT * FROM Showing";
+
+                return (await connection.QueryAsync<Showing>(selectQuery)).ToList();
+            }
+        }
+
         public async Task<bool> InsertShowingAsync(Showing showing, IDbConnection connection, IDbTransaction transaction)
         {
             int numRowsInserted = 0;

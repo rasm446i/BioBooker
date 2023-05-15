@@ -48,7 +48,7 @@ namespace BioBooker.WinApp.Bll
             return newShowing;
         }
 
-        public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
+        public async Task<bool> InsertReservationByShowingIdAsync(SeatReservation reservation)
         {
             bool reserved;
             try
@@ -60,6 +60,22 @@ namespace BioBooker.WinApp.Bll
                 reserved = false;
             }
             return reserved;
+        }
+
+        // Retrieves all showings from the sql database.
+        // Returns a list of showings if successful, or null if an error occurs.
+        public async Task<List<Showing>> GetAllShowingsAsync()
+        {
+            List<Showing> showings;
+            try
+            {
+                showings = await _showingService.GetAllShowingsAsync();
+            }
+            catch
+            {
+                showings = null;
+            }
+            return showings;
         }
 
         public SeatReservation CreateReservation(SeatReservation reservation)

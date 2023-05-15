@@ -19,7 +19,10 @@ namespace BioBooker.WebApi.Svl
             _showingRepository = new ShowingRepository(configuration);
         }
 
-
+        public async Task<List<Showing>> GetAllShowingsAsync()
+        {
+            return await _showingRepository.GetAllShowingsAsync();
+        }
 
         public async Task<bool> InsertShowingAsync(Showing showing)
         {
