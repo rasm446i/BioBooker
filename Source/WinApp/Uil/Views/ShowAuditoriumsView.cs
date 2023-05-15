@@ -118,5 +118,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
+        private void buttonAddShowing_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
