@@ -15,8 +15,6 @@ namespace BioBooker.Dml
         public List<Seat> Seats { get; set; }
         public string Name { get; set; }
 
-        public List<Showing> Showings { get; set; }
-
         public Auditorium()
         {
             
