@@ -204,7 +204,7 @@ namespace BioBooker.WebApi.Dal
         }
         public async Task CreateAndInsertSeatsAsync(List<Seat> seats, int auditoriumId, IDbConnection connection, IDbTransaction transaction)
         {
-            string insertQuery = @"INSERT INTO Seats (IsAvailable, SeatNumber, SeatRow, AuditoriumId) VALUES(@IsAvailable, @SeatNumber, @SeatRow, @AuditoriumId)";
+            string insertQuery = @"INSERT INTO Seats ( SeatNumber, SeatRow, AuditoriumId) VALUES( @SeatNumber, @SeatRow, @AuditoriumId)";
 
             foreach (Seat seat in seats)
             {
