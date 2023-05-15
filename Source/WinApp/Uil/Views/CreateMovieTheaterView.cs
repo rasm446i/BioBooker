@@ -13,20 +13,27 @@ namespace BioBooker.WinApp.Uil.Views
             movieTheaterController = new MovieTheaterController();
         }
 
+        /**
+         * Gets input data from CreateMovieTheaterView and validates it. It's then passed on to the MovieTheaterController 
+         * to create a movie theater with an auditorium that contains seats. 
+         */
         private async void btnCreateMovieTheater_Click(object sender, EventArgs e)
         {
+            //Get input data
             string movieTheaterName = txtBoxMovieTheaterName.Text;
             string amountOfRows = txtBoxAmountOfRows.Text;
             string seatsPerRow = txtBoxSeatsPerRow.Text;
             string auditoriumName = txtBoxAuditoriumName.Text;
 
+            //Parse amount of seats per row and amount of rows
             int seatRowsParseResult = MovieTheaterController.TryParseRowAndSeatInput(amountOfRows);
             int seatsPerRowParseResult = MovieTheaterController.TryParseRowAndSeatInput(seatsPerRow);
 
+            //Validate input
             bool isValidMovieTheaterName = MovieTheaterController.IsOnlyLettersAndNotEmpty(movieTheaterName);
             bool isValidAuditoriumName = MovieTheaterController.IsValidAuditoriumNameInputAndNotEmpty(auditoriumName);
 
-            bool wasInserted = false;
+            bool wasInserted;
 
             if (seatRowsParseResult > 0 && seatsPerRowParseResult >= 1 && isValidMovieTheaterName && isValidAuditoriumName)
             {
