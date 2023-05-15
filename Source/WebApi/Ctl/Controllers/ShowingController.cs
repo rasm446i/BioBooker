@@ -5,6 +5,7 @@ using BioBooker.Dml;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using System;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -60,11 +61,11 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        // Retrieves all showings from the database using the GetAllShowingsAsync() method in Showing.
+        // Retrieves showings from the database based on the specified auditorium ID and date using the GetShowingsAsync() method in Showing.
         // Returns Ok(showings) if showings are found, otherwise returns NotFound().
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int auditoriumId, DateTime date)
         {
-            List<Showing> showings = await _showingManager.GetAllShowingsAsync();
+            List<Showing> showings = await _showingManager.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
 
             if (showings == null)
             {
@@ -73,6 +74,8 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             return Ok(showings);
         }
+
+
 
     }
 }

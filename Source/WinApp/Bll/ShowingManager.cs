@@ -39,8 +39,6 @@ namespace BioBooker.WinApp.Bll
             return inserted;
         }
 
-
-
         public Showing CreateShowing(Showing showing)
         {
             Showing newShowing = new Showing(showing.Date, showing.StartTime, showing.EndTime, showing.AuditoriumId, showing.MovieId);
@@ -62,14 +60,14 @@ namespace BioBooker.WinApp.Bll
             return reserved;
         }
 
-        // Retrieves all showings from the sql database.
-        // Returns a list of showings if successful, or null if an error occurs.
-        public async Task<List<Showing>> GetAllShowingsAsync()
+        // Retrieves showings from the sql database based on the auditorium id and date.
+        // Returns a list of the showings if successful, or null if an error occurs.
+        public async Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date)
         {
             List<Showing> showings;
             try
             {
-                showings = await _showingService.GetAllShowingsAsync();
+                showings = await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
             }
             catch
             {

@@ -50,17 +50,18 @@ namespace BioBooker.WebApi.Dal
             return result;
         }
 
-        public async Task<List<Showing>> GetAllShowingsAsync()
+        public async Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
-                string selectQuery = "SELECT * FROM Showing";
+                string selectQuery = "SELECT * FROM Showing WHERE AuditoriumId = @AuditoriumId AND Date = @Date";
 
-                return (await connection.QueryAsync<Showing>(selectQuery)).ToList();
+                return (await connection.QueryAsync<Showing>(selectQuery, new { AuditoriumId = auditoriumId, Date = date })).ToList();
             }
         }
+
 
         public async Task<bool> InsertShowingAsync(Showing showing, IDbConnection connection, IDbTransaction transaction)
         {

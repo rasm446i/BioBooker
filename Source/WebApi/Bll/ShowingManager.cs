@@ -29,9 +29,9 @@ namespace BioBooker.WebApi.Bll
             return await _showingService.InsertReservationByShowingId(reservation);
         }
 
-        public async Task<List<Showing>> GetAllShowingsAsync()
+        public async Task<List<Showing>> GetShowingsByNameAndDateAsync()
         {
-            return await _showingService.GetAllShowingsAsync();
+            return await _showingService.GetShowingsByNameAndDateAsync();
         }
     }
 }

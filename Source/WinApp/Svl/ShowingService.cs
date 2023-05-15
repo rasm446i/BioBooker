@@ -21,17 +21,15 @@ namespace BioBooker.WinApp.Svl
         {
             _serviceConnection = new ServiceConnection(_serviceBaseUrl);
             _controller = new ShowingController(configuration);
-
-
         }
 
-        public async Task<List<Showing>> GetAllShowingsAsync()
+        public async Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date)
         {
             List<Showing> showings = null;
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "showings/";
+                string url = _serviceBaseUrl + "showings?auditoriumId=" + auditoriumId + "&date=" + date.ToString("yyyy-MM-dd");
 
                 try
                 {
@@ -50,6 +48,7 @@ namespace BioBooker.WinApp.Svl
 
             return showings;
         }
+
 
         public async Task<bool> InsertReservationAsync(SeatReservation reservation)
         {
