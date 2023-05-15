@@ -120,6 +120,9 @@ namespace BioBooker.WinApp.Uil.Views
 
         private void buttonAddShowing_Click(object sender, EventArgs e)
         {
+            int auditoriumId = 0; // få den til at get det selected auditorium.
+            CreateShowingView createShowingView = new CreateShowingView(auditoriumId);
+            createShowingView.ShowDialog();
 
         }
     }

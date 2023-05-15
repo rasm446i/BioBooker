@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +12,12 @@ namespace BioBooker.WinApp.Uil.Views
 {
     public partial class CreateShowingView : Form
     {
-        public CreateShowingView()
+
+        private int auditoriumId;
+        public CreateShowingView(int auditoriumId)
         {
             InitializeComponent();
+            this.auditoriumId = auditoriumId;
         }
     }
 }

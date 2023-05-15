@@ -9,10 +9,12 @@ namespace BioBooker.WinApp.Uil.Views
     public partial class CreateAuditoriumView : Form
     {
         private MovieTheater _selectedMovieTheater;
-        public CreateAuditoriumView(MovieTheater movieTheater)
+        private int auditoriumId;
+        public CreateAuditoriumView(MovieTheater movieTheater, int auditoriumId)
         {
             InitializeComponent();
             _selectedMovieTheater = movieTheater;
+            this.auditoriumId = auditoriumId;
         }
 
         private async void btnCreateAuditorium_Click(object sender, EventArgs e)
