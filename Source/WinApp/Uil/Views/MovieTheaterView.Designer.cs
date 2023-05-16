@@ -34,9 +34,10 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // btnCreateMovieTheater
             // 
-            this.btnCreateMovieTheater.Location = new System.Drawing.Point(112, 97);
+            this.btnCreateMovieTheater.Location = new System.Drawing.Point(96, 129);
+            this.btnCreateMovieTheater.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCreateMovieTheater.Name = "btnCreateMovieTheater";
-            this.btnCreateMovieTheater.Size = new System.Drawing.Size(138, 23);
+            this.btnCreateMovieTheater.Size = new System.Drawing.Size(190, 31);
             this.btnCreateMovieTheater.TabIndex = 0;
             this.btnCreateMovieTheater.Text = "Create Movie Theater";
             this.btnCreateMovieTheater.UseVisualStyleBackColor = true;
@@ -44,9 +45,10 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // btnCreateAuditoriums
             // 
-            this.btnCreateAuditoriums.Location = new System.Drawing.Point(280, 97);
+            this.btnCreateAuditoriums.Location = new System.Drawing.Point(320, 129);
+            this.btnCreateAuditoriums.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btnCreateAuditoriums.Name = "btnCreateAuditoriums";
-            this.btnCreateAuditoriums.Size = new System.Drawing.Size(119, 23);
+            this.btnCreateAuditoriums.Size = new System.Drawing.Size(136, 31);
             this.btnCreateAuditoriums.TabIndex = 1;
             this.btnCreateAuditoriums.Text = "Show auditoriums";
             this.btnCreateAuditoriums.UseVisualStyleBackColor = true;
@@ -54,11 +56,12 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // MovieTheaterView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(914, 600);
             this.Controls.Add(this.btnCreateAuditoriums);
             this.Controls.Add(this.btnCreateMovieTheater);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MovieTheaterView";
             this.Text = "Form1";
             this.ResumeLayout(false);
