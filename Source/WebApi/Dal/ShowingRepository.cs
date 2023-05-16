@@ -65,13 +65,37 @@ namespace BioBooker.WebApi.Dal
 
         public async Task<bool> InsertShowingAsync(Showing showing, IDbConnection connection, IDbTransaction transaction)
         {
-            int numRowsInserted = 0;
+            int showingId = 0;
 
-            string insertQuery = "INSERT INTO Showing (Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES (@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId)";
+            string insertQuery = "INSERT INTO Showing(Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES(@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId); SELECT CAST(SCOPE_IDENTITY() as int)";
 
-            numRowsInserted = await connection.ExecuteAsync(insertQuery, showing, transaction);
+            showingId = await connection.ExecuteScalarAsync<int>(insertQuery, showing, transaction);
 
-            return numRowsInserted > 0;
+
+            // insert Seats I SeatRES
+
+            List<Seat> seats = await GetAllSeatsFromAuditoriumIdAsync(showing.AuditoriumId);
+
+            string insertQuerySeatRes = "INSERT INTO SeatReservation (ShowingId, AuditoriumId, SeatRow, SeatNumber, CustomerId) VALUES (@ShowingId, @AuditoriumId, @SeatRow, @SeatNumber, @CustomerId)";
+
+            foreach (Seat seat in seats)
+            {
+                int customerId = 0;
+                SeatReservation seatReservation = new SeatReservation(showing.AuditoriumId, seat.SeatRow, seat.SeatNumber, showingId, customerId);
+                await connection.ExecuteAsync(insertQuerySeatRes, new { CustomerId = customerId, SeatRow = seat.SeatRow, SeatNumber = seat.SeatNumber, showing.AuditoriumId, ShowingId = showingId }, transaction);
+            }
+            return showingId > 0;
+        }
+
+
+        private async Task<List<Seat>> GetAllSeatsFromAuditoriumIdAsync(int auditoriumId)
+        {
+            string query = "SELECT * FROM Seats WHERE AuditoriumId = @Id";
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                List<Seat> seats = (await connection.QueryAsync<Seat>(query, new { Id = auditoriumId })).ToList();
+                return seats;
+            }
         }
 
 
@@ -122,12 +146,6 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-        // Checking seat availability before reservation
-        //public async Task<bool> IsSeatAvailableAsync(int seatNumber, int seatRow, int auditoriumId)
-        //{
-        //Compare seatRes
-
-        //}
 
     }
 

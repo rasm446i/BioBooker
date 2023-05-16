@@ -76,12 +76,5 @@ namespace BioBooker.WinApp.Bll
             return showings;
         }
 
-        public SeatReservation CreateReservation(SeatReservation reservation)
-        {
-            SeatReservation newReservation = new SeatReservation(reservation.AuditoriumId, reservation.SeatRow, reservation.SeatNumber, reservation.ShowingId);
-            
-
-            return newReservation;
-        }
     }
 }
