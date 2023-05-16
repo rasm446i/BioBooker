@@ -165,7 +165,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonAddShowing.Name = "buttonAddShowing";
             this.buttonAddShowing.Size = new System.Drawing.Size(109, 23);
             this.buttonAddShowing.TabIndex = 16;
-            this.buttonAddShowing.Text = "Add Showing";
+            this.buttonAddShowing.Text = "Show showings";
             this.buttonAddShowing.UseVisualStyleBackColor = true;
             this.buttonAddShowing.Click += new System.EventHandler(this.buttonAddShowing_Click);
             // 
