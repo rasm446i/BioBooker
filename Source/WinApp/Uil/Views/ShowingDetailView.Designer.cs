@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonUpdate = new System.Windows.Forms.Button();
             this.buttonDetails = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
@@ -40,18 +39,9 @@
             this.labelNoShowingsFound = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // buttonUpdate
-            // 
-            this.buttonUpdate.Location = new System.Drawing.Point(12, 344);
-            this.buttonUpdate.Name = "buttonUpdate";
-            this.buttonUpdate.Size = new System.Drawing.Size(75, 23);
-            this.buttonUpdate.TabIndex = 0;
-            this.buttonUpdate.Text = "Update";
-            this.buttonUpdate.UseVisualStyleBackColor = true;
-            // 
             // buttonDetails
             // 
-            this.buttonDetails.Location = new System.Drawing.Point(114, 344);
+            this.buttonDetails.Location = new System.Drawing.Point(12, 344);
             this.buttonDetails.Name = "buttonDetails";
             this.buttonDetails.Size = new System.Drawing.Size(75, 23);
             this.buttonDetails.TabIndex = 1;
@@ -115,7 +105,7 @@
             // 
             this.textBoxSearchShowing.Location = new System.Drawing.Point(114, 304);
             this.textBoxSearchShowing.Name = "textBoxSearchShowing";
-            this.textBoxSearchShowing.PlaceholderText = "Title...";
+            this.textBoxSearchShowing.PlaceholderText = "Movie Title...";
             this.textBoxSearchShowing.Size = new System.Drawing.Size(141, 23);
             this.textBoxSearchShowing.TabIndex = 9;
             // 
@@ -127,7 +117,7 @@
             this.labelNoShowingsFound.Size = new System.Drawing.Size(0, 15);
             this.labelNoShowingsFound.TabIndex = 10;
             // 
-            // CreateShowingView
+            // ShowingDetailView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -141,17 +131,14 @@
             this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.buttonDetails);
-            this.Controls.Add(this.buttonUpdate);
-            this.Name = "CreateShowingView";
-            this.Text = "CreateShowingView";
+            this.Name = "ShowingDetailView";
+            this.Text = "ShowingDetailView";
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button buttonUpdate;
         private System.Windows.Forms.Button buttonDetails;
         private System.Windows.Forms.Button buttonCreate;
         private System.Windows.Forms.Button buttonDelete;

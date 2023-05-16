@@ -67,7 +67,7 @@ namespace BioBooker.WebApi.Dal
         {
             int showingId = 0;
 
-            string insertQuery = "INSERT INTO Showing(Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES(@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId); SELECT CAST(SCOPE_IDENTITY() as int)";
+            string insertQuery = "INSERT INTO Showing(Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES(@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId); SELECT SCOPE_IDENTITY()";
 
             showingId = await connection.ExecuteScalarAsync<int>(insertQuery, showing, transaction);
 
