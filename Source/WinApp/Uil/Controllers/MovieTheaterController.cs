@@ -9,10 +9,10 @@ namespace BioBooker.WinApp.Uil.Controllers
 {
     public class MovieTheaterController
     {
-        private MovieTheaterBusinessController _movieTheaterBusinessController;
+        private IMovieTheaterManager _movieTheaterManager;
         public MovieTheaterController()
         {
-            _movieTheaterBusinessController = new MovieTheaterBusinessController();
+            _movieTheaterManager = new MovieTheaterManager();
         }
 
         public async Task<bool> CreateSeatsAndMovieTheaterFromUserInputAsync(string movieTheaterName, int amountOfRows, int seatsPerRow, string auditoriumName)
@@ -21,7 +21,7 @@ namespace BioBooker.WinApp.Uil.Controllers
             List<Seat> generatedSeats = GetGeneratedSeats(amountOfRows, seatsPerRow);
 
             // Create a movie theater with the provided name, generated seats and auditorium name
-            bool wasInserted = await _movieTheaterBusinessController.CreateMovieTheaterAndInsertAsync(movieTheaterName, generatedSeats, auditoriumName);
+            bool wasInserted = await _movieTheaterManager.CreateMovieTheaterAndInsertAsync(movieTheaterName, generatedSeats, auditoriumName);
 
             return wasInserted;
         }
@@ -47,12 +47,12 @@ namespace BioBooker.WinApp.Uil.Controllers
 
         public async Task<List<MovieTheater>> GetMovieTheaterListAsync()
         {
-            return await _movieTheaterBusinessController.GetMovieTheatersAsync();
+            return await _movieTheaterManager.GetMovieTheatersAsync();
         }
 
         public async Task<bool> AddAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
         {
-            bool wasInserted = await _movieTheaterBusinessController.AddAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
+            bool wasInserted = await _movieTheaterManager.AddAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
 
             return wasInserted;
         }
@@ -113,7 +113,7 @@ namespace BioBooker.WinApp.Uil.Controllers
 
         public Auditorium CreateAuditorium(List<Seat> seats, string AuditoriumName)
         {
-            return _movieTheaterBusinessController.CreateAuditorium(seats, AuditoriumName);
+            return _movieTheaterManager.CreateAuditorium(seats, AuditoriumName);
 
         }
         public static int TryParseRowAndSeatInput(string input)

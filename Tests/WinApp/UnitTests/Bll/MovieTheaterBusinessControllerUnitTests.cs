@@ -8,11 +8,11 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 {
     public class MovieTheaterBusinessControllerUnitTests
     {
-        private readonly MovieTheaterBusinessController _movieTheaterBusinessController;
+        private readonly MovieTheaterManager _movieTheaterBusinessController;
 
         public MovieTheaterBusinessControllerUnitTests()
         {
-            _movieTheaterBusinessController = new MovieTheaterBusinessController();
+            _movieTheaterBusinessController = new MovieTheaterManager();
         }
 
         [Fact]

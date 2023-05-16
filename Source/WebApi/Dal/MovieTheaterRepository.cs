@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Dal
 {
-    public class MovieTheaterDb : IMovieTheaterDb
+    public class MovieTheaterRepository : IMovieTheaterRepository
     {
         private readonly string? _connectionString;
 
         private IConfiguration Configuration;
 
-        public MovieTheaterDb(IConfiguration configuration)
+        public MovieTheaterRepository(IConfiguration configuration)
         {
             Configuration = configuration;
             _connectionString = Configuration.GetConnectionString("ConnectionString");

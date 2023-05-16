@@ -5,17 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BioBooker.WebApi.Svl
+namespace BioBooker.WebApi.Dal
 {
-    public interface IMovieTheaterServiceApi
+    public interface IMovieTheaterRepository
     {
-        public Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id);
+        public Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater);
         public Task<List<MovieTheater>> GetAllMovieTheatersAsync();
-        public Task<bool> InsertMovieTheaterAsync(MovieTheater newTheater);
-        public Task<bool> InsertSeatsAsync(List<Seat> seats, int auditoriumId);
+        public Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id);
         public Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium);
+        public Task<bool> InsertSeatsAsync(List<Seat> seats, int auditoriumId);
         public Task<Auditorium> GetAuditoriumByNameAndMovieTheaterIdAsync(string auditoriumName, int movieTheaterId);
-
-
     }
 }

@@ -72,11 +72,11 @@ CREATE TABLE MovieTheaters(
           PosterTitle NVARCHAR(255) NOT NULL,
           ImageData VARBINARY(MAX) NOT NULL
 );";
-        private MovieTheaterBusinessController _movieTheaterBusinessController;
+        private MovieTheaterManager _movieTheaterBusinessController;
 
         public MovieTheaterBusinessControllerTests()
         {
-            _movieTheaterBusinessController = new MovieTheaterBusinessController();
+            _movieTheaterBusinessController = new MovieTheaterManager();
         }
 
         [Fact]

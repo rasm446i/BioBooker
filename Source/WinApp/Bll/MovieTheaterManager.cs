@@ -8,10 +8,10 @@ using BioBooker.WinApp.Svl;
 
 namespace BioBooker.WinApp.Bll
 {
-    public class MovieTheaterBusinessController
+    public class MovieTheaterManager : IMovieTheaterManager
     {
         readonly IMovieTheaterService _movieTheaterService;
-        public MovieTheaterBusinessController()
+        public MovieTheaterManager()
         {
             _movieTheaterService = new MovieTheaterService();
         }

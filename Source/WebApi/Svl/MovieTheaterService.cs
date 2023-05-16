@@ -10,20 +10,21 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Svl
 {
-    public class MovieTheaterServiceApi : IMovieTheaterServiceApi
+    public class MovieTheaterService : IMovieTheaterService
     {
 
-        private readonly IMovieTheaterDb _movieTheaterDb;
+        private readonly IMovieTheaterRepository _MovieTheaterRepository;
 
-        public MovieTheaterServiceApi(IConfiguration configuration) {
-            _movieTheaterDb = new MovieTheaterDb(configuration);
+        public MovieTheaterService(IConfiguration configuration) 
+        {
+            _MovieTheaterRepository = new MovieTheaterRepository(configuration);
         }
 
         public async Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater)
         {
             bool wasInserted;
 
-            wasInserted = await _movieTheaterDb.InsertMovieTheaterAsync(newMovieTheater);
+            wasInserted = await _MovieTheaterRepository.InsertMovieTheaterAsync(newMovieTheater);
 
             return wasInserted;
         }
@@ -32,26 +33,26 @@ namespace BioBooker.WebApi.Svl
         {
             bool wasInserted;
 
-            wasInserted = await _movieTheaterDb.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
+            wasInserted = await _MovieTheaterRepository.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
 
             return wasInserted;
         }
         public async Task<Auditorium> GetAuditoriumByNameAndMovieTheaterIdAsync(string auditoriumName, int movieTheaterId)
         {
-            Auditorium foundAuditorium = await _movieTheaterDb.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
+            Auditorium foundAuditorium = await _MovieTheaterRepository.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
 
             return foundAuditorium;
         }
         public async Task<List<MovieTheater>> GetAllMovieTheatersAsync()
         {
-          List<MovieTheater> movieTheaterList = await _movieTheaterDb.GetAllMovieTheatersAsync();
+          List<MovieTheater> movieTheaterList = await _MovieTheaterRepository.GetAllMovieTheatersAsync();
 
             return movieTheaterList;   
         }
 
         public async Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id)
         {
-            List<Auditorium> auditoriums = await _movieTheaterDb.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
+            List<Auditorium> auditoriums = await _MovieTheaterRepository.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
 
             return auditoriums;
 
@@ -59,7 +60,7 @@ namespace BioBooker.WebApi.Svl
 
         public async Task<bool> InsertSeatsAsync(List<Seat> seats, int auditoriumId)
         {
-            return await _movieTheaterDb.InsertSeatsAsync(seats, auditoriumId);
+            return await _MovieTheaterRepository.InsertSeatsAsync(seats, auditoriumId);
         }
     }
 }

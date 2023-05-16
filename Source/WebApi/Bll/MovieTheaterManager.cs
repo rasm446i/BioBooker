@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Bll
 {
-    public class MovieTheaterBusinessController
+    public class MovieTheaterManager : IMovieTheaterManager
     {
 
-        private readonly IMovieTheaterServiceApi _movieTheaterServiceApi;
-        public MovieTheaterBusinessController(IConfiguration configuration)
+        private readonly IMovieTheaterService _movieTheaterServiceApi;
+        public MovieTheaterManager(IConfiguration configuration)
         {
-            _movieTheaterServiceApi = new MovieTheaterServiceApi(configuration);
+            _movieTheaterServiceApi = new MovieTheaterService(configuration);
         }
 
         public async Task<bool> InsertMovieTheaterAsync(MovieTheater newMovieTheater)
