@@ -66,6 +66,7 @@ namespace BioBooker.WebApi.Dal
             string query = "SELECT * FROM Auditorium WHERE MovieTheaterId = @Id";
             using (var connection = new SqlConnection(_connectionString))
             {
+                // Execute the SQL query to retrieve all auditoriums that belong to the given movie theater ID
                 List<Auditorium> auditoriums = (await connection.QueryAsync<Auditorium>(query, new { Id = movieTheaterId })).ToList();
                 return auditoriums;
             }
