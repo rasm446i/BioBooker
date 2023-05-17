@@ -13,10 +13,12 @@ namespace BioBooker.WinApp.Uil.Views
             movieTheaterController = new MovieTheaterController();
         }
 
-        /**
-         * Gets input data from CreateMovieTheaterView and validates it. It's then passed on to the MovieTheaterController 
-         * to create a movie theater with an auditorium that contains seats. 
-         */
+        /// <summary>
+        /// Gets input data from the CreateMovieTheaterView form and validates it. 
+        /// It is then passed on to the MovieTheaterController where the list of seats will be created.
+        /// The list of seats, movie theater name and auditorium name are then passed to the MovieTheaterManager to create the movie theater
+        /// </summary>
+
         private async void btnCreateMovieTheater_Click(object sender, EventArgs e)
         {
             //Get input data

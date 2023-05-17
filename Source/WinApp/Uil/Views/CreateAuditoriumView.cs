@@ -15,6 +15,11 @@ namespace BioBooker.WinApp.Uil.Views
             _selectedMovieTheater = movieTheater;
         }
 
+        /// <summary>
+        /// Event handler for the Click event of the btnCreateAuditorium button.
+        /// Creates a new auditorium with the specified seat rows, seats per row and auditorium name.
+        /// Also adds it to the selected movie theater in the database
+        /// </summary>
         private async void btnCreateAuditorium_Click(object sender, EventArgs e)
         {
             // Get the data from the textboxes
