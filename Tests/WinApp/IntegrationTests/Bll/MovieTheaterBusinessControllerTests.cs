@@ -83,7 +83,7 @@ CREATE TABLE MovieTheaters(
         public async Task CreateMovieTheaterAndInsertAsync_ReturnsTrue_WhenMovieTheaterHasBeenInserted()
         {
             ResetDatabase();
-
+            
             //arrange
             string movieTheaterName = "Movie Theater";
             string auditoriumName = "Auditorium 1";
@@ -125,9 +125,7 @@ CREATE TABLE MovieTheaters(
             //assert
             Assert.True(result);
 
-          
         }
-
 
         public void ResetDatabase()
         {
@@ -135,7 +133,6 @@ CREATE TABLE MovieTheaters(
             {
                 connection.Open();
                 connection.Execute(_sqlScript);
-                connection.Close();
             }
         }
     }

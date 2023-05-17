@@ -23,17 +23,16 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
         }
 
-        /**
-         * HTTP POST request that inserts a new movie theater
-         * 
-         * Route: api/movieTheaters
-         * 
-         * @param newMovieTheater The new movie theater to be inserted
-         * @returns 201 Created If created movie object was inserted
-         * @returns 400 Bad Request if the movie theater is null
-         * @returns 500 Internal Server Error if the insertion fails
-         */
-
+        /// <summary>
+        /// Inserts a new movie theater into the database asynchronously.
+        /// </summary>
+        /// <param name="newMovieTheater">The new movie theater to be inserted.</param>
+        /// <returns>
+        /// Returns the appropriate action result based on the success of the insertion:
+        /// - 201 Created: If the movie theater was successfully inserted.
+        /// - 400 Bad Request: If the movie theater object is null.
+        /// - 500 Internal Server Error: If the insertion fails.
+        /// </returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MovieTheater newMovieTheater)
         {
@@ -52,15 +51,14 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return StatusCode(500);
         }
 
-        /**
-         * HTTP Get request that retrieves a list of all the movie theaters in the database
-         * 
-         * Route: api/movieTheaters
-         * 
-         * @returns 200 OK if the list of movie theaters have been retrieved from the database
-         * @returns 404 Not Found if no movie theaters have been found
-         */
-
+        /// <summary>
+        /// Retrieves all movie theaters from the database asynchronously.
+        /// </summary>
+        /// <returns>
+        /// Returns the appropriate action result based on the availability of movie theaters:
+        /// - 200 OK: If movie theaters are found and returned successfully.
+        /// - 404 Not Found: If no movie theaters are found.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -72,6 +70,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
             }
             return Ok(movieTheaters);
         }
+
 
         [HttpGet, Route("{id}/Auditoriums")]
         public async Task<IActionResult> Get([FromRoute] int id)

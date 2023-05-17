@@ -215,7 +215,7 @@ namespace BioBooker.WinApp.UnitTests.Uil.Controllers
             new Seat(2, 1),
             new Seat(1, 2),
             new Seat(2, 2)
-             };
+            };
 
             //act
             Auditorium newAuditorium = _movieTheaterController.CreateAuditorium(seats, auditoriumName);

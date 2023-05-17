@@ -6,13 +6,13 @@ using Xunit;
 
 namespace BioBooker.WinApp.IntegrationTests.Bll
 {
-    public class MovieTheaterBusinessControllerUnitTests
+    public class MovieTheaterManagerUnitTests
     {
-        private readonly MovieTheaterManager _movieTheaterBusinessController;
+        private readonly MovieTheaterManager _movieTheaterManager;
 
-        public MovieTheaterBusinessControllerUnitTests()
+        public MovieTheaterManagerUnitTests()
         {
-            _movieTheaterBusinessController = new MovieTheaterManager();
+            _movieTheaterManager = new MovieTheaterManager();
         }
 
         [Fact]
@@ -30,7 +30,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
                  };
 
             // Act
-            Auditorium auditorium = _movieTheaterBusinessController.CreateAuditorium(seats, auditoriumName);
+            Auditorium auditorium = _movieTheaterManager.CreateAuditorium(seats, auditoriumName);
 
             // Assert
             Assert.Equal(auditoriumName, auditorium.Name);
@@ -58,10 +58,10 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             new Seat(1, 2),
             new Seat(2, 2)
             };
-            Auditorium newAuditorium = _movieTheaterBusinessController.CreateAuditorium(seats, movieTheaterName);
+            Auditorium newAuditorium = _movieTheaterManager.CreateAuditorium(seats, movieTheaterName);
 
             //act
-            MovieTheater newMovieTheater = _movieTheaterBusinessController.CreateMovieTheater(movieTheaterName, newAuditorium);
+            MovieTheater newMovieTheater = _movieTheaterManager.CreateMovieTheater(movieTheaterName, newAuditorium);
 
             //assert
             Assert.NotNull(newMovieTheater);

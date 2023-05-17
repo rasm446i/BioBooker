@@ -197,6 +197,7 @@ namespace BioBooker.WinApp.Uil.Controllers
                 // is the same as the one that is being added
                 if (currentAuditorium.Name == nameToCheck)
                 {
+                    // Returns true to indicate it already exists
                     return true;
                 }
 
