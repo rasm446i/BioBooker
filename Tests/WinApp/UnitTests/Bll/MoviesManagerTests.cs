@@ -15,16 +15,16 @@ namespace BioBooker.WinApp.UnitTests.Bll
 
     public class MoviesManagerTests
     {
-        private MoviesManager moviesManager;
-        private Base64EncodedImage utl;
-        private IConfiguration configuration;
+        private MoviesManager _moviesManager;
+        private Base64EncodedImage _utl;
+        private IConfiguration _configuration;
 
         public MoviesManagerTests()
         {
             // Set up the configuration object with necessary configuration values
 
-            utl = new Base64EncodedImage();
-            moviesManager = new MoviesManager(configuration);
+            _utl = new Base64EncodedImage();
+            _moviesManager = new MoviesManager(_configuration);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace BioBooker.WinApp.UnitTests.Bll
             // Arrange
             var imagePath = @"INSERT IMAGE PATH";
 
-            var imageData = utl.GenerateImageData(imagePath);
+            var imageData = _utl.GenerateImageData(imagePath);
 
             var movie = new Movie
             {
@@ -57,7 +57,7 @@ namespace BioBooker.WinApp.UnitTests.Bll
             };
 
             // Act
-            Movie createdMovie = moviesManager.CreateMovie(movie);
+            Movie createdMovie = _moviesManager.CreateMovie(movie);
 
             // Assert
             Assert.NotNull(createdMovie);
@@ -77,13 +77,12 @@ namespace BioBooker.WinApp.UnitTests.Bll
         }
 
         [Fact]
-        public async Task CreateMovie_WithInvalidMovieData_ReturnsFalse()
+        public async Task CreateMovie_EmptyMPARating_ReturnsFalse()
         {
-            //NEEDS BUSINESS LOGIC
             // Arrange
             var imagePath = @"INSERT IMAGE PATH";
 
-            var imageData = utl.GenerateImageData(imagePath);
+            var imageData = _utl.GenerateImageData(imagePath);
 
             var movie = new Movie
             {
@@ -107,10 +106,50 @@ namespace BioBooker.WinApp.UnitTests.Bll
             };
 
             // Act
-            Movie createdMovie = moviesManager.CreateMovie(movie);
+            Movie createdMovie = _moviesManager.CreateMovie(movie);
 
             // Assert
             Assert.Null(createdMovie);
+        }
+
+        [Fact]
+        public void CreateMovie_NullTitle_ThrowsArgumentException()
+        {
+            // Arrange
+            var imagePath = @"INSERT IMAGE PATH";
+
+            var imageData = _utl.GenerateImageData(imagePath);
+
+            Movie movie = new Movie
+            {
+                // Set title to null
+                Title = null,
+                Genre = "Action",
+                Actors = "John Doe, Jane Doe",
+                Director = "John Smith",
+                Language = "English",
+                ReleaseYear = "2022",
+                Subtitles = 1,
+                SubtitlesLanguage = "English",
+                MPARating = "PG-13",
+                RuntimeMinutes = 120,
+                Poster = new Poster("Test Movie Poster", imageData)
+            };
+
+            var poster = new Poster
+            {
+                PosterTitle = "Test Movie Poster",
+                ImageData = imageData
+            };
+
+            // Act & Assert
+            Movie createdMovie = _moviesManager.CreateMovie(movie);
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                // This code should throw an ArgumentException
+                _moviesManager.CreateMovie(movie);
+            });
         }
     }
 }

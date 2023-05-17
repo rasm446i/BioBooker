@@ -1,5 +1,6 @@
 using BioBooker.Dml;
 using BioBooker.WinApp.Uil.Controllers;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace BioBooker.WinApp.Uil.Views
     public partial class ShowAuditoriumsView : Form
     {
         private MovieTheaterController movieTheaterController;
+        private IConfiguration configuration;
         public ShowAuditoriumsView()
         {
             InitializeComponent();
@@ -120,10 +122,17 @@ namespace BioBooker.WinApp.Uil.Views
 
         private void buttonAddShowing_Click(object sender, EventArgs e)
         {
-            int auditoriumId = 0; // få den til at get det selected auditorium.
-            ShowingDetailView createShowingView = new ShowingDetailView(auditoriumId);
-            createShowingView.ShowDialog();
+            Auditorium selectedAuditorium = (Auditorium)ListBoxOfAuditoriums.SelectedItem;
+            if (selectedAuditorium != null)
+            {
 
+                ShowingDetailView createShowingView = new ShowingDetailView(selectedAuditorium, configuration);
+                createShowingView.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("No auditorium chosen");
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)

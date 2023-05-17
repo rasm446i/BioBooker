@@ -6,99 +6,140 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 
-namespace BioBooker.WebApi.Ctl.Controllers;
-
-[Route("movies")]
-[ApiController]
-public class MoviesController : ControllerBase
+namespace BioBooker.WebApi.Ctl.Controllers
 {
-
-    private readonly IConfiguration _configuration;
-    private readonly IMoviesManager _moviesManager;
-
-    // Constructor
-    public MoviesController(IConfiguration inConfiguration)
+    [Route("movies")]
+    [ApiController]
+    public class MoviesController : ControllerBase
     {
-        _configuration = inConfiguration;
-        _moviesManager = new MoviesManager(_configuration);
-    }
+        private readonly IConfiguration _configuration;
+        private readonly IMoviesManager _moviesManager;
 
-    [HttpPost]
-    [AllowAnonymous]
-    // Inserts a new movie into the database using the _moviesManager.InsertMovieAsync() method.
-    // Returns Ok() if the insertion was successful, otherwise returns a StatusCodeResult with code 500.
-    public async Task<IActionResult> Post([FromBody] Movie movie)
-    {
-        IActionResult inserted;
-        bool wasOk = await _moviesManager.InsertMovieAsync(movie);
-        if (wasOk)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MoviesController"/> class.
+        /// </summary>
+        /// <param name="inConfiguration">The configuration object.</param>
+        public MoviesController(IConfiguration inConfiguration)
         {
-            inserted = Ok();
+            _configuration = inConfiguration;
+            _moviesManager = new MoviesManager(_configuration);
         }
-        else
+
+        /// <summary>
+        /// Inserts a new movie into the database.
+        /// </summary>
+        /// <param name="movie">The movie to insert.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Post([FromBody] Movie movie)
         {
-            inserted = new StatusCodeResult(500);
+            IActionResult inserted;
+            bool wasOk = await _moviesManager.InsertMovieAsync(movie);
+            if (wasOk)
+            {
+                inserted = Ok();
+            }
+            else
+            {
+                inserted = new StatusCodeResult(500);
+            }
+            return inserted;
         }
-        return inserted;
-    }
 
-    [HttpGet]
-    [AllowAnonymous]
-    // Retrieves a movie from the database by its title using the _moviesManager.GetMovieByTitleAsync() method.
-    // Returns Ok(movie) if the movie is found, otherwise returns NotFound().
-    public async Task<IActionResult> Get([FromQuery] string title)
-    {
-        Movie movie = await _moviesManager.GetMovieByTitleAsync(title);
-
-        if (movie == null)
+        /// <summary>
+        /// Retrieves a movie from the database by its title.
+        /// </summary>
+        /// <param name="title">The title of the movie.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByTitle([FromQuery] string title)
         {
+            Movie movie = await _moviesManager.GetMovieByTitleAsync(title);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(movie);
+        }
+
+        /// <summary>
+        /// Retrieves a movie from the database by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
+        [HttpGet("id/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+            Movie movie = await _moviesManager.GetMovieByIdAsync(id);
+
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(movie);
+        }
+
+        /// <summary>
+        /// Retrieves all movies from the database.
+        /// </summary>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
+        [HttpGet("all")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Get()
+        {
+            List<Movie> movies = await _moviesManager.GetAllMoviesAsync();
+
+            if (movies == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(movies);
+        }
+
+        /// <summary>
+        /// Deletes a movie from the database by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie to delete.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
+        [HttpDelete("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Delete(int id)
+        {
+            bool wasDeleted = await _moviesManager.DeleteMovieByIdAsync(id);
+
+            if (wasDeleted)
+            {
+                return Ok();
+            }
+
             return NotFound();
         }
 
-        return Ok(movie);
-    }
-
-    [HttpGet("all")]
-    [AllowAnonymous]
-    // Retrieves all movies from the database using the _moviesManager.GetAllMoviesAsync() method.
-    // Returns Ok(movies) if movies are found, otherwise returns NotFound().
-    public async Task<IActionResult> Get()
-    {
-        List<Movie> movies = await _moviesManager.GetAllMoviesAsync();
-
-        if (movies == null)
+        /// <summary>
+        /// Updates a movie in the database by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie to update.</param>
+        /// <param name="updatedMovie">The updated movie object.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
+        [HttpPut("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Put(int id, [FromBody] Movie updatedMovie)
         {
+            bool wasUpdated = await _moviesManager.UpdateMovieByIdAsync(id, updatedMovie);
+
+            if (wasUpdated)
+            {
+                return Ok();
+            }
+
             return NotFound();
         }
-
-        return Ok(movies);
-    }
-
-    [HttpDelete("{id}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Delete(int id)
-    {
-        bool wasDeleted = await _moviesManager.DeleteMovieByIdAsync(id);
-
-        if (wasDeleted)
-        {
-            return Ok();
-        }
-
-        return NotFound();
-    }
-
-    [HttpPut("{id}")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Put(int id, [FromBody] Movie updatedMovie)
-    {
-        bool wasUpdated = await _moviesManager.UpdateMovieByIdAsync(id, updatedMovie);
-
-        if (wasUpdated)
-        {
-            return Ok();
-        }
-
-        return NotFound();
     }
 }

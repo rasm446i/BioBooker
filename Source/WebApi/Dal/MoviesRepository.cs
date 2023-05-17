@@ -17,12 +17,12 @@ namespace BioBooker.WebApi.Dal
     {
         private readonly string _connectionString;
 
-        private IConfiguration Configuration;
+        private IConfiguration _configuration;
 
         public MoviesRepository(IConfiguration configuration)
         {
-            Configuration = configuration;
-            _connectionString = Configuration.GetConnectionString("ConnectionString");
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("ConnectionString");
         }
 
         /// <summary>
@@ -182,6 +182,39 @@ namespace BioBooker.WebApi.Dal
                 return movie;
             }
         }
+
+        /// <summary>
+        /// Retrieves a movie from the database based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The retrieved movie object, or null if no movie is found.</returns>
+        public async Task<Movie> GetMovieByIdAsync(int id)
+        {
+            string sqlQuery = @"SELECT * FROM Movies WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var parameters = new { Id = id };
+                var movie = await connection.QueryFirstOrDefaultAsync<Movie>(sqlQuery, parameters);
+
+                if (movie != null)
+                {
+                    // Retrieve the poster for the movie
+                    string sqlPosterQuery = @"SELECT * FROM Posters WHERE MovieId = @MovieId";
+                    var posterParameters = new { MovieId = movie.Id };
+                    var poster = await connection.QueryFirstOrDefaultAsync<Poster>(sqlPosterQuery, posterParameters);
+
+                    if (poster != null)
+                    {
+                        movie.Poster = poster;
+                    }
+                }
+
+                return movie;
+            }
+        }
+
 
         /// <summary>
         /// Retrieves all movies from the database.

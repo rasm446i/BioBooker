@@ -15,14 +15,23 @@ namespace BioBooker.WebApi.Dal
     {
         private readonly string _connectionString;
 
-        private IConfiguration Configuration;
+        private IConfiguration _configuration;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShowingRepository"/> class.
+        /// </summary>
+        /// <param name="configuration">The configuration object.</param>
         public ShowingRepository(IConfiguration configuration)
         {
-            Configuration = configuration;
-            _connectionString = Configuration.GetConnectionString("ConnectionString");
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("ConnectionString");
         }
 
-
+        /// <summary>
+        /// Adds a new showing to the database.
+        /// </summary>
+        /// <param name="showing">The showing to add.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a value indicating whether the showing was added successfully.</returns>
         public async Task<bool> AddShowingAsync(Showing showing)
         {
             bool result = false;
@@ -50,6 +59,12 @@ namespace BioBooker.WebApi.Dal
             return result;
         }
 
+        /// <summary>
+        /// Retrieves showings from the database based on the specified auditorium ID and date.
+        /// </summary>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <param name="date">The date of the showings.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a list of showings.</returns>
         public async Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -62,17 +77,35 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+        /// <summary>
+        /// Retrieves all seats from the database for a given auditorium ID.
+        /// </summary>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a list of seats.</returns>
+        private async Task<List<Seat>> GetAllSeatsFromAuditoriumIdAsync(int auditoriumId)
+        {
+            string query = "SELECT * FROM Seats WHERE AuditoriumId = @Id";
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                List<Seat> seats = (await connection.QueryAsync<Seat>(query, new { Id = auditoriumId })).ToList();
+                return seats;
+            }
+        }
 
-        public async Task<bool> InsertShowingAsync(Showing showing, IDbConnection connection, IDbTransaction transaction)
+        /// <summary>
+        /// Inserts a showing into the database.
+        /// </summary>
+        /// <param name="showing">The showing to insert.</param>
+        /// <param name="connection">The database connection.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a value indicating whether the showing was inserted successfully.</returns>
+        private async Task<bool> InsertShowingAsync(Showing showing, IDbConnection connection, IDbTransaction transaction)
         {
             int showingId = 0;
 
             string insertQuery = "INSERT INTO Showing(Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES(@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId); SELECT SCOPE_IDENTITY()";
 
             showingId = await connection.ExecuteScalarAsync<int>(insertQuery, showing, transaction);
-
-
-            // insert Seats I SeatRES
 
             List<Seat> seats = await GetAllSeatsFromAuditoriumIdAsync(showing.AuditoriumId);
 
@@ -87,18 +120,11 @@ namespace BioBooker.WebApi.Dal
             return showingId > 0;
         }
 
-
-        private async Task<List<Seat>> GetAllSeatsFromAuditoriumIdAsync(int auditoriumId)
-        {
-            string query = "SELECT * FROM Seats WHERE AuditoriumId = @Id";
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                List<Seat> seats = (await connection.QueryAsync<Seat>(query, new { Id = auditoriumId })).ToList();
-                return seats;
-            }
-        }
-
-
+        /// <summary>
+        /// Inserts a reservation for a showing.
+        /// </summary>
+        /// <param name="reservation">The reservation to insert.</param>
+        /// <returns>A task representing the asynchronous operation. The task result contains a value indicating whether the reservation was inserted successfully.</returns>
         public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
         {
             bool result = false;
@@ -125,12 +151,16 @@ namespace BioBooker.WebApi.Dal
             return result;
         }
 
-        // ADD IsReserved TO SEATS COLUMN??
-        public async Task InsertReservationAsync(SeatReservation reservation, IDbConnection connection, IDbTransaction transaction)
+        /// <summary>
+        /// Inserts a reservation into the database.
+        /// </summary>
+        /// <param name="reservation">The reservation to insert.</param>
+        /// <param name="connection">The database connection.</param>
+        /// <param name="transaction">The transaction.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        private async Task InsertReservationAsync(SeatReservation reservation, IDbConnection connection, IDbTransaction transaction)
         {
             int numRowsInserted = 0;
-
-            // Check if the seat is available 
 
             try
             {
@@ -138,16 +168,10 @@ namespace BioBooker.WebApi.Dal
 
                 numRowsInserted = await connection.ExecuteAsync(insertQuery, new { ShowingId = reservation.ShowingId, SeatNumber = reservation.SeatNumber, SeatRow = reservation.SeatRow, AuditoriumId = reservation.AuditoriumId }, transaction);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                // Failed to insert reservation
                 throw new Exception("Failed to insert reservation.");
             }
         }
-
-
-
     }
-
-
 }

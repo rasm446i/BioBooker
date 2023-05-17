@@ -11,22 +11,28 @@ namespace BioBooker.WebApi.Ctl.Controllers
 {
     [Route("showings")]
     [ApiController]
-
-    public class ShowingController: ControllerBase
+    public class ShowingController : ControllerBase
     {
         private readonly IConfiguration _configuration;
         private readonly IShowingManager _showingManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShowingController"/> class.
+        /// </summary>
+        /// <param name="inConfiguration">The configuration object.</param>
         public ShowingController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
             _showingManager = new ShowingManager(_configuration);
         }
 
+        /// <summary>
+        /// Inserts a new showing into the database.
+        /// </summary>
+        /// <param name="showing">The showing to insert.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
         [HttpPost]
         [AllowAnonymous]
-        // Inserts a new showing into the database using the _showingManager.InsertShowingAsync() method.
-        // Returns Ok() if the insertion was successful, otherwise returns a StatusCodeResult with code 500.
         public async Task<IActionResult> Post([FromBody] Showing showing)
         {
             IActionResult inserted;
@@ -42,12 +48,16 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return inserted;
         }
 
+        /// <summary>
+        /// Inserts a new seat reservation for a showing.
+        /// </summary>
+        /// <param name="reservation">The seat reservation to insert.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
         [HttpPost("{showingId}/reservations")]
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] SeatReservation reservation)
         {
             bool reserved = await _showingManager.InsertReservationByShowingId(reservation);
-
 
             if (reserved)
             {
@@ -59,10 +69,14 @@ namespace BioBooker.WebApi.Ctl.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves showings from the database based on the specified auditorium ID and date.
+        /// </summary>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <param name="date">The date of the showings.</param>
+        /// <returns>An IActionResult representing the result of the operation.</returns>
         [HttpGet]
         [AllowAnonymous]
-        // Retrieves showings from the database based on the specified auditorium ID and date using the GetShowingsAsync() method in Showing.
-        // Returns Ok(showings) if showings are found, otherwise returns NotFound().
         public async Task<IActionResult> Get(int auditoriumId, DateTime date)
         {
             List<Showing> showings = await _showingManager.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
@@ -74,8 +88,5 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             return Ok(showings);
         }
-
-
-
     }
 }

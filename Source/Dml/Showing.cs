@@ -16,7 +16,11 @@ namespace BioBooker.Dml
         public TimeSpan EndTime { get; set; }
         public int AuditoriumId { get; set; }
         public int MovieId { get; set; }
-        public List<SeatReservation> SeatReservations { get; set; }
+
+        public Showing()
+        {
+
+        }
 
         public Showing(DateTime date, TimeSpan startTime, TimeSpan endTime, int auditoriumId, int movieId)
         {
@@ -25,7 +29,6 @@ namespace BioBooker.Dml
             EndTime = endTime;
             AuditoriumId = auditoriumId;
             MovieId = movieId;
-            SeatReservations = new List<SeatReservation>();
         }
     }
 }
