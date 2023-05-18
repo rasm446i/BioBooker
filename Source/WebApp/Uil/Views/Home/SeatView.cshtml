@@ -1,0 +1,63 @@
+@using System.Net.Http;
+@using Newtonsoft.Json;
+
+@model BioBooker.Dml.Showing;
+
+@{
+    ViewBag.Title = "SeatView";
+}
+
+@if (Model != null)
+{
+    // Extract information form the showing given
+    int showingId = Model.ShowingId;
+  
+
+    // Make an HTTP request to the API and retrieve seat reservations
+    HttpClient client = new HttpClient();
+    string apiUrl = $"https://localHost:7011/id={showingId}/reservations";
+    HttpResponseMessage response = await client.GetAsync(apiUrl);
+    List<BioBooker.Dml.SeatReservation> seatReservations = null;
+
+    if (response.IsSuccessStatusCode)
+    {
+        string json = await response.Content.ReadAsStringAsync();
+        seatReservations = JsonConvert.DeserializeObject<List<BioBooker.Dml.SeatReservation>>(json);
+    }
+
+    if (seatReservations != null)
+    {
+        <ol class="allSeats">
+            @foreach (int row in seatReservations.Select(sr => sr.SeatRow))
+            {
+                List<BioBooker.Dml.SeatReservation> rowSeatReservations = seatReservations.Where(sr => sr.SeatRow == row).ToList();
+
+                <li class="row">
+                    <ol class="seats" type="A">
+                        @foreach (BioBooker.Dml.SeatReservation seatReservation in rowSeatReservations)
+                        {
+                            int seatNo = seatReservation.SeatNumber;
+                            int reservationId = seatReservation.ReservationId;
+                            int seatRow = seatReservation.SeatRow;
+                            int seatNumber = seatReservation.SeatNumber;
+                            int? customerId = seatReservation.CustomerId;
+
+                            <li class="seat">
+                                <input type="checkbox" id="@reservationId" value="@seatNo" name="seat" @(customerId != 0 ? "checked" : "") onclick="seatChange(@reservationId)" />
+                                <label for="@reservationId">@seatNo</label>
+                            </li>
+                        }
+                    </ol>
+                </li>
+            }
+        </ol>
+    }
+    else
+    {
+        <div>Sorry - an error occurred while retrieving seat reservations. Please try again.</div>
+    }
+}
+else
+{
+    <div>Sorry - an error occurred. Please try again.</div>
+}

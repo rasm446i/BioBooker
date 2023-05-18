@@ -88,5 +88,34 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             return Ok(showings);
         }
+        //This is just for testing
+        [HttpGet("{id}/reservations")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Get()
+        {
+            List<SeatReservation> seatReservations = new List<SeatReservation>();
+            int reservationId = 1;
+            int auditoriumId = 1;
+            int showingId = 1;
+            int? customerId = null;
+
+            int numRows = 5;
+            int numSeatsPerRow = 7;
+
+            for (int row = 1; row <= numRows; row++)
+            {
+                for (int seatNumber = 1; seatNumber <= numSeatsPerRow; seatNumber++)
+                {
+                    SeatReservation reservation = new SeatReservation(auditoriumId, row, seatNumber, showingId, customerId);
+                    reservation.ReservationId = reservationId++;
+                    seatReservations.Add(reservation);
+                }
+            }
+
+            return Ok(seatReservations);
+        }
+
+
+
     }
 }
