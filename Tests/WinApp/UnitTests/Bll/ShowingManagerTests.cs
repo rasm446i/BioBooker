@@ -1,4 +1,6 @@
 using BioBooker.Dml;
+using BioBooker.WebApi.Bll;
+using BioBooker.WebApi.Dal;
 using BioBooker.WinApp.Bll;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -8,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using IShowingManager = BioBooker.WebApi.Bll.IShowingManager;
+using ShowingManager = BioBooker.WebApi.Bll.ShowingManager;
 
 namespace BioBooker.WinApp.UnitTests.Bll
 {
@@ -21,6 +25,28 @@ namespace BioBooker.WinApp.UnitTests.Bll
             _showingManager = new ShowingManager(_configuration);
         }
 
+        [Fact]
+        public async Task BookSeatForShowing()
+        {
+            int auditoriumId = 1;
+            int seatRow = 1;
+            int seatNumber = 1;
+            int showingId = 4;
+            int customerId = 5;
+            DateTime reservationDate = new DateTime(2023, 5, 15);
+            TimeSpan reservationStartTime = new TimeSpan(12, 0, 0);
+            TimeSpan reservationEndTime = new TimeSpan(14, 0, 0);
+
+            SeatReservation reservation = new SeatReservation(auditoriumId, seatRow, seatNumber, showingId, customerId);
+            IShowingManager repository = new ShowingManager(_configuration);
+
+            // Act
+            bool result = await repository.BookSeatForShowing(reservation);
+
+            // Assert
+            Assert.True(result);
+
+        }
 
         [Fact]
         public void CreateShowing_ValidData_ReturnsNewShowing()

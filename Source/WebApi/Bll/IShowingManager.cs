@@ -13,6 +13,6 @@ namespace BioBooker.WebApi.Bll
         public Task<bool> InsertReservationByShowingId(SeatReservation reservation);
 
         public Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date);
-        Task<bool> BookSeatForShowing(SeatReservation seatReservation, DateTime date, TimeSpan startTime, TimeSpan endTime);
+        Task<bool> BookSeatForShowing(SeatReservation seatReservation);
     }
 }

@@ -176,19 +176,27 @@ namespace BioBooker.WebApi.Dal
 
         public async Task<int> GetShowingIdByAuditoriumIdAndDateAndTimeAsync(int auditoriumId, DateTime date, TimeSpan startTime, TimeSpan endTime)
         {
-            using(var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
                 string selectQuery = "SELECT ShowingId FROM Showing WHERE AuditoriumId = @AuditoriumId AND Date = @Date AND StartTime = @StartTime AND EndTime = @EndTime";
-            
-                return await connection.ExecuteScalarAsync<int>(selectQuery, new { AuditoriumId = auditoriumId, Date = date, StartTime = startTime, EndTime = endTime });
+
+                var parameters = new
+                {
+                    AuditoriumId = auditoriumId,
+                    Date = date.Date,                      // Use only the date part, remove the time component
+                    StartTime = startTime.ToString(@"HH\:mm\:ss"),   // Format the TimeSpan as hh:mm:ss
+                    EndTime = endTime.ToString(@"HH\:mm\:ss")        // Format the TimeSpan as hh:mm:ss
+                };
+
+                return await connection.ExecuteScalarAsync<int>(selectQuery, parameters);
             }
         }
 
-        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation, DateTime date, TimeSpan startTime, TimeSpan endTime)
+        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation)
         {
-            using(var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
@@ -196,36 +204,24 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        int showingId = await GetShowingIdByAuditoriumIdAndDateAndTimeAsync(seatReservation.AuditoriumId, date, startTime, endTime);
-
-                        if(showingId == 0)
-                        {
-                            return false;
-                        }
-
                         string selectQuery = "SELECT * FROM SeatReservation WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
-                        var existingReservation = await connection.QueryFirstOrDefaultAsync<SeatReservation>(selectQuery, new { ShowingId = showingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
+                        var existingReservation = await connection.QueryFirstOrDefaultAsync<SeatReservation>(selectQuery, new { ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
 
-                        if(existingReservation != null)
-                        {
-                            // Seat is booked???
-                            return false;
-                        }
 
                         string updateQuery = "UPDATE SeatReservation SET CustomerId = @CustomerId WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
-                        var rowsUpdated = await connection.ExecuteAsync(updateQuery, new { CustomerId = seatReservation.CustomerId, ShowingId = showingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
+                        var rowsUpdated = await connection.ExecuteAsync(updateQuery, new { CustomerId = seatReservation.CustomerId, ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
 
-                        if(rowsUpdated > 0)
+                        if (rowsUpdated > 0)
                         {
                             transaction.Commit();
                             return true;
-                        } else
+                        }
+                        else
                         {
                             transaction.Rollback();
                             return false;
                         }
-
-                    } 
+                    }
                     catch (Exception ex)
                     {
                         transaction.Rollback();

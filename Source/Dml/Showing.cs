@@ -11,7 +11,7 @@ namespace BioBooker.Dml
     public class Showing
     {
 
-        public byte[] Version { get; set; }
+        //public byte[] Version { get; set; }
         public int ShowingId { get; set; }
         public DateTime Date { get; set; }
         public TimeSpan StartTime { get; set; }

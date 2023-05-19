@@ -34,9 +34,9 @@ namespace BioBooker.WebApi.Bll
             return await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
         }
 
-        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation, DateTime date, TimeSpan startTime, TimeSpan endTime)
+        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation)
         {
-            return await _showingService.BookSeatForShowing(seatReservation, date, startTime, endTime);
+            return await _showingService.BookSeatForShowing(seatReservation);
         }
     }
 }
