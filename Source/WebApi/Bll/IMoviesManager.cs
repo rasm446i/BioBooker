@@ -10,6 +10,7 @@ namespace BioBooker.WebApi.Bll
     public interface IMoviesManager
     {
         public Task<Movie> GetMovieByTitleAsync(string title);
+        public Task<Movie> GetMovieByIdAsync(int id);
 
         public Task<bool> InsertMovieAsync(Movie movie);
 

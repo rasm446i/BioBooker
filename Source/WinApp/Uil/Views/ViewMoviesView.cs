@@ -186,6 +186,7 @@ namespace BioBooker.WinApp.Uil.Views
 
                 MovieUpdateView muv = new MovieUpdateView(id, title, configuration);
                 muv.Show();
+                this.Close();
             }
         }
     }

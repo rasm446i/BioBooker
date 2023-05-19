@@ -23,6 +23,11 @@ namespace BioBooker.WebApi.Svl
             return await _moviesRepository.GetMovieByTitleAsync(title);
         }
 
+        public async Task<Movie> GetMovieByIdAsync(int id)
+        {
+            return await _moviesRepository.GetMovieByIdAsync(id);
+        }
+
         public async Task<bool> InsertMovieAsync(Movie movie)
         {
             return await _moviesRepository.AddMovieAsync(movie);

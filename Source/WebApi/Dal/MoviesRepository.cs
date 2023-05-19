@@ -17,12 +17,12 @@ namespace BioBooker.WebApi.Dal
     {
         private readonly string _connectionString;
 
-        private IConfiguration Configuration;
+        private IConfiguration _configuration;
 
         public MoviesRepository(IConfiguration configuration)
         {
-            Configuration = configuration;
-            _connectionString = Configuration.GetConnectionString("ConnectionString");
+            _configuration = configuration;
+            _connectionString = _configuration.GetConnectionString("ConnectionString");
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace BioBooker.WebApi.Dal
         public async Task<bool> AddMovieAsync(Movie movie)
         {
             ValidateMovie(movie);
-            bool movieExists = await CheckMovieExistsAsync(movie.Title, movie.ReleaseYear, movie.Director);
+            bool movieExists = await CheckMovieExistsAsync(movie.Title, movie.ReleaseYear, movie.Director, movie.Poster);
             if (movieExists)
             {
                 throw new InvalidOperationException("A movie with the same title, release year, and director already exists.");
@@ -82,16 +82,24 @@ namespace BioBooker.WebApi.Dal
         /// <param name="releaseYear">The release year of the movie.</param>
         /// <param name="director">The director of the movie.</param>
         /// <returns>A task representing the asynchronous operation. The task result is true if a movie with the specified details exists, false otherwise.</returns>
-        private async Task<bool> CheckMovieExistsAsync(string title, string releaseYear, string director)
+        private async Task<bool> CheckMovieExistsAsync(string title, string releaseYear, string director, Poster poster)
         {
-            string sqlQuery = "SELECT COUNT(*) FROM Movies WHERE Title = @Title AND ReleaseYear = @ReleaseYear AND Director = @Director";
+            // Check if a movie with the specified title, release year, director, and poster exists
+            string sqlQuery = @"SELECT COUNT(*) FROM Movies WHERE Title = @Title 
+                                AND ReleaseYear = @ReleaseYear 
+                                AND Director = @Director 
+                                AND EXISTS ( SELECT 1 FROM Posters WHERE Posters.MovieId = Movies.Id 
+                                AND PosterTitle = @PosterTitle )";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                int count = await connection.ExecuteScalarAsync<int>(sqlQuery, new { Title = title, ReleaseYear = releaseYear, Director = director });
+                var parameters = new { Title = title, ReleaseYear = releaseYear, Director = director, PosterTitle = poster.PosterTitle };
+                int count = await connection.ExecuteScalarAsync<int>(sqlQuery, parameters);
                 return count > 0;
             }
         }
+
+
 
         /// <summary>
         /// Inserts a movie into database in the Movies table.
@@ -176,6 +184,39 @@ namespace BioBooker.WebApi.Dal
         }
 
         /// <summary>
+        /// Retrieves a movie from the database based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie to retrieve.</param>
+        /// <returns>A task representing the asynchronous operation. The retrieved movie object, or null if no movie is found.</returns>
+        public async Task<Movie> GetMovieByIdAsync(int id)
+        {
+            string sqlQuery = @"SELECT * FROM Movies WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var parameters = new { Id = id };
+                var movie = await connection.QueryFirstOrDefaultAsync<Movie>(sqlQuery, parameters);
+
+                if (movie != null)
+                {
+                    // Retrieve the poster for the movie
+                    string sqlPosterQuery = @"SELECT * FROM Posters WHERE MovieId = @MovieId";
+                    var posterParameters = new { MovieId = movie.Id };
+                    var poster = await connection.QueryFirstOrDefaultAsync<Poster>(sqlPosterQuery, posterParameters);
+
+                    if (poster != null)
+                    {
+                        movie.Poster = poster;
+                    }
+                }
+
+                return movie;
+            }
+        }
+
+
+        /// <summary>
         /// Retrieves all movies from the database.
         /// </summary>
         /// <returns>A task representing the asynchronous operation. The task result contains a list of Movie objects.</returns>
@@ -190,7 +231,7 @@ namespace BioBooker.WebApi.Dal
 
                 foreach (var movie in movies)
                 {
-                   // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
+                    // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
                     movie.ReleaseYear = movie.ReleaseYear.ToString();
 
                     // Retrieve the poster for each movie
@@ -246,12 +287,11 @@ namespace BioBooker.WebApi.Dal
         public async Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie)
         {
             ValidateMovie(updatedMovie);
-            bool movieExists = await CheckMovieExistsAsync(updatedMovie.Title, updatedMovie.ReleaseYear, updatedMovie.Director);
+            bool movieExists = await CheckMovieExistsAsync(updatedMovie.Title, updatedMovie.ReleaseYear, updatedMovie.Director, updatedMovie.Poster);
             if (movieExists)
             {
-                throw new InvalidOperationException("A movie with the same title, release year, and director already exists.");
+                throw new InvalidOperationException("A movie with the same title, release year, director, and poster already exists.");
             }
-
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -286,18 +326,19 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation.</returns>
         private async Task UpdateMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
         {
-            string sqlUpdateMovies = @"UPDATE Movies SET
-                                Title = @Title,
-                                Genre = @Genre,
-                                Actors = @Actors,
-                                Director = @Director,
-                                Language = @Language,
-                                ReleaseYear = @ReleaseYear,
-                                Subtitles = @Subtitles,
-                                SubtitlesLanguage = @SubtitlesLanguage,
-                                MPARating = @MPARating,
-                                RuntimeMinutes = @RuntimeMinutes,
-                              WHERE Id = @Id";
+            string sqlUpdateMovies = @"UPDATE Movies 
+                                        SET 
+                                        Title = @Title,
+                                        Genre = @Genre,
+                                        Actors = @Actors,
+                                        Director = @Director,
+                                        Language = @Language,
+                                        ReleaseYear = @ReleaseYear,
+                                        Subtitles = @Subtitles,
+                                        SubtitlesLanguage = @SubtitlesLanguage,
+                                        MPARating = @MPARating,
+                                        RuntimeMinutes = @RuntimeMinutes
+                                        WHERE Id = @Id";
 
             await connection.ExecuteAsync(sqlUpdateMovies, movie, transaction);
         }
