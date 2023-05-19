@@ -5,7 +5,7 @@ namespace BioBooker.Dml;
 
 public class Poster
 {
-    public byte[] Version { get; set; }
+    //public byte[] Version { get; set; }
     public int MovieId { get; set; }
     public string PosterTitle { get; set; }
     public byte[] ImageData { get; set; }
