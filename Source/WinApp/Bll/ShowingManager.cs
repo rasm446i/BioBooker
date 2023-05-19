@@ -70,6 +70,14 @@ namespace BioBooker.WinApp.Bll
   //         throw new ArgumentException("Invalid movie ID. The specified movie does not exist.");
   //    }
 
+          /*  // Validate movie ID
+
+            bool movieExists = await MovieExists(showing.MovieId);
+            if (!movieExists)
+            {
+                throw new ArgumentException("Invalid movie ID. The specified movie does not exist.");
+            }
+*/
             // Validate time range
             if (showing.EndTime < showing.StartTime)
             {

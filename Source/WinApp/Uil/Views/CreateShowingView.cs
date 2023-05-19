@@ -152,7 +152,7 @@ namespace BioBooker.WinApp.Uil.Views
                 // Display the end time with the desired format
                 // String literal (@) needed to format correctly and \: indicates that the colon
                 // should be treated as a character rather thana formatting speicifier
-                textBoxEndTime.Text = endTime.ToString(@"hh\:mm\:ss");
+                textBoxEndTime.Text = endTime.ToString(@"HH\:mm\:ss");
 
             }
         }
@@ -174,7 +174,7 @@ namespace BioBooker.WinApp.Uil.Views
                 DateTime endTime = startTime.AddMinutes(movieRuntimeMinutes);
 
                 // Display the end time
-                textBoxEndTime.Text = endTime.ToString(@"hh\:mm\:ss");
+                textBoxEndTime.Text = endTime.ToString(@"HH\:mm\:ss");
 
 
                 // Display movie title of selected movie
