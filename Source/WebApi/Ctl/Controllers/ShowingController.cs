@@ -88,7 +88,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             return Ok(showings);
         }
-<<<<<<< Updated upstream
+
         //This is just for testing
         [HttpGet("{id}/reservations")]
         [AllowAnonymous]
@@ -118,8 +118,6 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
 
 
-=======
-
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
         public async Task<IActionResult> Put([FromBody] SeatReservation seatReservation, DateTime date, TimeSpan startTime, TimeSpan endTime)
@@ -136,6 +134,6 @@ namespace BioBooker.WebApi.Ctl.Controllers
             }
             return foundReturn;
         }
->>>>>>> Stashed changes
+
     }
 }
