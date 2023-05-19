@@ -107,6 +107,14 @@ namespace BioBooker.WinApp.Uil.Views
                 TimeSpan startTime = TimeSpan.Parse(selectedStartTime);
                 TimeSpan endTime = TimeSpan.Parse(selectedEndTime);
 
+                // Check if a showing with the same start time and end time already exists
+                bool showingExists = await showingManager.ShowingExists(auditorium.AuditoriumId, startTime, endTime, DateTime.Parse(date));
+                if (showingExists)
+                {
+                    MessageBox.Show("A showing with the same start time and end time already exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 // Create a new Showing object
                 Showing newShowing = new Showing(DateTime.Parse(date), startTime, endTime, auditorium.AuditoriumId, movieId);
 
@@ -131,6 +139,7 @@ namespace BioBooker.WinApp.Uil.Views
                 MessageBox.Show("Please select a movie.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
 
@@ -166,31 +175,28 @@ namespace BioBooker.WinApp.Uil.Views
                 ListViewItem selectedItem = listViewMovies.SelectedItems[0];
                 int movieRuntimeMinutes = int.Parse(selectedItem.SubItems[3].Text);
 
-                // Get the selected start time
                 string selectedStartTime = comboBoxStartTime.SelectedItem.ToString();
 
-                // Calculate the end time
+                // Calculate the end time (start time + movie length)
                 DateTime startTime = DateTime.Parse(selectedStartTime);
                 DateTime endTime = startTime.AddMinutes(movieRuntimeMinutes);
 
-                // Display the end time
+                // Formatted to be a 24 hour clock. Example: 13:45:30
                 textBoxEndTime.Text = endTime.ToString(@"HH\:mm\:ss");
 
 
                 // Display movie title of selected movie
                 labelMovieTitle.Text = selectedItem.SubItems[1].Text;
 
-                // Enable the ComboBox and make the TextBox read-only
                 comboBoxStartTime.Enabled = true;
                 textBoxEndTime.ReadOnly = true;
             }
             else
-            {
-                // No movie is selected, disable the ComboBox and clear the TextBox
+            
                 comboBoxStartTime.Enabled = false;
                 textBoxEndTime.Text = string.Empty;
             }
         }
 
     }
-}
+

@@ -40,7 +40,17 @@ namespace BioBooker.WinApp.Bll
             {
                 Showing createdShowing = await CreateShowing(showing);
 
-                inserted = await _showingService.InsertShowingAsync(showing);
+                // Check if a showing with the same start time and end time already exists
+                bool showingExists = await ShowingExists(createdShowing.AuditoriumId, createdShowing.StartTime, createdShowing.EndTime, createdShowing.Date);
+                if (showingExists)
+                {
+                    Console.WriteLine("A showing with the same start time and end time already exists.");
+                    inserted = false;
+                }
+                else
+                {
+                    inserted = await _showingService.InsertShowingAsync(createdShowing);
+                }
             }
             catch
             {
@@ -49,6 +59,24 @@ namespace BioBooker.WinApp.Bll
 
             return inserted;
         }
+
+        public async Task<bool> ShowingExists(int auditoriumId, TimeSpan startTime, TimeSpan endTime, DateTime date)
+        {
+            List<Showing> showings = await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
+
+            foreach (Showing showing in showings)
+            {
+                if (showing.StartTime == startTime && showing.EndTime == endTime)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+
 
         /// <summary>
         /// Creates a showing object based on the provided showing information and performs validation.

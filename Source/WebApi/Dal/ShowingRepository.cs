@@ -185,9 +185,9 @@ namespace BioBooker.WebApi.Dal
                 var parameters = new
                 {
                     AuditoriumId = auditoriumId,
-                    Date = date.Date,                      // Use only the date part, remove the time component
-                    StartTime = startTime.ToString(@"HH\:mm\:ss"),   // Format the TimeSpan as hh:mm:ss
-                    EndTime = endTime.ToString(@"HH\:mm\:ss")        // Format the TimeSpan as hh:mm:ss
+                    Date = date.Date,   
+                    StartTime = startTime.ToString(@"HH\:mm\:ss"),   
+                    EndTime = endTime.ToString(@"HH\:mm\:ss")        
                 };
 
                 return await connection.ExecuteScalarAsync<int>(selectQuery, parameters);
@@ -207,20 +207,29 @@ namespace BioBooker.WebApi.Dal
                         string selectQuery = "SELECT * FROM SeatReservation WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
                         var existingReservation = await connection.QueryFirstOrDefaultAsync<SeatReservation>(selectQuery, new { ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
 
-
-                        string updateQuery = "UPDATE SeatReservation SET CustomerId = @CustomerId WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
-                        var rowsUpdated = await connection.ExecuteAsync(updateQuery, new { CustomerId = seatReservation.CustomerId, ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
-
-                        if (rowsUpdated > 0)
+                        if (existingReservation != null)
                         {
-                            transaction.Commit();
-                            return true;
+                            if (existingReservation.CustomerId == 0)
+                            {
+                                // Seat is not booked, update the seat reservation
+                                string updateQuery = "UPDATE SeatReservation SET CustomerId = @CustomerId WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
+                                var rowsUpdated = await connection.ExecuteAsync(updateQuery, new { CustomerId = seatReservation.CustomerId, ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
+
+                                if (rowsUpdated > 0)
+                                {
+                                    transaction.Commit();
+                                    return true;
+                                }
+                            }
+                            else
+                            {
+                                // Seat is already booked
+                                Console.WriteLine("The seat is already booked.");
+                            }
                         }
-                        else
-                        {
-                            transaction.Rollback();
-                            return false;
-                        }
+
+                        transaction.Rollback();
+                        return false;
                     }
                     catch (Exception ex)
                     {
@@ -230,6 +239,7 @@ namespace BioBooker.WebApi.Dal
                 }
             }
         }
+
 
 
     }
