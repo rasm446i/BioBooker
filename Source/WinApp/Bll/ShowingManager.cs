@@ -64,14 +64,14 @@ namespace BioBooker.WinApp.Bll
                 throw new ArgumentException("Cannot choose a date before today.");
             }
 
-<<<<<<< Updated upstream
+
             // Validate movie ID
             // Assume you have a method to check if the movie exists based on its ID
   //      bool movieExists = await MovieExists(showing.MovieId);
   //         throw new ArgumentException("Invalid movie ID. The specified movie does not exist.");
   //    }
 
-=======
+
           /*  // Validate movie ID
 
             bool movieExists = await MovieExists(showing.MovieId);
@@ -80,7 +80,7 @@ namespace BioBooker.WinApp.Bll
                 throw new ArgumentException("Invalid movie ID. The specified movie does not exist.");
             }
 */
->>>>>>> Stashed changes
+
             // Validate time range
             if (showing.EndTime < showing.StartTime)
             {
