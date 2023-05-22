@@ -31,9 +31,25 @@ public class Movie
         Poster = poster;
     }
 
+    // Constructor also has version
+    public Movie(string title, string genre, string actors, string director, string language, string releaseYear, byte subtitles, string subtitlesLanguage, string mpaRating, int runtimeMinutes, Poster poster, byte[] version)
+    {
+        Version = version;
+        Title = title;
+        Genre = genre;
+        Actors = actors;
+        Director = director;
+        Language = language;
+        ReleaseYear = releaseYear;
+        Subtitles = subtitles;
+        SubtitlesLanguage = subtitlesLanguage;
+        MPARating = mpaRating;
+        RuntimeMinutes = runtimeMinutes;
+        Poster = poster;
+    }
 
     public int Id { get; set; }
-
+    public byte[]? Version { get; set; }
     public string Title { get; set; }
     public string Genre { get; set; }
     public string Actors { get; set; }

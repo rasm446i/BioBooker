@@ -154,7 +154,6 @@ namespace BioBooker.WebApi.Dal
                 var parameters = new { Title = title };
                 var movie = await connection.QueryFirstOrDefaultAsync<Movie>(sqlQuery, parameters);
 
-                //movie.ReleaseYear = movie.ReleaseYear.ToString();
 
                 if (movie != null)
                 {
@@ -216,13 +215,15 @@ namespace BioBooker.WebApi.Dal
         }
 
 
+
         /// <summary>
         /// Retrieves all movies from the database.
         /// </summary>
         /// <returns>A task representing the asynchronous operation. The task result contains a list of Movie objects.</returns>
         public async Task<List<Movie>> GetAllMoviesAsync()
         {
-            string sqlQuery = "SELECT * FROM Movies";
+            string sqlQuery = "SELECT m.*, @@DBTS AS RowVersion " +
+                              "FROM Movies AS m";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
@@ -231,7 +232,6 @@ namespace BioBooker.WebApi.Dal
 
                 foreach (var movie in movies)
                 {
-                    // DateTime releaseYear = DateTime.Parse(movie.ReleaseYear);
                     movie.ReleaseYear = movie.ReleaseYear.ToString();
 
                     // Retrieve the poster for each movie
@@ -248,6 +248,7 @@ namespace BioBooker.WebApi.Dal
                 return movies.ToList();
             }
         }
+
 
         /// <summary>
         /// Deletes a movie from the database.
@@ -278,6 +279,25 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+
+        public async Task<byte[]> ValidateMovieVersionByTitleAsync(int id)
+        {
+            byte[] version = null;
+            string sqlQuery = @"SELECT @@DBTS AS Version
+                        FROM Movies
+                        WHERE Id = @Id";
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+                var parameters = new { Id = id };
+                version = await connection.ExecuteScalarAsync<byte[]>(sqlQuery, parameters);
+            }
+
+            return version;
+        }
+
+
         /// <summary>
         /// Updates a movie in the database.
         /// </summary>
@@ -292,19 +312,28 @@ namespace BioBooker.WebApi.Dal
                 connection.Open();
                 using (var transaction = connection.BeginTransaction())
                 {
-                    try
+                    byte[] Version = await ValidateMovieVersionByTitleAsync(id);
+                    if (updatedMovie.Version.SequenceEqual(Version))
                     {
-                        updatedMovie.Id = id; // Set the ID of the updated movie
-                        await UpdateMovieAsync(connection, transaction, updatedMovie);
-                        await UpdatePosterAsync(connection, transaction, updatedMovie.Id, updatedMovie.Poster);
+                        try
+                        {
+                            updatedMovie.Id = id; // Set the ID of the updated movie
+                            await UpdateMovieAsync(connection, transaction, updatedMovie);
+                            await UpdatePosterAsync(connection, transaction, updatedMovie.Id, updatedMovie.Poster);
 
-                        transaction.Commit();
-                        return true;
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
                     }
-                    catch
+                    else
                     {
                         transaction.Rollback();
-                        throw;
+                        throw new Exception("you dont have the newest version");
                     }
                 }
             }
