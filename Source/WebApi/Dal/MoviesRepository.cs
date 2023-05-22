@@ -62,6 +62,39 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+        public async Task<bool> UpdateMovieAsync(Movie movie)
+        {
+            ValidateMovie(movie);
+
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Check if the movie has been modified by another user
+                        byte[] currentRowVersion = await GetMovieRowVersionAsync(connection, transaction, movie.Id);
+                        if (!currentRowVersion.SequenceEqual(movie.Version))
+                        {
+                            throw new InvalidOperationException("The movie has been modified by another user. Please refresh and try again.");
+                        }
+
+                        // Update the movie
+                        await UpdateMovieAsync(connection, transaction, movie);
+
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Validates a movie object.
         /// </summary>
@@ -110,8 +143,8 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation. The task result is the ID of the inserted movie.</returns>
         private async Task<int> InsertMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
         {
-            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARating, RuntimeMinutes)
-                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARating, @RuntimeMinutes);
+            string sqlInsertMovies = @"INSERT INTO Movies (Title, Genre, Actors, Director, Language, ReleaseYear, Subtitles, SubtitlesLanguage, MPARating, RuntimeMinutes, RowVersion)
+                              VALUES (@Title, @Genre, @Actors, @Director, @Language, @ReleaseYear, @Subtitles, @SubtitlesLanguage, @MPARating, @RuntimeMinutes, 0x0);
                               SELECT SCOPE_IDENTITY();";
 
             return await connection.ExecuteScalarAsync<int>(sqlInsertMovies, movie, transaction);
@@ -295,7 +328,7 @@ namespace BioBooker.WebApi.Dal
                     try
                     {
                         updatedMovie.Id = id; // Set the ID of the updated movie
-                        await UpdateMovieAsync(connection, transaction, updatedMovie);
+                        await UpdateMovieAsync(updatedMovie);
                         await UpdatePosterAsync(connection, transaction, updatedMovie.Id, updatedMovie.Poster);
 
                         transaction.Commit();
@@ -320,22 +353,39 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation.</returns>
         private async Task UpdateMovieAsync(SqlConnection connection, SqlTransaction transaction, Movie movie)
         {
-            string sqlUpdateMovies = @"UPDATE Movies 
-                                        SET 
-                                        Title = @Title,
-                                        Genre = @Genre,
-                                        Actors = @Actors,
-                                        Director = @Director,
-                                        Language = @Language,
-                                        ReleaseYear = @ReleaseYear,
-                                        Subtitles = @Subtitles,
-                                        SubtitlesLanguage = @SubtitlesLanguage,
-                                        MPARating = @MPARating,
-                                        RuntimeMinutes = @RuntimeMinutes
-                                        WHERE Id = @Id";
+            string sqlUpdateMovie = @"UPDATE Movies SET
+                                  Title = @Title,
+                                  Genre = @Genre,
+                                  Actors = @Actors,
+                                  Director = @Director,
+                                  Language = @Language,
+                                  ReleaseYear = @ReleaseYear,
+                                  Subtitles = @Subtitles,
+                                  SubtitlesLanguage = @SubtitlesLanguage,
+                                  MPARating = @MPARating,
+                                  RuntimeMinutes = @RuntimeMinutes,
+                                  RowVersion = @NewRowVersion
+                                  WHERE Id = @Id";
 
-            await connection.ExecuteAsync(sqlUpdateMovies, movie, transaction);
+            byte[] newRowVersion = IncrementRowVersion(movie.Version);
+            movie.Version = newRowVersion;
+
+            await connection.ExecuteAsync(sqlUpdateMovie, new { movie.Title, movie.Genre, movie.Actors, movie.Director, movie.Language, movie.ReleaseYear, movie.Subtitles, movie.SubtitlesLanguage, movie.MPARating, movie.RuntimeMinutes, NewRowVersion = newRowVersion, movie.Id }, transaction);
         }
+
+        private async Task<byte[]> GetMovieRowVersionAsync(SqlConnection connection, SqlTransaction transaction, int movieId)
+        {
+            string sqlQuery = "SELECT RowVersion FROM Movies WHERE MovieId = @MovieId";
+            return await connection.ExecuteScalarAsync<byte[]>(sqlQuery, new { MovieId = movieId }, transaction);
+        }
+
+        private byte[] IncrementRowVersion(byte[] rowVersion)
+        {
+            ulong version = BitConverter.ToUInt64(rowVersion.Reverse().ToArray(), 0);
+            version++;
+            return BitConverter.GetBytes(version).Reverse().ToArray();
+        }
+
 
         /// <summary>
         /// Updates the data of a poster in the Posters table.
@@ -360,7 +410,7 @@ namespace BioBooker.WebApi.Dal
 
             await connection.ExecuteAsync(sqlUpdatePosters, parameters, transaction);
         }
-
+        
 
 
     }

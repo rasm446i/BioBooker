@@ -36,6 +36,7 @@ namespace BioBooker.WinApp.Uil.Views
             comboBoxStartTime.SelectedIndexChanged += ComboBoxStartTime_SelectedIndexChanged;
             listViewMovies.SelectedIndexChanged += ListViewMovies_SelectedIndexChanged;
             textBoxEndTime.ReadOnly = true;
+            buttonSubmit.Enabled = false;
         }
 
         private async void LoadMovies()
@@ -162,6 +163,7 @@ namespace BioBooker.WinApp.Uil.Views
                 // String literal (@) needed to format correctly and \: indicates that the colon
                 // should be treated as a character rather thana formatting speicifier
                 textBoxEndTime.Text = endTime.ToString(@"HH\:mm\:ss");
+                buttonSubmit.Enabled = true;
 
             }
         }
@@ -195,6 +197,7 @@ namespace BioBooker.WinApp.Uil.Views
             
                 comboBoxStartTime.Enabled = false;
                 textBoxEndTime.Text = string.Empty;
+                buttonSubmit.Enabled = false;
             }
         }
 
