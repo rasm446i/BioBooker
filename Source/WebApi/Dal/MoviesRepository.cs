@@ -286,12 +286,6 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation. The task result is true if the movie was updated successfully.</returns>
         public async Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie)
         {
-            ValidateMovie(updatedMovie);
-            bool movieExists = await CheckMovieExistsAsync(updatedMovie.Title, updatedMovie.ReleaseYear, updatedMovie.Director, updatedMovie.Poster);
-            if (movieExists)
-            {
-                throw new InvalidOperationException("A movie with the same title, release year, director, and poster already exists.");
-            }
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
