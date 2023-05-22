@@ -117,20 +117,20 @@ namespace BioBooker.WinApp.Uil.Views
 
                 // Create a new Showing object
                 Showing newShowing = new Showing(DateTime.Parse(date), startTime, endTime, auditorium.AuditoriumId, movieId);
-
-                // Call the CreateAndInsertShowingAsync method to save the new showing
-                bool success = await showingManager.CreateAndInsertShowingAsync(newShowing);
-
-                if (success)
+                try
                 {
-                    // Showing saved successfully, display a success message
-                    MessageBox.Show("Showing saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                }
-                else
+                    // Call the CreateAndInsertShowingAsync method to save the new showing
+                    bool success = await showingManager.CreateAndInsertShowingAsync(newShowing);
+                    if (success)
+                    {
+                        // Showing saved successfully, display a success message
+                        MessageBox.Show("Showing saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                }catch (Exception exception)
                 {
                     // Failed to save showing, display an error message
-                    MessageBox.Show("Failed to save showing. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to save showing."+exception.Message, "failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
