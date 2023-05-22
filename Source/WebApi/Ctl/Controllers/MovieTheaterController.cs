@@ -14,31 +14,34 @@ namespace BioBooker.WebApi.Ctl.Controllers
     public class MovieTheaterController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly MovieTheaterBusiness _movieTheaterBusiness;
-        
+        private readonly IMovieTheaterManager _MovieTheaterManager;
+
         public MovieTheaterController(IConfiguration inConfiguration)
         {
             _configuration = inConfiguration;
-            _movieTheaterBusiness = new MovieTheaterBusiness(_configuration);
+            _MovieTheaterManager = new MovieTheaterManager(inConfiguration);
 
         }
-        /**
-         * Inserts a new movie theater
-         * 
-         * @param newMovieTheater The new movie theater to be inserted
-         * @returns 201 Created If created movie object was insterted
-         * @returns 400 Bad Request if the movie theater is null
-         * @returns 500 Internal Server Error if the insertion fails
-         */
+
+        /// <summary>
+        /// Inserts a new movie theater into the database asynchronously.
+        /// </summary>
+        /// <param name="newMovieTheater">The new movie theater to be inserted.</param>
+        /// <returns>
+        /// Returns the appropriate action result based on the success of the insertion:
+        /// - 201 Created: If the movie theater was successfully inserted.
+        /// - 400 Bad Request: If the movie theater object is null.
+        /// - 500 Internal Server Error: If the insertion fails.
+        /// </returns>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] MovieTheater newMovieTheater)
         {
 
             if (newMovieTheater == null)
             {
-                return BadRequest();
+                return BadRequest("Movie Theater is null");
             }
-            bool wasInserted = await _movieTheaterBusiness.InsertMovieTheaterAsync(newMovieTheater);
+            bool wasInserted = await _MovieTheaterManager.InsertMovieTheaterAsync(newMovieTheater);
 
             if (wasInserted)
             {
@@ -48,10 +51,18 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return StatusCode(500);
         }
 
+        /// <summary>
+        /// Retrieves all movie theaters from the database asynchronously.
+        /// </summary>
+        /// <returns>
+        /// Returns the appropriate action result based on the availability of movie theaters:
+        /// - 200 OK: If movie theaters are found and returned successfully.
+        /// - 404 Not Found: If no movie theaters are found.
+        /// </returns>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<MovieTheater> movieTheaters = await _movieTheaterBusiness.GetAllMovieTheatersAsync();
+            List<MovieTheater> movieTheaters = await _MovieTheaterManager.GetAllMovieTheatersAsync();
 
             if (movieTheaters == null || movieTheaters.Count == 0)
             {
@@ -60,10 +71,11 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return Ok(movieTheaters);
         }
 
+
         [HttpGet, Route("{id}/Auditoriums")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            List<Auditorium> auditoriums = await _movieTheaterBusiness.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
+            List<Auditorium> auditoriums = await _MovieTheaterManager.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
 
             if (auditoriums == null || auditoriums.Count == 0)
             {
@@ -86,7 +98,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return BadRequest("Seat list is null or empty");
             }
 
-            bool wasAdded = await _movieTheaterBusiness.InsertSeatsAsync(seats, auditoriumId);
+            bool wasAdded = await _MovieTheaterManager.InsertSeatsAsync(seats, auditoriumId);
 
             if (!wasAdded)
             {
@@ -117,7 +129,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return BadRequest("Invalid auditorium data");
             }
 
-            bool wasSaved = await _movieTheaterBusiness.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
+            bool wasSaved = await _MovieTheaterManager.InsertAuditoriumToMovieTheaterAsync(movieTheaterId, newAuditorium);
 
             if (wasSaved)
             {
@@ -143,7 +155,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return BadRequest("Auditorium name must not be empty");
             }
 
-            Auditorium foundAuditorium = await _movieTheaterBusiness.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
+            Auditorium foundAuditorium = await _MovieTheaterManager.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
             if (foundAuditorium == null)
             {
                 return NotFound("Auditorium not found.");

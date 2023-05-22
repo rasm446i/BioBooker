@@ -72,18 +72,18 @@ CREATE TABLE MovieTheaters(
           PosterTitle NVARCHAR(255) NOT NULL,
           ImageData VARBINARY(MAX) NOT NULL
 );";
-        private MovieTheaterBusinessController _movieTheaterBusinessController;
+        private MovieTheaterManager _movieTheaterBusinessController;
 
         public MovieTheaterBusinessControllerTests()
         {
-            _movieTheaterBusinessController = new MovieTheaterBusinessController();
+            _movieTheaterBusinessController = new MovieTheaterManager();
         }
 
         [Fact]
         public async Task CreateMovieTheaterAndInsertAsync_ReturnsTrue_WhenMovieTheaterHasBeenInserted()
         {
             ResetDatabase();
-
+            
             //arrange
             string movieTheaterName = "Movie Theater";
             string auditoriumName = "Auditorium 1";
@@ -125,9 +125,7 @@ CREATE TABLE MovieTheaters(
             //assert
             Assert.True(result);
 
-          
         }
-
 
         public void ResetDatabase()
         {
@@ -135,7 +133,6 @@ CREATE TABLE MovieTheaters(
             {
                 connection.Open();
                 connection.Execute(_sqlScript);
-                connection.Close();
             }
         }
     }

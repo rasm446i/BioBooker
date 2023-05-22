@@ -1,5 +1,4 @@
 using BioBooker.Dml;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -19,6 +18,14 @@ namespace BioBooker.WinApp.Svl
         {
             _serviceConnection = new ServiceConnection(_serviceBaseUrl);
         }
+
+        /// <summary>
+        /// Inserts a movie theater into the database asynchronously.
+        /// </summary>
+        /// <param name="movieTheater">The movie theater object to be inserted.</param>
+        /// <returns>
+        /// A task that holds a boolean indicating whether the movie theater was successfully saved into the database or not.
+        /// </returns>
         public async Task<bool> InsertMovieTheaterAsync(MovieTheater movieTheater)
         {
             bool wasSaved = false;
@@ -49,7 +56,6 @@ namespace BioBooker.WinApp.Svl
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
                     throw;
                 }
             }
@@ -58,10 +64,12 @@ namespace BioBooker.WinApp.Svl
             return wasSaved;
         }
 
-        public async Task<MovieTheater> GetMovieTheaterAsync()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Retrieves a list of movie theaters asynchronously.
+        /// </summary>
+        /// <returns>
+        /// A task that holds a list of MovieTheater objects or null if the service connection is not available.
+        /// </returns>
         public async Task<List<MovieTheater>> GetMovieTheatersAsync()
         {
             List<MovieTheater> movieTheaters = null;
@@ -72,10 +80,15 @@ namespace BioBooker.WinApp.Svl
 
                 try
                 {
+                    // Call the API service to retrieve movie theaters asynchronously
                     HttpResponseMessage? response = await _serviceConnection.CallServiceGet(url);
+
+                    // Check if the response is successful and contains valid content
                     if (response != null && response.IsSuccessStatusCode)
                     {
+                        // Read the response content as JSON
                         string json = await response.Content.ReadAsStringAsync();
+                        // Deserialize the JSON into a list of MovieTheater objects
                         movieTheaters = JsonConvert.DeserializeObject<List<MovieTheater>>(json);
                     }
                 }
@@ -88,27 +101,20 @@ namespace BioBooker.WinApp.Svl
             return movieTheaters;
         }
 
-        public async Task<List<Auditorium>> GetAuditoriumsAsync(int movieTheaterId)
-        {
-
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> UpdateMovieTheaterAsync()
-        {
-            throw new NotImplementedException();
-        }
-        public async Task<bool> DeleteMovieTheaterAsync()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Inserts an auditorium into a movie theater in the database asynchronously.
+        /// </summary>
+        /// <param name="movieTheaterId">The ID of the movie theater to which the auditorium will be inserted.</param>
+        /// <param name="newAuditorium">The auditorium to be inserted.</param>
+        /// <returns>
+        /// A task that holds a boolean indicating whether the auditorium was successfully inserted into the movie theater or not.
+        /// </returns>
         public async Task<bool> InsertAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium)
         {
             bool wasSaved = false;
             string url = $"{_serviceBaseUrl}/{movieTheaterId}/auditoriums";
 
-                    // Check for valid input
+            // Check for valid input
             if (_serviceBaseUrl != null && newAuditorium != null && movieTheaterId > 0)
             {
                 try
@@ -127,7 +133,6 @@ namespace BioBooker.WinApp.Svl
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
                     throw;
                 }
             }
@@ -136,6 +141,25 @@ namespace BioBooker.WinApp.Svl
             return wasSaved;
         }
 
+        public async Task<bool> UpdateMovieTheaterAsync()
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<bool> DeleteMovieTheaterAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<Auditorium>> GetAuditoriumsAsync(int movieTheaterId)
+        {
+
+            throw new NotImplementedException();
+        }
+
+        public async Task<MovieTheater> GetMovieTheaterAsync()
+        {
+            throw new NotImplementedException();
+        }
 
     }
 

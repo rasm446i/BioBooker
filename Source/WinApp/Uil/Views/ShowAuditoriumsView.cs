@@ -20,10 +20,11 @@ namespace BioBooker.WinApp.Uil.Views
             ListBoxOfAuditoriums.Sorted = true;
 
         }
-
+        /// <summary>
+        /// Asynchronously retrieves a list of movie theaters from the database and adds them to a list box of movie theaters.
+        /// </summary>
         private async Task AddMovieTheatersToListBoxAsync()
         {
-            // Retrieve the list of movie theaters asynchronously from the database
             List<MovieTheater> movieTheaters = await movieTheaterController.GetMovieTheaterListAsync();
 
             // Iterate through each movie theater in the list
@@ -33,7 +34,10 @@ namespace BioBooker.WinApp.Uil.Views
                 ListBoxOfMovieTheaters.Items.Add(movieTheater);
             }
         }
-
+        /// <summary>
+        /// Event handler for the SelectedIndexChanged event of the ListBoxOfMovieTheaters.
+        /// Clears the ListBoxOfAuditoriums and populates it with the auditoriums of the selected movie theater.
+        /// </summary>
         private void ListBoxOfMovieTheaters_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Clear the listbox of auditoriums when changing index
@@ -54,6 +58,11 @@ namespace BioBooker.WinApp.Uil.Views
 
         }
 
+        /// <summary>
+        /// Event handler for the SelectedIndexChanged event of the ListBoxOfAuditoriums.
+        /// Retrieves seat information for the selected auditorium and updates corresponding labels.
+        /// </summary>
+
         private void ListBoxOfAuditoriums_SelectedIndexChanged(object sender, EventArgs e)
         {
             // Get the selected auditorium
@@ -67,7 +76,6 @@ namespace BioBooker.WinApp.Uil.Views
                 int seatNumbers = 0;
                 int totalSeats = selectedAuditorium.Seats.Count;
 
-                //Calculate seat information
                 foreach (Seat seat in selectedAuditorium.Seats)
                 {
                     // Check if the current seat's SeatRow is greater than the current max seatRows
@@ -99,9 +107,12 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
+        /// <summary>
+        /// Event handler for the Click event of the btnAddAuditorium button.
+        /// Also opens the auditorium view to create a new auditorium for the selected movie theater and refreshes the auditorium list.
+        /// </summary>
         private void btnAddAuditorium_Click(object sender, EventArgs e)
         {
-            // Get the selected movie theater from the ListBoxOfMovieTheaters
             MovieTheater selectedMovieTheater = (MovieTheater)ListBoxOfMovieTheaters.SelectedItem;
 
             // Check if a movie theater is selected
