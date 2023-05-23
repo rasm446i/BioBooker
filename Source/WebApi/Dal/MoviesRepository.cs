@@ -251,7 +251,7 @@ namespace BioBooker.WebApi.Dal
         public async Task<byte[]> ValidateMovieVersionByTitleAsync(int id)
         {
             byte[] version = null;
-            string sqlQuery = @"SELECT @@DBTS AS Version
+            string sqlQuery = @"SELECT Version
                         FROM Movies
                         WHERE Id = @Id";
 

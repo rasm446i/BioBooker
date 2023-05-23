@@ -34,7 +34,7 @@ namespace BioBooker.WinApp.Uil.Views
         {
 
             // Call the GetAllMoviesAsync method to retrieve all movies
-            List<Movie> moviesList = await moviesManager.GetAllMoviesAsync();
+            List<Movie> listOfMovies = await moviesManager.GetAllMoviesAsync();
 
             // Add columns to the ListView
             listView1.Columns.Add("Id");
@@ -45,7 +45,7 @@ namespace BioBooker.WinApp.Uil.Views
 
 
             // Add movie data to the ListView
-            foreach (var movie in moviesList)
+            foreach (var movie in listOfMovies)
             {
                 var item = new ListViewItem(movie.Id.ToString());
                 item.SubItems.Add(movie.Title);
