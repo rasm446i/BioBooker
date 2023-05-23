@@ -29,7 +29,6 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation. The task result is true if the movie was added successfully.</returns>
         public async Task<bool> AddMovieAsync(Movie movie)
         {
-            ValidateMovie(movie);
             bool movieExists = await CheckMovieExistsAsync(movie.Title, movie.ReleaseYear, movie.Director, movie.Poster);
             if (movieExists)
             {
@@ -57,18 +56,7 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
-        /// <summary>
-        /// Validates a movie object.
-        /// </summary>
-        /// <param name="movie">The movie to validate.</param>
-        /// <exception cref="ArgumentException">Thrown when the MPA Rating is null or empty.</exception>
-        private void ValidateMovie(Movie movie)
-        {
-            if (string.IsNullOrEmpty(movie.MPARating))
-            {
-                throw new ArgumentException("MPA Rating is required.");
-            }
-        }
+
         /// <summary>
         /// Checks if a movie with the unique identifiers title, release year, and director already exists in the database.
         /// </summary>

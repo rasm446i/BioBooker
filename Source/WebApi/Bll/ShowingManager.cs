@@ -24,11 +24,6 @@ namespace BioBooker.WebApi.Bll
             return await _showingService.InsertShowingAsync(showing);
         }
 
-        public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
-        {
-            return await _showingService.InsertReservationByShowingId(reservation);
-        }
-
         public async Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date)
         {
             return await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
@@ -37,6 +32,11 @@ namespace BioBooker.WebApi.Bll
         public async Task<bool> BookSeatForShowing(SeatReservation seatReservation)
         {
             return await _showingService.BookSeatForShowing(seatReservation);
+        }
+
+        public async Task<List<SeatReservation>> GetAllSeatReservationsByShowingId(int showingId)
+        {
+            return await _showingService.GetAllSeatReservationByShowingId(showingId);
         }
     }
 }

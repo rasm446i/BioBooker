@@ -8,8 +8,8 @@ namespace BioBooker.WebApi.Svl
     public interface IShowingService
     {
         Task<bool> BookSeatForShowing(SeatReservation seatReservation);
+        Task<List<SeatReservation>> GetAllSeatReservationByShowingId(int showingId);
         public Task<List<Showing>> GetShowingsByAuditoriumIdAndDateAsync(int auditoriumId, DateTime date);
-        Task<bool> InsertReservationByShowingId(SeatReservation reservation);
         Task<bool> InsertShowingAsync(Showing showing);
     }
 }
