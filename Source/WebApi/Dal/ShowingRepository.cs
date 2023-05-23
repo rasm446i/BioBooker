@@ -132,9 +132,10 @@ namespace BioBooker.WebApi.Dal
             {
                 await connection.OpenAsync();
                 var parameters = new { ReservationId = seatReservation.ReservationId }; // Updated parameter name to ReservationId
+            //Concurrency check here
                 version = await connection.ExecuteScalarAsync<byte[]>(sqlQuery, parameters);
             }
-            //Conccurency check here
+            
             if (version.SequenceEqual(seatReservation.Version))
             {
                 matching = true;
@@ -188,12 +189,12 @@ namespace BioBooker.WebApi.Dal
                         string selectQuery = "SELECT * FROM SeatReservation WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
                         var existingReservation = await connection.QueryFirstOrDefaultAsync<SeatReservation>(selectQuery, new { ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber, }, transaction);
 
-                        if (existingReservation != null)
+                        //checks if the seat exists and if it is booked
+                        if (existingReservation != null && existingReservation.CustomerId == 0)
                         {
                             //checks if version equals the current version in database
                             if (await ValidateSeatReservationVersionIsNotBooked(seatReservation))
                             {
-                                // Seat is not booked, update the seat reservation
                                 string updateQuery = "UPDATE SeatReservation SET CustomerId = @CustomerId WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
                                 var rowsUpdated = await connection.ExecuteAsync(updateQuery, new { CustomerId = seatReservation.CustomerId, ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
 
@@ -208,6 +209,11 @@ namespace BioBooker.WebApi.Dal
                                 // Seat is already booked
                                 Console.WriteLine("The seat is already booked.");
                             }
+                        }
+                        else
+                        {
+                            transaction.Rollback();
+                            throw new ArgumentException("seat is already booked or does not exists");
                         }
 
                         transaction.Rollback();
