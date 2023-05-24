@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using BioBooker.WebApi.Bll;
-using Microsoft.Extensions.Configuration;
 using BioBooker.Dml;
-using System.Threading.Tasks;
+using BioBooker.WebApi.Bll;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -82,26 +82,44 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return Ok(seatReservations);
         }
 
-
-
-
-
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
         public async Task<IActionResult> Put([FromBody] SeatReservation seatReservation)
         {
             IActionResult foundReturn;
             bool wasUpdated = await _showingManager.BookSeatForShowing(seatReservation);
-            if(wasUpdated)
+            if (wasUpdated)
             {
                 foundReturn = Ok();
-            } 
+            }
             else
             {
                 foundReturn = new StatusCodeResult(500);
             }
             return foundReturn;
         }
+
+        [HttpGet("movies/{movieId}/showings")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetShowingsByMovieId(int movieId)
+        {
+            try
+            {
+                List<Showing> showings = await _showingManager.GetShowingsByMovieIdAsync(movieId);
+
+                if (showings == null || showings.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(showings);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
+
 
     }
 }

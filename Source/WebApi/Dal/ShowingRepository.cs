@@ -73,9 +73,11 @@ namespace BioBooker.WebApi.Dal
 
                 string selectQuery = "SELECT * FROM Showing WHERE AuditoriumId = @AuditoriumId AND Date = @Date";
 
-                return (await connection.QueryAsync<Showing>(selectQuery, new { AuditoriumId = auditoriumId, Date = date })).ToList();
+                return (await connection.QueryAsync<Showing>(selectQuery, new { AuditoriumId = auditoriumId, Date = dateOnly })).ToList();
             }
         }
+
+
 
         /// <summary>
         /// Retrieves all seats from the database for a given auditorium ID.
@@ -178,6 +180,20 @@ namespace BioBooker.WebApi.Dal
                 var parameters = new { ShowingId = showingId };
                 var result = await connection.QueryAsync<SeatReservation>(sqlQuery, parameters);
                 return result.ToList();
+            }
+        }
+
+        public async Task<List<Showing>> GetShowingsByMovieIdAsync(int movieId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                string query = "SELECT * FROM Showing WHERE MovieId = @MovieId";
+
+                var parameters = new { MovieId = movieId };
+
+                return (await connection.QueryAsync<Showing>(query, parameters)).ToList();
             }
         }
 
