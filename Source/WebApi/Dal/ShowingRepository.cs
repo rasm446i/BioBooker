@@ -201,10 +201,7 @@ namespace BioBooker.WebApi.Dal
                     AND [Date] >= CONVERT(date, GETDATE())
                     AND CAST(CONCAT([Date], ' ', StartTime) AS DATETIME) >= GETDATE()";
 
-                    var parameters = new
-                    {
-                        MovieId = movieId
-                    };
+                    var parameters = new { MovieId = movieId };
 
                     return (await connection.QueryAsync<Showing>(query, parameters)).ToList();
                 }
