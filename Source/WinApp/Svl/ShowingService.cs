@@ -75,7 +75,7 @@ namespace BioBooker.WinApp.Svl
                         var json = JsonConvert.SerializeObject(reservation);
                         var postData = new StringContent(json, Encoding.UTF8, "application/json");
 
-                        HttpResponseMessage response = await _serviceConnection.CallServicePost(url, postData);
+                        HttpResponseMessage response = await _serviceConnection.CallServicePut(url, postData);
                         if (response.IsSuccessStatusCode)
                         {
                             reservedOk = true;

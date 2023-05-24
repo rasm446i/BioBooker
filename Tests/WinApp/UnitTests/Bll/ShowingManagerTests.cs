@@ -1,6 +1,4 @@
 using BioBooker.Dml;
-using BioBooker.WebApi.Bll;
-using BioBooker.WebApi.Dal;
 using BioBooker.WinApp.Bll;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -10,14 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
-using IShowingManager = BioBooker.WebApi.Bll.IShowingManager;
-using ShowingManager = BioBooker.WebApi.Bll.ShowingManager;
+
 
 namespace BioBooker.WinApp.UnitTests.Bll
 {
     public class ShowingManagerTests
     {
-        private IShowingManager _showingManager;
+        private ShowingManager _showingManager;
         private IConfiguration _configuration;
 
         public ShowingManagerTests()
@@ -26,30 +23,7 @@ namespace BioBooker.WinApp.UnitTests.Bll
         }
 
         [Fact]
-        public async Task BookSeatForShowing()
-        {
-            int auditoriumId = 1;
-            int seatRow = 1;
-            int seatNumber = 1;
-            int showingId = 4;
-            int customerId = 5;
-            DateTime reservationDate = new DateTime(2023, 5, 15);
-            TimeSpan reservationStartTime = new TimeSpan(12, 0, 0);
-            TimeSpan reservationEndTime = new TimeSpan(14, 0, 0);
-
-            SeatReservation reservation = new SeatReservation(auditoriumId, seatRow, seatNumber, showingId, customerId);
-            IShowingManager repository = new ShowingManager(_configuration);
-
-            // Act
-            bool result = await repository.BookSeatForShowing(reservation);
-
-            // Assert
-            Assert.True(result);
-
-        }
-
-        [Fact]
-        public void CreateShowing_ValidData_ReturnsNewShowing()
+        public async void CreateShowing_ValidData_ReturnsNewShowing()
         {
             // Arrange
             DateTime date = DateTime.Now;
@@ -62,21 +36,20 @@ namespace BioBooker.WinApp.UnitTests.Bll
 
             // Act
 
-            /*Showing createdShowing = _showingManager.CreateShowing(expectedShowing);
+            Showing createdShowing = await _showingManager.CreateShowing(expectedShowing);
 
             // Assert
             Assert.Equal(expectedShowing.Date, createdShowing.Date);
             Assert.Equal(expectedShowing.StartTime, createdShowing.StartTime);
             Assert.Equal(expectedShowing.EndTime, createdShowing.EndTime);
             Assert.Equal(expectedShowing.AuditoriumId, createdShowing.AuditoriumId);
-            Assert.Equal(expectedShowing.MovieId, createdShowing.MovieId);*/
+            Assert.Equal(expectedShowing.MovieId, createdShowing.MovieId);
         }
 
         [Fact]
-        public void CreateShowing_InvalidShowing_ThrowsArgumentException()
+        public async void CreateShowing_InvalidShowing_ThrowsArgumentException()
         {
             // Arrange
-            IShowingManager showingManager = new ShowingManager(_configuration);
             DateTime date = DateTime.Now;
             TimeSpan startTime = TimeSpan.FromHours(10);
             TimeSpan endTime = TimeSpan.FromHours(8);  // Invalid: end time is before start time
@@ -85,11 +58,11 @@ namespace BioBooker.WinApp.UnitTests.Bll
             Showing showing = new Showing(date, startTime, endTime, auditoriumId, movieId);
 
             // Act and Assert
-           /* Assert.Throws<ArgumentException>(() =>
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
             {
                 // This code should throw an ArgumentException
-                showingManager.CreateShowing(showing);
-            });*/
+                await _showingManager.CreateShowing(showing);
+            });
         }
 
     }

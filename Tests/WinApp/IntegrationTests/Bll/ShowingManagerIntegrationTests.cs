@@ -51,7 +51,7 @@ namespace BioBooker.WinApp.Bll.Tests
         public async Task InsertReservationByShowingIdAsync_ValidReservation_ReturnsTrue()
         {
             // Arrange
-            SeatReservation reservation = new SeatReservation(1, 1, 1, 1, 1);
+            SeatReservation reservation = new SeatReservation(1, 1, 1, 2, 15);
 
             // Act
             bool result = await showingManager.InsertReservationByShowingIdAsync(reservation);
@@ -100,7 +100,7 @@ namespace BioBooker.WinApp.Bll.Tests
             List<Showing> showings = await showingManager.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
 
             // Assert
-            Assert.Null(showings);
+            Assert.Empty(showings);
         }
     }
 }

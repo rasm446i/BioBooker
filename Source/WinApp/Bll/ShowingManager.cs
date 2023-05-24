@@ -181,30 +181,25 @@ namespace BioBooker.WinApp.Bll
         /// <returns>A task representing the asynchronous operation. The task returns true if showing does not overlap with exsisting showing.</returns>
         public async Task<bool> ValidateForDoubleBookingShowingsAsync(Showing showing)
         {
-            bool wasOk = false;
             List<Showing> showings = await GetShowingsByAuditoriumIdAndDateAsync(showing.AuditoriumId, showing.Date);
 
-            if (showings.Count == 0)
+            foreach (Showing existingShowing in showings)
             {
-                wasOk = true;
-            }
-
-            foreach (Showing exsistingShowing in showings)
-            {
-
-                if (showing.StartTime.TotalHours < exsistingShowing.StartTime.TotalHours && showing.EndTime.TotalHours < exsistingShowing.StartTime.TotalHours)
+                // Check if the date is the same
+                if (existingShowing.Date == showing.Date)
                 {
-                    wasOk = true;
-
-                }
-                else if (showing.StartTime.TotalHours > exsistingShowing.EndTime.TotalHours)
-                {
-                    wasOk = true;
-
+                    // Check if the start time or end time of the showing overlaps with an existing showing
+                    if (existingShowing.StartTime < showing.EndTime && existingShowing.EndTime > showing.StartTime)
+                    {
+                        return false; // Overlapping showing found
+                    }
                 }
             }
 
-            return wasOk;
+            return true; // No overlapping showings found
         }
+
+
+
     }
 }
