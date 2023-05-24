@@ -120,64 +120,9 @@ namespace BioBooker.WebApi.Dal
             return showingId > 0;
         }
 
-        public async Task<bool> ValidateSeatReservationVersionIsNotBooked(SeatReservation seatReservation)
-        {
-            bool matching = false;
-            byte[] version = null;
-
-            string sqlQuery = @"SELECT Version
-                        FROM SeatReservation WHERE ReservationId = @ReservationId";
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-                var parameters = new { ReservationId = seatReservation.ReservationId }; // Updated parameter name to ReservationId
-            //Concurrency check here
-                version = await connection.ExecuteScalarAsync<byte[]>(sqlQuery, parameters);
-            }
-            
-            if (version.SequenceEqual(seatReservation.Version))
-            {
-                matching = true;
-            }
-            else
-            {
-                throw new ArgumentException("Seat reservation version mismatch");
-            }
-
-            return matching;
-        }
-
-        public async Task<int> GetReservationId(SeatReservation seatReservation)
-        {
-            int reservationId = 0;
-
-            string sqlQuery = @"SELECT ReservationId
-                        FROM SeatReservation WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
-
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                await connection.OpenAsync();
-
-                var parameters = new
-                {
-                    ShowingId = seatReservation.ShowingId,
-                    SeatRow = seatReservation.SeatRow,
-                    SeatNumber = seatReservation.SeatNumber
-                };
-
-                reservationId = await connection.ExecuteScalarAsync<int>(sqlQuery, parameters);
-            }
-
-            return reservationId;
-        }
-
 
         public async Task<bool> BookSeatForShowing(SeatReservation seatReservation)
         {
-
-            seatReservation.ReservationId = await GetReservationId(seatReservation);
-
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
@@ -186,34 +131,28 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        string selectQuery = "SELECT * FROM SeatReservation WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
-                        var existingReservation = await connection.QueryFirstOrDefaultAsync<SeatReservation>(selectQuery, new { ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber, }, transaction);
+                        string updateQuery = @"
+                    UPDATE SeatReservation
+                    SET CustomerId = @CustomerId
+                    WHERE ShowingId = @ShowingId
+                    AND SeatRow = @SeatRow
+                    AND SeatNumber = @SeatNumber
+                    AND CustomerId = 0
+                    AND Version = @Version";
 
-                        //checks if the seat exists and if it is booked
-                        if (existingReservation != null && existingReservation.CustomerId == 0)
+                        var rowsUpdated = await connection.ExecuteAsync(updateQuery, new
                         {
-                            //checks if version equals the current version in database
-                            if (await ValidateSeatReservationVersionIsNotBooked(seatReservation))
-                            {
-                                string updateQuery = "UPDATE SeatReservation SET CustomerId = @CustomerId WHERE ShowingId = @ShowingId AND SeatRow = @SeatRow AND SeatNumber = @SeatNumber";
-                                var rowsUpdated = await connection.ExecuteAsync(updateQuery, new { CustomerId = seatReservation.CustomerId, ShowingId = seatReservation.ShowingId, SeatRow = seatReservation.SeatRow, SeatNumber = seatReservation.SeatNumber }, transaction);
+                            CustomerId = seatReservation.CustomerId,
+                            ShowingId = seatReservation.ShowingId,
+                            SeatRow = seatReservation.SeatRow,
+                            SeatNumber = seatReservation.SeatNumber,
+                            Version = seatReservation.Version
+                        }, transaction);
 
-                                if (rowsUpdated > 0)
-                                {
-                                    transaction.Commit();
-                                    return true;
-                                }
-                            }
-                            else
-                            {
-                                // Seat is already booked
-                                Console.WriteLine("The seat is already booked.");
-                            }
-                        }
-                        else
+                        if (rowsUpdated > 0)
                         {
-                            transaction.Rollback();
-                            throw new ArgumentException("seat is already booked or does not exists");
+                            transaction.Commit();
+                            return true;
                         }
 
                         transaction.Rollback();
