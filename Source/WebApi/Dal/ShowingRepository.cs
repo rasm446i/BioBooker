@@ -1,6 +1,7 @@
 using BioBooker.Dml;
 using Dapper;
 using Microsoft.Extensions.Configuration;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -133,9 +134,22 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        foreach (var seatReservation in seatViewModel.SeatReservations)
-                        {
-                        string updateQuery = @"
+                        foreach(SeatReservation seatRes in seatViewModel.SeatReservations){
+
+                            string getAvailability = @"Select *  
+                            FROM SeatReservation    
+                            WHERE ShowingId = @showingId 
+                            AND SeatRow = @SeatRow 
+                            AND SeatNumber = @SeatNumber";
+                            
+                          
+
+                            SeatReservation returnedData = (SeatReservation)await connection.QueryAsync(getAvailability, seatRes, transaction);
+                            
+                            if (returnedData.CustomerId == 0)
+                            {
+
+                                string updateQuery = @"
                             UPDATE SeatReservation
                             SET CustomerId = @CustomerId
                             WHERE ShowingId = @ShowingId
@@ -144,14 +158,17 @@ namespace BioBooker.WebApi.Dal
                             AND CustomerId = 0
                             AND [Version] = @Version";
 
-                            var rowsUpdated = await connection.ExecuteAsync(updateQuery, seatReservation, transaction);
+                                var rowsUpdated = await connection.ExecuteAsync(updateQuery, seatRes, transaction);
 
-                            if (rowsUpdated == 0)
-                            {
-                                transaction.Rollback();
-                                return false;
+                                if (rowsUpdated == 0)
+                                {
+                                    transaction.Rollback();
+                                    return false;
+                                }
                             }
                         }
+
+                        
 
                         transaction.Commit();
                         return true;
