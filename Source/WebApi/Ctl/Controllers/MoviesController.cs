@@ -9,7 +9,7 @@ using System;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
-    [Route("movies")]
+    [Route("api/movies")]
     [ApiController]
     public class MoviesController : ControllerBase
     {
@@ -90,7 +90,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
         /// Retrieves all movies from the database.
         /// </summary>
         /// <returns>An IActionResult representing the result of the operation.</returns>
-        [HttpGet("all")]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
