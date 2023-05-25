@@ -14,7 +14,7 @@ namespace BioBooker.WinApp.Svl
     public class MoviesService : IMoviesService
     {
         private readonly IServiceConnection _serviceConnection;
-        readonly string _serviceBaseUrl = "https://localhost:7011/";
+        readonly string _serviceBaseUrl = "https://localhost:7011/api/movies";
         private readonly MoviesController _controller;
 
         public MoviesService(IConfiguration configuration)
@@ -34,7 +34,7 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies/" + id;
+                string url = _serviceBaseUrl + "/" + id;
 
                 try
                 {
@@ -64,7 +64,7 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies?title=" + title;
+                string url = _serviceBaseUrl + "/movies?title=" + title;
 
                 try
                 {
@@ -95,7 +95,7 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies/id/" + id;
+                string url = _serviceBaseUrl + "/id/" + id;
 
                 try
                 {
@@ -125,7 +125,7 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies/all";
+                string url = _serviceBaseUrl;
 
                 try
                 {
@@ -156,7 +156,7 @@ namespace BioBooker.WinApp.Svl
             bool changedOk = false;
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies";
+                string url = _serviceBaseUrl;
 
                 if (movie != null)
                 {
@@ -199,7 +199,7 @@ namespace BioBooker.WinApp.Svl
 
             if (_serviceConnection != null)
             {
-                string url = _serviceBaseUrl + "movies/" + id;
+                string url = _serviceBaseUrl + "/" + id;
 
                 if (updatedMovie != null)
                 {
