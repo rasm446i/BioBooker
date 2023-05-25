@@ -5,6 +5,7 @@ using BioBooker.Dml;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
+using System;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -141,5 +142,35 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             return NotFound();
         }
+
+        /// <summary>
+        /// Retrieves the list of showings for a specific movie.
+        /// </summary>
+        /// <param name="movieId">The ID of the movie.</param>
+        /// <returns>The list of showings for the specified movie.</returns>
+        /// <response code="200">Returns the list of showings.</response>
+        /// <response code="404">If no showings are found for the specified movie.</response>
+        /// <response code="500">If an error occurs while processing the request.</response>
+        [HttpGet("{movieId}/showings")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Get(int movieId)
+        {
+            try
+            {
+                List<Showing> retrievedShowings = await _moviesManager.GetShowingsByMovieIdAsync(movieId);
+
+                if (retrievedShowings == null || retrievedShowings.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(retrievedShowings);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
     }
+           
 }

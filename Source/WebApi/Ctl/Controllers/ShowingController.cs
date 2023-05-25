@@ -99,27 +99,5 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return foundReturn;
         }
 
-        [HttpGet("movies/{movieId}/showings")]
-        [AllowAnonymous]
-        public async Task<IActionResult> GetShowingsByMovieId(int movieId)
-        {
-            try
-            {
-                List<Showing> showings = await _showingManager.GetShowingsByMovieIdAsync(movieId);
-
-                if (showings == null || showings.Count == 0)
-                {
-                    return NotFound();
-                }
-
-                return Ok(showings);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500);
-            }
-        }
-
-
     }
 }

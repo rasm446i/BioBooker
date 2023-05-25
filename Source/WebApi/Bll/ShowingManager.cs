@@ -39,9 +39,5 @@ namespace BioBooker.WebApi.Bll
             return await _showingService.GetAllSeatReservationByShowingId(showingId);
         }
 
-        public async Task<List<Showing>> GetShowingsByMovieIdAsync(int movieId)
-        {
-            return await _showingService.GetShowingsByMovieIdAsync(movieId);
-        }
     }
 }

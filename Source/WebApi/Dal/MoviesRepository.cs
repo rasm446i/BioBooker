@@ -1,15 +1,11 @@
 using BioBooker.Dml;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Dapper;
-using System.Transactions;
-using System.Reflection;
-using System.Globalization;
 
 namespace BioBooker.WebApi.Dal
 {
@@ -341,10 +337,11 @@ namespace BioBooker.WebApi.Dal
         /// <returns>A task representing the asynchronous operation.</returns>
         private async Task UpdatePosterAsync(SqlConnection connection, SqlTransaction transaction, int movieId, Poster updatedPoster)
         {
-            string sqlUpdatePosters = @"UPDATE Posters SET
-                                PosterTitle = @PosterTitle,
-                                ImageData = @ImageData
-                              WHERE MovieId = @MovieId";
+            string sqlUpdatePosters = @"
+                                    UPDATE Posters SET
+                                    PosterTitle = @PosterTitle,
+                                    ImageData = @ImageData
+                                    WHERE MovieId = @MovieId";
             var parameters = new
             {
                 PosterTitle = updatedPoster.PosterTitle,
@@ -354,6 +351,30 @@ namespace BioBooker.WebApi.Dal
             await connection.ExecuteAsync(sqlUpdatePosters, parameters, transaction);
         }
 
+        /// <summary>
+        /// Retrieves the list of showings for a specific movie.
+        /// </summary>
+        /// <param name="movieId">The ID of the movie.</param>
+        /// <returns>The list of showings for the specified movie.</returns>
+        public async Task<List<Showing>> GetShowingsByMovieIdAsync(int movieId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                var query = @"
+                    SELECT * FROM Showing
+                    WHERE MovieId = @MovieId
+                    AND [Date] >= CONVERT(date, GETDATE())
+                    AND CAST(CONCAT([Date], ' ', StartTime) AS DATETIME) >= GETDATE()";
+
+                var parameters = new { MovieId = movieId };
+
+                var showings = await connection.QueryAsync<Showing>(query, parameters);
+
+                return showings.ToList();
+            }
+        }
 
 
     }
