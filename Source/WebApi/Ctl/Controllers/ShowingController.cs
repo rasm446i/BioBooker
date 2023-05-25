@@ -105,7 +105,7 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 seatViewDto.AuditoriumId = seatViewDto.SeatReservations.Select(s => s.AuditoriumId).FirstOrDefault() ?? 0;
                 seatViewDto.ShowingId = showingId;
                 seatViewDto.SeatRows = seatViewDto.SeatReservations.Max(s => s.SeatRow);
-                seatViewDto.SeatAmountPerRow = seatViewDto.SeatReservations.Max(s => s.SeatNumber);
+                seatViewDto.SeatsPerRow = seatViewDto.SeatReservations.Max(s => s.SeatNumber);
 
                 return Ok(seatViewDto);
         }
