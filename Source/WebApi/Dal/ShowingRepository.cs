@@ -1,7 +1,6 @@
 using BioBooker.Dml;
 using Dapper;
 using Microsoft.Extensions.Configuration;
-using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -134,31 +133,35 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        foreach(SeatReservation seatRes in seatViewModel.SeatReservations){
+                        foreach (SeatReservation seatRes in seatViewModel.SeatReservations)
+                        {
+                            string getAvailability = @"SELECT *  
+                                       FROM SeatReservation    
+                                       WHERE ShowingId = @ShowingId 
+                                       AND SeatRow = @SeatRow 
+                                       AND SeatNumber = @SeatNumber";
 
-                            string getAvailability = @"Select *  
-                            FROM SeatReservation    
-                            WHERE ShowingId = @showingId 
-                            AND SeatRow = @SeatRow 
-                            AND SeatNumber = @SeatNumber";
-                            
-                          
+                            var returnedData = await connection.QuerySingleOrDefaultAsync<SeatReservation>(getAvailability, seatRes, transaction);
 
-                            SeatReservation returnedData = (SeatReservation)await connection.QueryAsync(getAvailability, seatRes, transaction);
-                            
-                            if (returnedData.CustomerId == 0)
+                            if (returnedData != null && returnedData.CustomerId == 0)
                             {
-
                                 string updateQuery = @"
-                            UPDATE SeatReservation
-                            SET CustomerId = @CustomerId
-                            WHERE ShowingId = @ShowingId
-                            AND SeatRow = @SeatRow
-                            AND SeatNumber = @SeatNumber
-                            AND CustomerId = 0
-                            AND [Version] = @Version";
+                        UPDATE SeatReservation
+                        SET CustomerId = @CustomerId
+                        WHERE ShowingId = @ShowingId
+                        AND SeatRow = @SeatRow
+                        AND SeatNumber = @SeatNumber
+                        AND CustomerId = 0";
 
-                                var rowsUpdated = await connection.ExecuteAsync(updateQuery, seatRes, transaction);
+                                var parameters = new
+                                {
+                                    seatRes.CustomerId,
+                                    seatRes.ShowingId,
+                                    seatRes.SeatRow,
+                                    seatRes.SeatNumber,
+                                };
+
+                                var rowsUpdated = await connection.ExecuteAsync(updateQuery, parameters, transaction);
 
                                 if (rowsUpdated == 0)
                                 {
@@ -167,8 +170,6 @@ namespace BioBooker.WebApi.Dal
                                 }
                             }
                         }
-
-                        
 
                         transaction.Commit();
                         return true;
@@ -181,6 +182,10 @@ namespace BioBooker.WebApi.Dal
                 }
             }
         }
+
+
+
+
 
 
 
