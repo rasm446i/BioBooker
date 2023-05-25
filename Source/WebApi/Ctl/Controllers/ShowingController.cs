@@ -100,9 +100,8 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
             SeatViewDto seatViewDto = new SeatViewDto();
 
-
+               
                 seatViewDto.SeatReservations = seatReservations;
-                seatViewDto.AuditoriumId = seatViewDto.SeatReservations.Select(s => s.AuditoriumId).FirstOrDefault() ?? 0;
                 seatViewDto.ShowingId = showingId;
                 seatViewDto.SeatRows = seatViewDto.SeatReservations.Max(s => s.SeatRow);
                 seatViewDto.SeatsPerRow = seatViewDto.SeatReservations.Max(s => s.SeatNumber);
@@ -116,10 +115,11 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
-        public async Task<IActionResult> Put([FromBody] SeatReservation seatReservation)
+        public async Task<IActionResult> Put(int showingId, [FromBody] SeatViewModel seatViewModel)
         {
             IActionResult foundReturn;
-            bool wasUpdated = await _showingManager.BookSeatForShowing(seatReservation);
+            bool wasUpdated = await _showingManager.BookSeatForShowing(seatViewModel);
+
             if (wasUpdated)
             {
                 foundReturn = Ok();

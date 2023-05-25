@@ -29,9 +29,9 @@ namespace BioBooker.WebApi.Svl
             return await _showingRepository.AddShowingAsync(showing);
         }
 
-        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation)
+        public async Task<bool> BookSeatForShowing(SeatViewModel seatViewModel)
         {
-            return await _showingRepository.BookSeatForShowing(seatReservation);
+            return await _showingRepository.BookSeatForShowing(seatViewModel);
         }
 
         public async Task<List<SeatReservation>> GetAllSeatReservationByShowingId(int showingId)

@@ -122,7 +122,8 @@ namespace BioBooker.WebApi.Dal
         }
 
 
-        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation)
+
+        public async Task<bool> BookSeatForShowing(SeatViewModel seatViewModel)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -132,32 +133,28 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
+                        foreach (var seatReservation in seatViewModel.SeatReservations)
+                        {
                         string updateQuery = @"
-                    UPDATE SeatReservation
-                    SET CustomerId = @CustomerId
-                    WHERE ShowingId = @ShowingId
-                    AND SeatRow = @SeatRow
-                    AND SeatNumber = @SeatNumber
-                    AND CustomerId = 0
-                    AND Version = @Version";
+                            UPDATE SeatReservation
+                            SET CustomerId = @CustomerId
+                            WHERE ShowingId = @ShowingId
+                            AND SeatRow = @SeatRow
+                            AND SeatNumber = @SeatNumber
+                            AND CustomerId = 0
+                            AND [Version] = @Version";
 
-                        var rowsUpdated = await connection.ExecuteAsync(updateQuery, new
-                        {
-                            CustomerId = seatReservation.CustomerId,
-                            ShowingId = seatReservation.ShowingId,
-                            SeatRow = seatReservation.SeatRow,
-                            SeatNumber = seatReservation.SeatNumber,
-                            Version = seatReservation.Version
-                        }, transaction);
+                            var rowsUpdated = await connection.ExecuteAsync(updateQuery, seatReservation, transaction);
 
-                        if (rowsUpdated > 0)
-                        {
-                            transaction.Commit();
-                            return true;
+                            if (rowsUpdated == 0)
+                            {
+                                transaction.Rollback();
+                                return false;
+                            }
                         }
 
-                        transaction.Rollback();
-                        return false;
+                        transaction.Commit();
+                        return true;
                     }
                     catch (Exception)
                     {
@@ -168,9 +165,12 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+
+
+
         public async Task<List<SeatReservation>> GetAllSeatReservationByShowingId(int showingId)
         {
-            string sqlQuery = @"SELECT AuditoriumId, SeatRow, SeatNumber, ShowingId, CustomerId, Version
+            string sqlQuery = @"SELECT SeatRow, SeatNumber, ShowingId, CustomerId
                                 FROM SeatReservation WHERE ShowingId = @ShowingId";
 
             using (SqlConnection connection = new SqlConnection(_connectionString))
