@@ -182,32 +182,6 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
-        /// <summary>
-        /// Retrieves a list of upcoming showings for a given movie ID.
-        /// </summary>
-        /// <param name="movieId">The ID of the movie for which to retrieve upcoming showings.</param>
-        /// <returns>A list of upcoming Showings.</returns>
-        public async Task<List<Showing>> GetShowingsByMovieIdAsync(int movieId)
-        {
-            {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    await connection.OpenAsync();
-
-                    //Retrieve showings scheduled for today or in the future
-                    string query = @"
-                    SELECT * FROM Showing
-                    WHERE MovieId = @MovieId
-                    AND [Date] >= CONVERT(date, GETDATE())
-                    AND CAST(CONCAT([Date], ' ', StartTime) AS DATETIME) >= GETDATE()";
-
-                    var parameters = new { MovieId = movieId };
-
-                    return (await connection.QueryAsync<Showing>(query, parameters)).ToList();
-                }
-            }
-        }
-
     }
 
 }

@@ -362,6 +362,7 @@ namespace BioBooker.WebApi.Dal
             {
                 await connection.OpenAsync();
 
+                //Retrieve showings scheduled for today or in the future
                 var query = @"
                     SELECT * FROM Showing
                     WHERE MovieId = @MovieId
