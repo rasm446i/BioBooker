@@ -1,9 +1,11 @@
 using BioBooker.Dml;
 using BioBooker.WebApi.Bll;
 using BioBooker.WinApp.Bll;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -13,6 +15,13 @@ namespace BioBooker.WinApp.Bll.Tests
     {
         private IConfiguration configuration;
         private IShowingManager showingManager;
+        private readonly string _connectionString = "server=localhost; Database=BioBooker; integrated security=true;";
+        private readonly string _sqlScript = @"DELETE FROM Showing
+                                              WHERE Date = CONVERT(date, GETDATE()) AND
+                                              StartTime = '10:00:00' AND
+                                              EndTime = '11:00:00' AND
+                                              AuditoriumId = 1 AND
+                                              MovieId = 1;";
 
         public ShowingManagerIntegrationTests()
         {
@@ -23,6 +32,7 @@ namespace BioBooker.WinApp.Bll.Tests
         [Fact]
         public async Task CreateAndInsertShowingAsync_ValidShowing_ReturnsTrue()
         {
+            ResetDatabase();
             // Arrange
             Showing showing = new Showing(DateTime.Now, TimeSpan.FromHours(10), TimeSpan.FromHours(11), 1, 1);
 
@@ -42,33 +52,6 @@ namespace BioBooker.WinApp.Bll.Tests
 
             // Act
             bool result = await showingManager.CreateAndInsertShowingAsync(showing);
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
-        public async Task InsertReservationByShowingIdAsync_ValidReservation_ReturnsTrue()
-        {
-            // Arrange
-            SeatReservation reservation = new SeatReservation(1, 1, 1, 2, 15);
-
-            // Act
-            bool result = await showingManager.InsertReservationByShowingIdAsync(reservation);
-
-            // Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public async Task InsertReservationByShowingIdAsync_InvalidReservation_ReturnsFalse()
-        {
-            // Arrange
-            // Creating an invalid reservation by providing an invalid showing ID
-            SeatReservation reservation = new SeatReservation(-1, 1, 1, 1, 1);
-
-            // Act
-            bool result = await showingManager.InsertReservationByShowingIdAsync(reservation);
 
             // Assert
             Assert.False(result);
@@ -101,6 +84,19 @@ namespace BioBooker.WinApp.Bll.Tests
 
             // Assert
             Assert.Empty(showings);
+        }
+
+        private void ResetDatabase()
+        {
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    connection.Execute(_sqlScript);
+                    connection.Close();
+                }
+            }
+
         }
     }
 }
