@@ -6,6 +6,10 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BioBooker.WebApi.Dto;
+using System.Linq;
+using System.Security.AccessControl;
+
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -74,13 +78,41 @@ namespace BioBooker.WebApi.Ctl.Controllers
         public async Task<IActionResult> Get(int showingId)
         {
             List<SeatReservation> seatReservations = await _showingManager.GetAllSeatReservationsByShowingId(showingId);
+
+            if (seatReservations == null || seatReservations.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return Ok(seatReservations);
+        }
+
+        [HttpGet("{showingId}/seatView")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSeatView([FromRoute]int showingId)
+        {
+            List<SeatReservation> seatReservations = await _showingManager.GetAllSeatReservationsByShowingId(showingId);
+
             if (seatReservations == null || seatReservations.Count == 0)
             {
                 return NotFound();
             }
 
-            return Ok(seatReservations);
+            SeatViewDto seatViewDto = new SeatViewDto();
+
+
+                seatViewDto.SeatReservations = seatReservations;
+                seatViewDto.AuditoriumId = seatViewDto.SeatReservations.Select(s => s.AuditoriumId).FirstOrDefault() ?? 0;
+                seatViewDto.ShowingId = showingId;
+                seatViewDto.SeatRows = seatViewDto.SeatReservations.Max(s => s.SeatRow);
+                seatViewDto.SeatAmountPerRow = seatViewDto.SeatReservations.Max(s => s.SeatNumber);
+
+                return Ok(seatViewDto);
         }
+
+
+
+
 
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
