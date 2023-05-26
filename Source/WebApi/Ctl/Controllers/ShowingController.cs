@@ -115,10 +115,10 @@ namespace BioBooker.WebApi.Ctl.Controllers
 
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
-        public async Task<IActionResult> Put(int showingId, [FromBody] SeatViewModel seatViewModel)
+        public async Task<IActionResult> Put(int showingId, [FromBody] List<SeatReservation> seatReservations)
         {
             IActionResult foundReturn;
-            bool wasUpdated = await _showingManager.BookSeatForShowing(seatViewModel);
+            bool wasUpdated = await _showingManager.BookSeatForShowing(seatReservations);
 
             if (wasUpdated)
             {

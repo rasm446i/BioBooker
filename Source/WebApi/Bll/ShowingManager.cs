@@ -29,9 +29,9 @@ namespace BioBooker.WebApi.Bll
             return await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
         }
 
-        public async Task<bool> BookSeatForShowing(SeatViewModel seatViewModel)
+        public async Task<bool> BookSeatForShowing(List<SeatReservation> seatReservations)
         {
-            return await _showingService.BookSeatForShowing(seatViewModel);
+            return await _showingService.BookSeatForShowing(seatReservations);
         }
 
         public async Task<List<SeatReservation>> GetAllSeatReservationsByShowingId(int showingId)

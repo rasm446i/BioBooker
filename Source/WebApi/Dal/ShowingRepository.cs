@@ -104,18 +104,18 @@ namespace BioBooker.WebApi.Dal
         {
             int showingId = 0;
 
-            string insertQuery = "INSERT INTO Showing(Date, StartTime, EndTime, AuditoriumId, MovieId) VALUES(@Date, @StartTime, @EndTime, @AuditoriumId, @MovieId); SELECT SCOPE_IDENTITY()";
+            string insertQuery = "INSERT INTO Showing(Date, StartTime, EndTime, MovieId) VALUES(@Date, @StartTime, @EndTime, @MovieId); SELECT SCOPE_IDENTITY()";
 
             showingId = await connection.ExecuteScalarAsync<int>(insertQuery, showing, transaction);
 
             List<Seat> seats = await GetAllSeatsFromAuditoriumIdAsync(showing.AuditoriumId);
 
-            string insertQuerySeatRes = "INSERT INTO SeatReservation (ShowingId, AuditoriumId, SeatRow, SeatNumber, CustomerId) VALUES (@ShowingId, @AuditoriumId, @SeatRow, @SeatNumber, @CustomerId)";
+            string insertQuerySeatRes = "INSERT INTO SeatReservation (ShowingId, SeatRow, SeatNumber, CustomerId) VALUES (@ShowingId, @SeatRow, @SeatNumber, @CustomerId)";
 
             foreach (Seat seat in seats)
             {
                 int customerId = 0;
-                SeatReservation seatReservation = new SeatReservation(showing.AuditoriumId, seat.SeatRow, seat.SeatNumber, showingId, customerId);
+                SeatReservation seatReservation = new SeatReservation(seat.SeatRow, seat.SeatNumber, showingId, customerId);
                 await connection.ExecuteAsync(insertQuerySeatRes, new { CustomerId = customerId, SeatRow = seat.SeatRow, SeatNumber = seat.SeatNumber, showing.AuditoriumId, ShowingId = showingId }, transaction);
             }
             return showingId > 0;
@@ -123,7 +123,7 @@ namespace BioBooker.WebApi.Dal
 
 
 
-        public async Task<bool> BookSeatForShowing(SeatViewModel seatViewModel)
+        public async Task<bool> BookSeatForShowing(List<SeatReservation> seatReservations)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -133,7 +133,7 @@ namespace BioBooker.WebApi.Dal
                 {
                     try
                     {
-                        foreach (SeatReservation seatRes in seatViewModel.SeatReservations)
+                        foreach (SeatReservation seatRes in seatReservations)
                         {
                             string getAvailability = @"SELECT *  
                                        FROM SeatReservation    
@@ -160,7 +160,7 @@ namespace BioBooker.WebApi.Dal
                                     seatRes.ShowingId,
                                     seatRes.SeatRow,
                                     seatRes.SeatNumber,
-                                    seatRes.Version
+                                    returnedData.Version
                                 };
 
                                 var rowsUpdated = await connection.ExecuteAsync(updateQuery, parameters, transaction);
