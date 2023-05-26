@@ -151,7 +151,8 @@ namespace BioBooker.WebApi.Dal
                         WHERE ShowingId = @ShowingId
                         AND SeatRow = @SeatRow
                         AND SeatNumber = @SeatNumber
-                        AND CustomerId = 0";
+                        AND CustomerId = 0
+                        AND Version = @Version";
 
                                 var parameters = new
                                 {
@@ -159,6 +160,7 @@ namespace BioBooker.WebApi.Dal
                                     seatRes.ShowingId,
                                     seatRes.SeatRow,
                                     seatRes.SeatNumber,
+                                    seatRes.Version
                                 };
 
                                 var rowsUpdated = await connection.ExecuteAsync(updateQuery, parameters, transaction);
