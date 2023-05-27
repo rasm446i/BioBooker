@@ -28,56 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.buttonDetails = new System.Windows.Forms.Button();
             this.buttonCreate = new System.Windows.Forms.Button();
-            this.buttonDelete = new System.Windows.Forms.Button();
-            this.buttonSearch = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.labelAuditoriumTitle = new System.Windows.Forms.Label();
-            this.textBoxSearchShowing = new System.Windows.Forms.TextBox();
             this.labelNoShowingsFound = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.labelAuditorium = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // buttonDetails
-            // 
-            this.buttonDetails.Location = new System.Drawing.Point(12, 344);
-            this.buttonDetails.Name = "buttonDetails";
-            this.buttonDetails.Size = new System.Drawing.Size(75, 23);
-            this.buttonDetails.TabIndex = 1;
-            this.buttonDetails.Text = "Details";
-            this.buttonDetails.UseVisualStyleBackColor = true;
-            // 
             // buttonCreate
             // 
-            this.buttonCreate.Location = new System.Drawing.Point(114, 385);
+            this.buttonCreate.Location = new System.Drawing.Point(12, 297);
             this.buttonCreate.Name = "buttonCreate";
             this.buttonCreate.Size = new System.Drawing.Size(75, 23);
             this.buttonCreate.TabIndex = 2;
             this.buttonCreate.Text = "Create";
             this.buttonCreate.UseVisualStyleBackColor = true;
             this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
-            // 
-            // buttonDelete
-            // 
-            this.buttonDelete.Location = new System.Drawing.Point(12, 385);
-            this.buttonDelete.Name = "buttonDelete";
-            this.buttonDelete.Size = new System.Drawing.Size(75, 23);
-            this.buttonDelete.TabIndex = 3;
-            this.buttonDelete.Text = "Delete";
-            this.buttonDelete.UseVisualStyleBackColor = true;
-            // 
-            // buttonSearch
-            // 
-            this.buttonSearch.Location = new System.Drawing.Point(12, 304);
-            this.buttonSearch.Name = "buttonSearch";
-            this.buttonSearch.Size = new System.Drawing.Size(75, 23);
-            this.buttonSearch.TabIndex = 4;
-            this.buttonSearch.Text = "Search";
-            this.buttonSearch.UseVisualStyleBackColor = true;
-            this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
             // listView1
             // 
@@ -105,14 +73,6 @@
             this.labelAuditoriumTitle.Size = new System.Drawing.Size(90, 20);
             this.labelAuditoriumTitle.TabIndex = 8;
             this.labelAuditoriumTitle.Text = "Auditorium";
-            // 
-            // textBoxSearchShowing
-            // 
-            this.textBoxSearchShowing.Location = new System.Drawing.Point(114, 304);
-            this.textBoxSearchShowing.Name = "textBoxSearchShowing";
-            this.textBoxSearchShowing.PlaceholderText = "Movie Title...";
-            this.textBoxSearchShowing.Size = new System.Drawing.Size(141, 23);
-            this.textBoxSearchShowing.TabIndex = 9;
             // 
             // labelNoShowingsFound
             // 
@@ -149,14 +109,10 @@
             this.Controls.Add(this.labelAuditorium);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.labelNoShowingsFound);
-            this.Controls.Add(this.textBoxSearchShowing);
             this.Controls.Add(this.labelAuditoriumTitle);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.listView1);
-            this.Controls.Add(this.buttonSearch);
-            this.Controls.Add(this.buttonDelete);
             this.Controls.Add(this.buttonCreate);
-            this.Controls.Add(this.buttonDetails);
             this.Name = "ShowingDetailView";
             this.Text = "ShowingDetailView";
             this.ResumeLayout(false);
@@ -165,14 +121,10 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button buttonDetails;
         private System.Windows.Forms.Button buttonCreate;
-        private System.Windows.Forms.Button buttonDelete;
-        private System.Windows.Forms.Button buttonSearch;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label labelAuditoriumTitle;
-        private System.Windows.Forms.TextBox textBoxSearchShowing;
         private System.Windows.Forms.Label labelNoShowingsFound;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label labelAuditorium;
