@@ -1,18 +1,22 @@
 using BioBooker.Dml;
+using BioBooker.WebApi.Ctl.Controllers;
 using BioBooker.WinApp.Uil.Controllers;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using MovieTheaterController = BioBooker.WinApp.Uil.Controllers.MovieTheaterController;
 
 namespace BioBooker.WinApp.Uil.Views
 {
     public partial class CreateAuditoriumView : Form
     {
         private MovieTheater _selectedMovieTheater;
+        private MovieTheaterController _movieTheaterController;
         public CreateAuditoriumView(MovieTheater movieTheater)
         {
             InitializeComponent();
             _selectedMovieTheater = movieTheater;
+            _movieTheaterController = new MovieTheaterController();
         }
 
         /// <summary>
@@ -38,11 +42,10 @@ namespace BioBooker.WinApp.Uil.Views
             if (seatRowsParseResult > 0 && seatsPerRowParseResult > 1 && isValidAuditoriumName)
             {
                 // Generate the seats for the auditorium
-                List<Seat> seats = MovieTheaterController.GetGeneratedSeats(seatRowsParseResult, seatsPerRowParseResult);
+                List<Seat> seats = _movieTheaterController.GetGeneratedSeats(seatRowsParseResult, seatsPerRowParseResult);
 
                 // Create a new auditorium with the generated seats and auditorium name
-                MovieTheaterController movieTheaterController = new MovieTheaterController();
-                Auditorium newAuditorium = movieTheaterController.CreateAuditorium(seats, auditoriumName);
+                Auditorium newAuditorium = _movieTheaterController.CreateAuditorium(seats, auditoriumName);
 
                 // Check if the selected movie theater already contains the auditorium that is trying to be inserted
                 var isAlreadyAdded = MovieTheaterController.AuditoriumAlreadyAdded(newAuditorium, _selectedMovieTheater.Auditoriums);
@@ -54,7 +57,7 @@ namespace BioBooker.WinApp.Uil.Views
                 }
 
                 // Save changes in the database
-                bool wasInserted = await movieTheaterController.AddAuditoriumToMovieTheaterAsync(_selectedMovieTheater.Id, newAuditorium);
+                bool wasInserted = await _movieTheaterController.AddAuditoriumToMovieTheaterAsync(_selectedMovieTheater.Id, newAuditorium);
 
                 if (wasInserted)
                 {

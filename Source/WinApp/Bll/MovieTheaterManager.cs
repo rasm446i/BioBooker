@@ -100,5 +100,29 @@ namespace BioBooker.WinApp.Bll
             return wasInserted;
         }
 
+        /// <summary>
+        /// Generates a list of seats based on the specified number of rows and seats per row.
+        /// </summary>
+        /// <param name="amountOfRows">The number of rows in the auditorium.</param>
+        /// <param name="seatsPerRow">The number of seats per row in the auditorium.</param>
+        /// <returns>A list of seats.</returns>
+        public List<Seat> GetGeneratedSeats(int amountOfRows, int seatsPerRow)
+        {
+            List<Seat> seats = new List<Seat>();
+
+            // Iterate through each row
+            for (int rowNum = 1; rowNum <= amountOfRows; rowNum++)
+            {
+                // Iterate through each seat in the row
+                for (int seatNum = 1; seatNum <= seatsPerRow; seatNum++)
+                {
+                    // Create a new Seat with the row number and seat number, and add it to the list
+                    seats.Add(new Seat(rowNum, seatNum));
+                }
+            }
+
+            return seats;
+        }
+
     }
 }

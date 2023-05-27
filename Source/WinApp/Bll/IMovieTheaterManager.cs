@@ -15,6 +15,7 @@ namespace BioBooker.WinApp.Bll
         public MovieTheater CreateMovieTheater(string movieTheaterName, Auditorium newAuditorium);
         public Task<List<MovieTheater>> GetMovieTheatersAsync();
         public Task<bool> AddAuditoriumToMovieTheaterAsync(int movieTheaterId, Auditorium newAuditorium);
+        public List<Seat> GetGeneratedSeats(int amountOfRows, int seatsPerRow);
 
 
 
