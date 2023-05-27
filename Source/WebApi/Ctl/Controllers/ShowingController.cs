@@ -13,7 +13,7 @@ using System.Security.AccessControl;
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
-    [Route("showings")]
+    [Route("api/showings")]
     [ApiController]
     public class ShowingController : ControllerBase
     {

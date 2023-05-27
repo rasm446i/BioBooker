@@ -13,7 +13,7 @@ namespace BioBooker.WinApp.Svl
     public class ShowingService : IShowingService
     {
         private readonly IServiceConnection _serviceConnection;
-        readonly string _serviceBaseUrl = "https://localhost:7011/";
+        readonly string _serviceBaseUrl = "https://localhost:7011/api/";
         private readonly ShowingController _controller;
 
         public ShowingService(IConfiguration configuration)
