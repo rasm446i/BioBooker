@@ -121,8 +121,13 @@ namespace BioBooker.WebApi.Dal
             return showingId > 0;
         }
 
-
-
+        /// <summary>
+        /// Books seats for a showing.
+        /// </summary>
+        /// <param name="seatReservations">A list of seat reservations to be booked.</param>
+        /// <returns>
+        /// A boolean task result indicating whether the seat bookings were successful or not.
+        /// </returns>
         public async Task<bool> BookSeatForShowing(List<SeatReservation> seatReservations)
         {
             using (var connection = new SqlConnection(_connectionString))
@@ -135,25 +140,32 @@ namespace BioBooker.WebApi.Dal
                     {
                         foreach (SeatReservation seatRes in seatReservations)
                         {
-                            string getAvailability = @"SELECT *  
-                                       FROM SeatReservation    
-                                       WHERE ShowingId = @ShowingId 
-                                       AND SeatRow = @SeatRow 
-                                       AND SeatNumber = @SeatNumber";
+                            // SQL query to check the availability of a seat reservation
+                            string getAvailability = @"
+                                SELECT *  
+                                FROM SeatReservation    
+                                WHERE ShowingId = @ShowingId 
+                                AND SeatRow = @SeatRow 
+                                AND SeatNumber = @SeatNumber";
 
+                            // Execute the query to retrieve the existing seat reservation data
                             var returnedData = await connection.QuerySingleOrDefaultAsync<SeatReservation>(getAvailability, seatRes, transaction);
 
+                            // If a seat reservation exists and is not assigned to any customer,
+                            // update it with the new customer ID.
                             if (returnedData != null && returnedData.CustomerId == 0)
                             {
+                                // SQL query to update the seat reservation with the new customer ID
                                 string updateQuery = @"
-                        UPDATE SeatReservation
-                        SET CustomerId = @CustomerId
-                        WHERE ShowingId = @ShowingId
-                        AND SeatRow = @SeatRow
-                        AND SeatNumber = @SeatNumber
-                        AND CustomerId = 0
-                        AND Version = @Version";
+                                    UPDATE SeatReservation
+                                    SET CustomerId = @CustomerId
+                                    WHERE ShowingId = @ShowingId
+                                    AND SeatRow = @SeatRow
+                                    AND SeatNumber = @SeatNumber
+                                    AND CustomerId = 0
+                                    AND Version = @Version";
 
+                                // Update query parameters
                                 var parameters = new
                                 {
                                     seatRes.CustomerId,
@@ -163,8 +175,10 @@ namespace BioBooker.WebApi.Dal
                                     returnedData.Version
                                 };
 
+                                // Execute the update query
                                 var rowsUpdated = await connection.ExecuteAsync(updateQuery, parameters, transaction);
 
+                                // If no rows were affected by the update, rollback the transaction and return false
                                 if (rowsUpdated == 0)
                                 {
                                     transaction.Rollback();
@@ -185,13 +199,14 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
-
-
-
-
-
-
-
+        /// <summary>
+        /// Retrieves all seat reservations for a specific showing.
+        /// </summary>
+        /// <param name="showingId">The ID of the showing.</param>
+        /// <returns>
+        /// A task representing the asynchronous operation. The task result is a list of seat reservations
+        /// associated with the specified showing ID.
+        /// </returns>
         public async Task<List<SeatReservation>> GetAllSeatReservationByShowingId(int showingId)
         {
             string sqlQuery = @"SELECT SeatRow, SeatNumber, ShowingId, CustomerId
@@ -200,8 +215,13 @@ namespace BioBooker.WebApi.Dal
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 await connection.OpenAsync();
+
+                // Parameters for the SQL query
                 var parameters = new { ShowingId = showingId };
+
+                // Execute the query and retrieve the seat reservations
                 var result = await connection.QueryAsync<SeatReservation>(sqlQuery, parameters);
+
                 return result.ToList();
             }
         }
