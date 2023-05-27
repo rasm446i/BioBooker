@@ -76,8 +76,6 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
-
-
         /// <summary>
         /// Retrieves all seats from the database for a given auditorium ID.
         /// </summary>
@@ -216,10 +214,8 @@ namespace BioBooker.WebApi.Dal
             {
                 await connection.OpenAsync();
 
-                // Parameters for the SQL query
                 var parameters = new { ShowingId = showingId };
 
-                // Execute the query and retrieve the seat reservations
                 var result = await connection.QueryAsync<SeatReservation>(sqlQuery, parameters);
 
                 return result.ToList();
