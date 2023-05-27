@@ -66,6 +66,12 @@ namespace BioBooker.WebApi.Svl
             return movieTheaterList;
         }
 
+        /// <summary>
+        /// Retrieves an auditorium by its name and movie theater ID asynchronously.
+        /// </summary>
+        /// <param name="auditoriumName">The name of the auditorium.</param>
+        /// <param name="movieTheaterId">The ID of the movie theater.</param>
+        /// <returns>Returns the found auditorium or null if not found.</returns>
         public async Task<Auditorium> GetAuditoriumByNameAndMovieTheaterIdAsync(string auditoriumName, int movieTheaterId)
         {
             Auditorium foundAuditorium = await _MovieTheaterRepository.GetAuditoriumByNameAndMovieTheaterIdAsync(auditoriumName, movieTheaterId);
@@ -73,6 +79,11 @@ namespace BioBooker.WebApi.Svl
             return foundAuditorium;
         }
 
+        /// <summary>
+        /// Retrieves all auditoriums associated with a movie theater ID asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the movie theater.</param>
+        /// <returns>Returns a list of auditoriums or an empty list if none found.</returns>
         public async Task<List<Auditorium>> GetAllAuditoriumsFromMovieTheaterIdAsync(int id)
         {
             List<Auditorium> auditoriums = await _MovieTheaterRepository.GetAllAuditoriumsFromMovieTheaterIdAsync(id);
@@ -81,6 +92,12 @@ namespace BioBooker.WebApi.Svl
 
         }
 
+        /// <summary>
+        /// Inserts a list of seats into an auditorium asynchronously.
+        /// </summary>
+        /// <param name="seats">The list of seats to insert.</param>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <returns>Returns true if the seats were inserted successfully, false otherwise.</returns>
         public async Task<bool> InsertSeatsAsync(List<Seat> seats, int auditoriumId)
         {
             return await _MovieTheaterRepository.InsertSeatsAsync(seats, auditoriumId);

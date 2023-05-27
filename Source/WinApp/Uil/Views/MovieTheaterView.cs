@@ -17,12 +17,18 @@ namespace BioBooker.WinApp.Uil.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Opens the view to create a movie theater and auditorium
+        /// </summary>
         private void btnCreateMovieTheater_Click(object sender, EventArgs e)
         {
             CreateMovieTheaterView auditoriumView = new CreateMovieTheaterView();
             auditoriumView.Show();
         }
 
+        /// <summary>
+        /// Opens the view to ShowAuditoriumsView
+        /// </summary>
         private void btnCreateAuditoriums_Click(object sender, EventArgs e)
         {
             ShowAuditoriumsView auditoriumsView = new ShowAuditoriumsView();

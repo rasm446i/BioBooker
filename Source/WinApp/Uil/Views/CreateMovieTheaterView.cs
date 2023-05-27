@@ -18,7 +18,6 @@ namespace BioBooker.WinApp.Uil.Views
         /// It is then passed on to the MovieTheaterController where the list of seats will be created.
         /// The list of seats, movie theater name and auditorium name are then passed to the MovieTheaterManager to create the movie theater
         /// </summary>
-
         private async void btnCreateMovieTheater_Click(object sender, EventArgs e)
         {
             //Get input data
@@ -37,6 +36,7 @@ namespace BioBooker.WinApp.Uil.Views
 
             bool wasInserted;
 
+            // Checks if the parsed seat rows and seats per row are valid, along with valid movie theater and auditorium names.
             if (seatRowsParseResult > 0 && seatsPerRowParseResult >= 1 && isValidMovieTheaterName && isValidAuditoriumName)
             {
                 wasInserted = await movieTheaterController.CreateSeatsAndMovieTheaterFromUserInputAsync(movieTheaterName, seatRowsParseResult, seatsPerRowParseResult, auditoriumName);

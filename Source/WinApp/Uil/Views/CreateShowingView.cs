@@ -39,6 +39,9 @@ namespace BioBooker.WinApp.Uil.Views
             buttonSubmit.Enabled = false;
         }
 
+        /// <summary>
+        /// Loads movies data into the ListView.
+        /// </summary>
         private async void LoadMovies()
         {
             // Call the GetAllMoviesAsync method to retrieve all movies
@@ -67,6 +70,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
+        /// <summary>
+        /// Sets up the start time and end time ComboBoxes with time values.
+        /// </summary>
         private void SetupTimeComboBoxes()
         {
             // Populate the start time and end time ComboBoxes with time values
@@ -87,12 +93,19 @@ namespace BioBooker.WinApp.Uil.Views
             comboBoxStartTime.Enabled = false;
         }
 
-
+        /// <summary>
+        /// Closes the window
+        /// </summary>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Handles the button click event to submit a new showing.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private async void buttonSubmit_Click(object sender, EventArgs e)
         {
             if (listViewMovies.SelectedItems.Count > 0)
@@ -141,10 +154,11 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the ComboBoxStartTime.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void ComboBoxStartTime_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewMovies.SelectedItems.Count > 0)
@@ -175,8 +189,11 @@ namespace BioBooker.WinApp.Uil.Views
         }
 
 
-
-
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the ListViewMovies.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void ListViewMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewMovies.SelectedItems.Count > 0)

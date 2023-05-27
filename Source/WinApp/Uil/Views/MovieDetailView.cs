@@ -32,7 +32,9 @@ namespace BioBooker.WinApp.Uil.Views
             Load += MovieDetailView_Load;
         }
 
-        // Retrieves the movie and displays the data and poster
+        /// <summary>
+        /// Retrieves the movie and displays the data and poster
+        /// </summary>
         private async void MovieDetailView_Load(object sender, EventArgs e)
         {
             movie = await moviesManager.GetMovieByTitleAsync(title);
@@ -48,7 +50,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-        // Display the movie details in the form controls
+        /// <summary>
+        /// Display the movie details in the form controls
+        /// </summary>
         private async void DisplayMovieDetails()
         {
             labelReleaseYear.Text = movie.ReleaseYear;

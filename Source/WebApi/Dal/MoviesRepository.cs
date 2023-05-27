@@ -244,6 +244,11 @@ namespace BioBooker.WebApi.Dal
             }
         }
 
+        /// <summary>
+        /// Validates the version of a movie by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the movie.</param>
+        /// <returns>Returns the version of the movie as a byte array.</returns>
         public async Task<byte[]> ValidateMovieVersionByTitleAsync(int id)
         {
             byte[] version = null;

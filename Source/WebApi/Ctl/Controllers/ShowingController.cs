@@ -72,7 +72,11 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return Ok(showings);
         }
 
-        //gets all Seats in SeatResevations by showing id
+        /// <summary>
+        /// Retrieves all seat reservations for a specific showing.
+        /// </summary>
+        /// <param name="showingId">The ID of the showing.</param>
+        /// <returns>Returns a list of seat reservations.</returns>
         [HttpGet("{showingId}/reservations")]
         [AllowAnonymous]
         public async Task<IActionResult> Get(int showingId)
@@ -87,6 +91,12 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return Ok(seatReservations);
         }
 
+
+        /// <summary>
+        /// Retrieves the seat view for a specific showing, including seat reservations and layout information.
+        /// </summary>
+        /// <param name="showingId">The ID of the showing.</param>
+        /// <returns>Returns the seat view information.</returns>
         [HttpGet("{showingId}/seatView")]
         [AllowAnonymous]
         public async Task<IActionResult> GetSeatView([FromRoute]int showingId)
@@ -109,10 +119,12 @@ namespace BioBooker.WebApi.Ctl.Controllers
                 return Ok(seatViewDto);
         }
 
-
-
-
-
+        /// <summary>
+        /// Updates the seat reservations for a specific showing.
+        /// </summary>
+        /// <param name="showingId">The ID of the showing.</param>
+        /// <param name="seatReservations">The list of seat reservations to be updated.</param>
+        /// <returns>Returns the result of the update operation.</returns>
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
         public async Task<IActionResult> Put(int showingId, [FromBody] List<SeatReservation> seatReservations)

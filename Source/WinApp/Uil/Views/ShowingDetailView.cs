@@ -27,6 +27,9 @@ namespace BioBooker.WinApp.Uil.Views
             dateTimePicker1.ValueChanged += DateTimePicker1_ValueChanged;
         }
 
+        /// <summary>
+        /// Handles the Load event of the ShowingDetailView form.
+        /// </summary>
         private async void ShowingDetailView_Load(object sender, EventArgs e)
         {
             // Add column headers
@@ -39,12 +42,20 @@ namespace BioBooker.WinApp.Uil.Views
             await DisplayShowings(selectedDate);
         }
 
+        /// <summary>
+        /// Handles the ValueChanged event of the DateTimePicker1 control.
+        /// </summary>
         private async void DateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DateTime selectedDate = dateTimePicker1.Value;
             await DisplayShowings(selectedDate);
         }
 
+        /// <summary>
+        /// Displays the showings for the specified date.
+        /// </summary>
+        /// <param name="selectedDate">The selected date.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         private async Task DisplayShowings(DateTime selectedDate)
         {
             List<Showing> showings = await showingManager.GetShowingsByAuditoriumIdAndDateAsync(auditorium.AuditoriumId, selectedDate);
@@ -65,11 +76,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-        private async void buttonSearch_Click(object sender, EventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// Handles the Click event of the buttonCreate control.
+        /// </summary>
         private void buttonCreate_Click(object sender, EventArgs e)
         {
             string selectedDateString = dateTimePicker1.Value.ToString("yyyy-MM-dd"); // Parse selectedDate to a string with the format "yyyy-MM-dd"
@@ -78,9 +87,5 @@ namespace BioBooker.WinApp.Uil.Views
             createShowingView.ShowDialog();
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

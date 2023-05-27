@@ -72,6 +72,11 @@ namespace BioBooker.WebApi.Ctl.Controllers
         }
 
 
+        /// <summary>
+        /// Retrieves all auditoriums associated with a specific movie theater.
+        /// </summary>
+        /// <param name="id">The ID of the movie theater.</param>
+        /// <returns>Returns the list of auditoriums for the specified movie theater.</returns>
         [HttpGet, Route("{id}/Auditoriums")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
@@ -80,11 +85,17 @@ namespace BioBooker.WebApi.Ctl.Controllers
             if (auditoriums == null || auditoriums.Count == 0)
             {
                 return NotFound();
-
             }
+
             return Ok(auditoriums);
         }
 
+        /// <summary>
+        /// Adds seats to a specific auditorium.
+        /// </summary>
+        /// <param name="seats">The list of seats to be added.</param>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <returns>Returns the result of the seat addition operation.</returns>
         [HttpPost, Route("{id}/Auditoriums/{auditoriumId}/Seats")]
         public async Task<IActionResult> Post(List<Seat> seats, [FromRoute] int auditoriumId)
         {
@@ -108,9 +119,14 @@ namespace BioBooker.WebApi.Ctl.Controllers
             {
                 return CreatedAtAction(nameof(Post), seats, auditoriumId);
             }
-
         }
 
+        /// <summary>
+        /// Inserts a new auditorium to a specific movie theater.
+        /// </summary>
+        /// <param name="movieTheaterId">The ID of the movie theater.</param>
+        /// <param name="newAuditorium">The data of the new auditorium to be inserted.</param>
+        /// <returns>Returns the result of the auditorium insertion operation.</returns>
         [HttpPost("{movieTheaterId}/auditoriums")]
         public async Task<IActionResult> InsertAuditoriumToMovieTheater(int movieTheaterId, [FromBody] Auditorium newAuditorium)
         {
@@ -142,6 +158,12 @@ namespace BioBooker.WebApi.Ctl.Controllers
             }
         }
 
+        /// <summary>
+        /// Retrieves an auditorium by its name and associated movie theater ID.
+        /// </summary>
+        /// <param name="movieTheaterId">The ID of the movie theater.</param>
+        /// <param name="auditoriumName">The name of the auditorium.</param>
+        /// <returns>Returns the auditorium that matches the specified name and movie theater ID.</returns>
         [HttpGet("{movieTheaterId}/auditoriums/{auditoriumName}")]
         public async Task<IActionResult> GetAuditoriumByNameAndMovieTheaterId([FromRoute] int movieTheaterId, [FromRoute] string auditoriumName)
         {

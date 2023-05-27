@@ -61,6 +61,14 @@ namespace BioBooker.WinApp.Bll
             return inserted;
         }
 
+        /// <summary>
+        /// Checks if a showing exists in an auditorium for a specific start time, end time, and date asynchronously.
+        /// </summary>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <param name="startTime">The start time of the showing.</param>
+        /// <param name="endTime">The end time of the showing.</param>
+        /// <param name="date">The date of the showing.</param>
+        /// <returns>Returns true if a showing with the specified start time, end time, and date exists in the auditorium, false otherwise.</returns>
         public async Task<bool> ShowingExists(int auditoriumId, TimeSpan startTime, TimeSpan endTime, DateTime date)
         {
             List<Showing> showings = await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
@@ -75,8 +83,6 @@ namespace BioBooker.WinApp.Bll
 
             return false;
         }
-
-
 
 
         /// <summary>
