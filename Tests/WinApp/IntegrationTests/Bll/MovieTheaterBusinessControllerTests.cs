@@ -12,6 +12,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 {
     public class MovieTheaterBusinessControllerTests
     {
+<<<<<<< HEAD
         private readonly string _connectionString = "server=localhost; Database=BioBooker; integrated security=true;";
         private readonly string _sqlScript = @"USE master;
 
@@ -73,6 +74,11 @@ CREATE TABLE MovieTheaters(
           ImageData VARBINARY(MAX) NOT NULL
 );";
         private MovieTheaterManager _movieTheaterBusinessController;
+=======
+        private readonly string _connectionString = "server=.\\SQLExpress; Database=BioBooker; integrated security=true;";
+        private readonly string _sqlScript = @"DELETE FROM MovieTheaters WHERE Name = 'MovieTheater'";
+        private MovieTheaterBusinessController _movieTheaterBusinessController;
+>>>>>>> AddShowingsGUI
 
         public MovieTheaterBusinessControllerTests()
         {
@@ -82,10 +88,15 @@ CREATE TABLE MovieTheaters(
         [Fact]
         public async Task CreateMovieTheaterAndInsertAsync_ReturnsTrue_WhenMovieTheaterHasBeenInserted()
         {
+<<<<<<< HEAD
             ResetDatabase();
             
+=======
+
+            ResetDatabase();
+>>>>>>> AddShowingsGUI
             //arrange
-            string movieTheaterName = "Movie Theater";
+            string movieTheaterName = "MovieTheater";
             string auditoriumName = "Auditorium 1";
             List<Seat> seats = new List<Seat>
             {
@@ -101,17 +112,13 @@ CREATE TABLE MovieTheaters(
             //assert
             Assert.True(result);
 
-           
+            ResetDatabase();
         }
 
-        [Fact]
-        public async Task AddAuditoriumToMovieTheaterAsync_ReturnsTrue_WhenAuditoriumHasBeenAddedToMovieTheater()
+        private void ResetDatabase()
         {
-            //arrange
-            int movieTheaterId = 1;
-            string auditoriumName = "Auditorium 2";
-            List<Seat> seats = new List<Seat>
             {
+<<<<<<< HEAD
             new Seat(1, 1),
             new Seat(1, 2),
             new Seat(2, 1),
@@ -133,7 +140,16 @@ CREATE TABLE MovieTheaters(
             {
                 connection.Open();
                 connection.Execute(_sqlScript);
+=======
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    connection.Execute(_sqlScript);
+                    connection.Close();
+                }
+>>>>>>> AddShowingsGUI
             }
+
         }
     }
 }

@@ -159,14 +159,21 @@ namespace BioBooker.WinApp.Uil.Views
                 DateTime startTime = DateTime.Parse(selectedStartTime);
                 DateTime endTime = startTime.AddMinutes(movieRuntimeMinutes);
 
+                if (endTime.Date > startTime.Date || endTime.TimeOfDay >= TimeSpan.FromDays(1))
+                {
+                    MessageBox.Show("The selected start time exceeds midnight and will go into the next day.", "Invalid Start Time", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboBoxStartTime.SelectedIndex = 0; // Reset to the default start time option
+                    return;
+                }
+
                 // Display the end time with the desired format
                 // String literal (@) needed to format correctly and \: indicates that the colon
-                // should be treated as a character rather thana formatting speicifier
+                // should be treated as a character rather than a formatting specifier
                 textBoxEndTime.Text = endTime.ToString(@"HH\:mm\:ss");
                 buttonSubmit.Enabled = true;
-
             }
         }
+
 
 
 

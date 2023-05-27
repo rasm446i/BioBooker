@@ -29,9 +29,7 @@ namespace BioBooker.WinApp.Uil.Views
         private void InitializeComponent()
         {
             this.textBoxSearch = new System.Windows.Forms.TextBox();
-            this.textBoxSortBy = new System.Windows.Forms.TextBox();
             this.buttonSearch = new System.Windows.Forms.Button();
-            this.buttonSortBy = new System.Windows.Forms.Button();
             this.buttonDelete = new System.Windows.Forms.Button();
             this.buttonClose = new System.Windows.Forms.Button();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -47,13 +45,6 @@ namespace BioBooker.WinApp.Uil.Views
             this.textBoxSearch.Size = new System.Drawing.Size(100, 23);
             this.textBoxSearch.TabIndex = 1;
             // 
-            // textBoxSortBy
-            // 
-            this.textBoxSortBy.Location = new System.Drawing.Point(206, 92);
-            this.textBoxSortBy.Name = "textBoxSortBy";
-            this.textBoxSortBy.Size = new System.Drawing.Size(100, 23);
-            this.textBoxSortBy.TabIndex = 2;
-            // 
             // buttonSearch
             // 
             this.buttonSearch.Location = new System.Drawing.Point(109, 21);
@@ -64,18 +55,9 @@ namespace BioBooker.WinApp.Uil.Views
             this.buttonSearch.UseVisualStyleBackColor = true;
             this.buttonSearch.Click += new System.EventHandler(this.buttonSearch_Click);
             // 
-            // buttonSortBy
-            // 
-            this.buttonSortBy.Location = new System.Drawing.Point(109, 92);
-            this.buttonSortBy.Name = "buttonSortBy";
-            this.buttonSortBy.Size = new System.Drawing.Size(91, 23);
-            this.buttonSortBy.TabIndex = 4;
-            this.buttonSortBy.Text = "Sort by";
-            this.buttonSortBy.UseVisualStyleBackColor = true;
-            // 
             // buttonDelete
             // 
-            this.buttonDelete.Location = new System.Drawing.Point(206, 202);
+            this.buttonDelete.Location = new System.Drawing.Point(215, 121);
             this.buttonDelete.Name = "buttonDelete";
             this.buttonDelete.Size = new System.Drawing.Size(91, 23);
             this.buttonDelete.TabIndex = 5;
@@ -105,7 +87,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // buttonDetails
             // 
-            this.buttonDetails.Location = new System.Drawing.Point(206, 151);
+            this.buttonDetails.Location = new System.Drawing.Point(215, 70);
             this.buttonDetails.Name = "buttonDetails";
             this.buttonDetails.Size = new System.Drawing.Size(91, 23);
             this.buttonDetails.TabIndex = 9;
@@ -124,7 +106,7 @@ namespace BioBooker.WinApp.Uil.Views
             // 
             // buttonUpdateMovie
             // 
-            this.buttonUpdateMovie.Location = new System.Drawing.Point(206, 249);
+            this.buttonUpdateMovie.Location = new System.Drawing.Point(215, 168);
             this.buttonUpdateMovie.Name = "buttonUpdateMovie";
             this.buttonUpdateMovie.Size = new System.Drawing.Size(91, 23);
             this.buttonUpdateMovie.TabIndex = 11;
@@ -143,9 +125,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.buttonClose);
             this.Controls.Add(this.buttonDelete);
-            this.Controls.Add(this.buttonSortBy);
             this.Controls.Add(this.buttonSearch);
-            this.Controls.Add(this.textBoxSortBy);
             this.Controls.Add(this.textBoxSearch);
             this.Name = "ViewMoviesView";
             this.Text = "ViewMoviesView";
@@ -156,9 +136,7 @@ namespace BioBooker.WinApp.Uil.Views
 
         #endregion
         private System.Windows.Forms.TextBox textBoxSearch;
-        private System.Windows.Forms.TextBox textBoxSortBy;
         private System.Windows.Forms.Button buttonSearch;
-        private System.Windows.Forms.Button buttonSortBy;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.Button buttonClose;
         private System.Windows.Forms.ListView listView1;
