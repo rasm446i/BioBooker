@@ -36,8 +36,12 @@ namespace BioBooker.WinApp.Uil.Views
             comboBoxStartTime.SelectedIndexChanged += ComboBoxStartTime_SelectedIndexChanged;
             listViewMovies.SelectedIndexChanged += ListViewMovies_SelectedIndexChanged;
             textBoxEndTime.ReadOnly = true;
+            buttonSubmit.Enabled = false;
         }
 
+        /// <summary>
+        /// Loads movies data into the ListView.
+        /// </summary>
         private async void LoadMovies()
         {
             // Call the GetAllMoviesAsync method to retrieve all movies
@@ -66,6 +70,9 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
+        /// <summary>
+        /// Sets up the start time and end time ComboBoxes with time values.
+        /// </summary>
         private void SetupTimeComboBoxes()
         {
             // Populate the start time and end time ComboBoxes with time values
@@ -86,12 +93,19 @@ namespace BioBooker.WinApp.Uil.Views
             comboBoxStartTime.Enabled = false;
         }
 
-
+        /// <summary>
+        /// Closes the window
+        /// </summary>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Handles the button click event to submit a new showing.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private async void buttonSubmit_Click(object sender, EventArgs e)
         {
             if (listViewMovies.SelectedItems.Count > 0)
@@ -117,20 +131,20 @@ namespace BioBooker.WinApp.Uil.Views
 
                 // Create a new Showing object
                 Showing newShowing = new Showing(DateTime.Parse(date), startTime, endTime, auditorium.AuditoriumId, movieId);
-
-                // Call the CreateAndInsertShowingAsync method to save the new showing
-                bool success = await showingManager.CreateAndInsertShowingAsync(newShowing);
-
-                if (success)
+                try
                 {
-                    // Showing saved successfully, display a success message
-                    MessageBox.Show("Showing saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                }
-                else
+                    // Call the CreateAndInsertShowingAsync method to save the new showing
+                    bool success = await showingManager.CreateAndInsertShowingAsync(newShowing);
+                    if (success)
+                    {
+                        // Showing saved successfully, display a success message
+                        MessageBox.Show("Showing saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Close();
+                    }
+                }catch (Exception exception)
                 {
                     // Failed to save showing, display an error message
-                    MessageBox.Show("Failed to save showing. Please try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to save showing."+exception.Message, "failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
@@ -140,10 +154,11 @@ namespace BioBooker.WinApp.Uil.Views
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the ComboBoxStartTime.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void ComboBoxStartTime_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewMovies.SelectedItems.Count > 0)
@@ -158,16 +173,27 @@ namespace BioBooker.WinApp.Uil.Views
                 DateTime startTime = DateTime.Parse(selectedStartTime);
                 DateTime endTime = startTime.AddMinutes(movieRuntimeMinutes);
 
+                if (endTime.Date > startTime.Date || endTime.TimeOfDay >= TimeSpan.FromDays(1))
+                {
+                    MessageBox.Show("The selected start time exceeds midnight and will go into the next day.", "Invalid Start Time", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    comboBoxStartTime.SelectedIndex = 0; // Reset to the default start time option
+                    return;
+                }
+
                 // Display the end time with the desired format
                 // String literal (@) needed to format correctly and \: indicates that the colon
-                // should be treated as a character rather thana formatting speicifier
+                // should be treated as a character rather than a formatting specifier
                 textBoxEndTime.Text = endTime.ToString(@"HH\:mm\:ss");
-
+                buttonSubmit.Enabled = true;
             }
         }
 
 
-
+        /// <summary>
+        /// Handles the SelectedIndexChanged event of the ListViewMovies.
+        /// </summary>
+        /// <param name="sender">The sender object.</param>
+        /// <param name="e">The event arguments.</param>
         private void ListViewMovies_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listViewMovies.SelectedItems.Count > 0)
@@ -195,6 +221,7 @@ namespace BioBooker.WinApp.Uil.Views
             
                 comboBoxStartTime.Enabled = false;
                 textBoxEndTime.Text = string.Empty;
+                buttonSubmit.Enabled = false;
             }
         }
 

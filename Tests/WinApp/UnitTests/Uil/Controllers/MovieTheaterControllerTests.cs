@@ -23,7 +23,7 @@ namespace BioBooker.WinApp.UnitTests.Uil.Controllers
             int seatsPerRow = 2;
 
             //act
-            List<Seat> seats = MovieTheaterController.GetGeneratedSeats(amountOfRows, seatsPerRow);
+            List<Seat> seats = _movieTheaterController.GetGeneratedSeats(amountOfRows, seatsPerRow);
 
             //assert
             Assert.Equal(amountOfRows * seatsPerRow, seats.Count);
@@ -36,7 +36,7 @@ namespace BioBooker.WinApp.UnitTests.Uil.Controllers
             int seatsPerRow = 3;
 
             //act
-            List<Seat> seats = MovieTheaterController.GetGeneratedSeats(amountOfRows, seatsPerRow);
+            List<Seat> seats = _movieTheaterController.GetGeneratedSeats(amountOfRows, seatsPerRow);
 
             //assert
             for (int rowNum = 1; rowNum <= amountOfRows; rowNum++)

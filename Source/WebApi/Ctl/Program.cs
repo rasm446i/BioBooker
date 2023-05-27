@@ -11,31 +11,40 @@ internal static class Program
         var webApiBuilder = WebApplication.CreateBuilder(args);
         webApiBuilder.Services.AddControllers();
 
+        // CORS
+        webApiBuilder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+
         // Authentication
         webApiBuilder.Services.AddAuthentication("Bearer")
-        .AddJwtBearer("Bearer", options =>
-        {
-            options.Authority = "https://localhost:7001";
-            options.TokenValidationParameters = new TokenValidationParameters
+            .AddJwtBearer("Bearer", options =>
             {
-                ValidateAudience = false
-            };
-        });
+                options.Authority = "https://localhost:7001/";
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateAudience = false
+                };
+            });
 
         // Authorization
         webApiBuilder.Services.AddAuthorization(options =>
             options.AddPolicy("RequireSpecificApiScopePolicy", policy =>
-                {
-                    policy.RequireAuthenticatedUser();
-                    policy.RequireClaim("scope", "WebApi.FullCrudScope");
-                }
-            )
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim("scope", "WebApi.FullCrudScope");
+            })
         );
-
-
 
         var webApi = webApiBuilder.Build();
         webApi.UseHttpsRedirection();
+        webApi.UseCors(); // Add this line to enable CORS
         webApi.UseAuthentication();
         webApi.UseAuthorization();
         webApi.MapControllers().RequireAuthorization("RequireSpecificApiScopePolicy");

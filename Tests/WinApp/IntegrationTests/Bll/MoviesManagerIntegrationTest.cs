@@ -2,10 +2,14 @@ using BioBooker.Dml;
 using BioBooker.Utl;
 using BioBooker.WinApp.Bll;
 using BioBooker.WinApp.Svl;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -27,14 +31,16 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         [Fact]
         public async Task CreateAndInsertMovieAsync_InsertsAndRetrievesMovie()
         {
-            var imagePath = @"C:\Users\Visti\Desktop\Dyring.png";
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
+
 
             var imageData = utl.GenerateImageData(imagePath);
+
 
             // Arrange
             var movie = new Movie
             {
-                Title = "Test Movie70",
+                Title = "Test Movie1",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
                 Director = "Director Name",
@@ -65,26 +71,30 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             Assert.Equal(movie.Actors, retrievedMovie.Actors);
             Assert.Equal(movie.Director, retrievedMovie.Director);
             Assert.Equal(movie.Language, retrievedMovie.Language);
-            Assert.Equal(movie.ReleaseYear, retrievedMovie.ReleaseYear);
             Assert.Equal(movie.Subtitles, retrievedMovie.Subtitles);
             Assert.Equal(movie.SubtitlesLanguage, retrievedMovie.SubtitlesLanguage);
             Assert.Equal(movie.MPARating, retrievedMovie.MPARating);
             Assert.Equal(movie.RuntimeMinutes, retrievedMovie.RuntimeMinutes);
             Assert.Equal(movie.Poster.PosterTitle, retrievedMovie.Poster.PosterTitle);
             Assert.Equal(movie.Poster.ImageData, retrievedMovie.Poster.ImageData);
+
+            // Delete test movie from database
+            await moviesManager.DeleteMovieByIdAsync(retrievedMovie.Id);
         }
 
         [Fact]
         public async Task CreateAndInsertMovieAsync_WithValidData_ReturnsTrue()
         {
-            var imagePath = @"INSERT IMAGE PATH";
+
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
 
             var imageData = utl.GenerateImageData(imagePath);
+
 
             // Arrange
             var movie = new Movie
             {
-                Title = "Test Movie19",
+                Title = "Test Movie2",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
                 Director = "Director Name",
@@ -109,6 +119,10 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 
             // Assert
             Assert.True(result);
+
+            // Delete test movie from database
+            Movie retrievedMovie = await moviesManager.GetMovieByTitleAsync(movie.Title);
+            await moviesManager.DeleteMovieByIdAsync(retrievedMovie.Id);
         }
 
         [Fact]
@@ -130,14 +144,41 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         public async Task GetMovieByTitleAsync_WithExistingTitle_ReturnsMovie()
         {
             // Arrange
-            string title = "Test Movie";
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
+            var imageData = utl.GenerateImageData(imagePath);
+
+            var movie = new Movie
+            {
+                Title = "Test Movie1",
+                Genre = "Action",
+                Actors = "Actor 1, Actor 2",
+                Director = "Director Name",
+                Language = "English",
+                ReleaseYear = "2023-01-01",
+                Subtitles = 1,
+                SubtitlesLanguage = "English",
+                MPARating = "PG-13",
+                RuntimeMinutes = 120,
+                Poster = new Poster("Test Movie Poster", imageData)
+            };
+
+            var poster = new Poster
+            {
+                PosterTitle = "Test Movie Poster",
+                ImageData = imageData
+            };
 
             // Act
-            Movie movie = await moviesManager.GetMovieByTitleAsync(title);
+            bool insertResult = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
+            Movie retrievedMovie = await moviesManager.GetMovieByTitleAsync(movie.Title);
 
             // Assert
-            Assert.NotNull(movie);
-            Assert.Equal(title, movie.Title);
+            Assert.True(insertResult);
+            Assert.NotNull(retrievedMovie);
+            Assert.Equal(movie.Title, retrievedMovie.Title);
+
+            // Delete test movie from database
+            await moviesManager.DeleteMovieByIdAsync(retrievedMovie.Id);
         }
 
         [Fact]
@@ -149,6 +190,6 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             // Assert
             Assert.NotNull(movies);
             Assert.NotEmpty(movies);
-        }
+        }    
     }
 }

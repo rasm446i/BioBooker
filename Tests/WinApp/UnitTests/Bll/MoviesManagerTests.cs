@@ -5,6 +5,7 @@ using BioBooker.WinApp.Bll;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,13 +32,13 @@ namespace BioBooker.WinApp.UnitTests.Bll
         public async Task CreateMovie_WithValidData_ReturnsTrue()
         {
             // Arrange
-            var imagePath = @"INSERT IMAGE PATH";
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
 
             var imageData = _utl.GenerateImageData(imagePath);
 
             var movie = new Movie
             {
-                Title = "Test Movie70",
+                Title = "Test Movie 1",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
                 Director = "Director Name",
@@ -77,16 +78,15 @@ namespace BioBooker.WinApp.UnitTests.Bll
         }
 
         [Fact]
-        public async Task CreateMovie_EmptyMPARating_ReturnsFalse()
+        public async Task CreateMovie_EmptyMPARating_ThrowsArgumentException()
         {
             // Arrange
-            var imagePath = @"INSERT IMAGE PATH";
-
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
             var imageData = _utl.GenerateImageData(imagePath);
 
             var movie = new Movie
             {
-                Title = "Test Movie70",
+                Title = "Test Movie 1",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
                 Director = "Director Name",
@@ -105,18 +105,17 @@ namespace BioBooker.WinApp.UnitTests.Bll
                 ImageData = imageData
             };
 
-            // Act
-            Movie createdMovie = _moviesManager.CreateMovie(movie);
-
-            // Assert
-            Assert.Null(createdMovie);
+            // Act & Assert
+            Exception ex = Assert.Throws<ArgumentException>(() => _moviesManager.CreateMovie(movie));
+            Assert.Contains("MPARating", ex.Message);
         }
 
+
         [Fact]
-        public void CreateMovie_NullTitle_ThrowsArgumentException()
+        public async void CreateMovie_NullTitle_ThrowsArgumentException()
         {
             // Arrange
-            var imagePath = @"INSERT IMAGE PATH";
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
 
             var imageData = _utl.GenerateImageData(imagePath);
 
@@ -143,13 +142,8 @@ namespace BioBooker.WinApp.UnitTests.Bll
             };
 
             // Act & Assert
-            Movie createdMovie = _moviesManager.CreateMovie(movie);
-
-            Assert.Throws<ArgumentException>(() =>
-            {
-                // This code should throw an ArgumentException
-                _moviesManager.CreateMovie(movie);
-            });
+            Exception ex = Assert.Throws<ArgumentException>(() => _moviesManager.CreateMovie(movie));
+            Assert.Contains("Title", ex.Message);
         }
     }
 }

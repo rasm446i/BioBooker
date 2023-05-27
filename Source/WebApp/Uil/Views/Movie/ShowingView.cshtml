@@ -1,0 +1,61 @@
+@model IEnumerable<BioBooker.Dml.Showing>
+
+@{
+    ViewData["Title"] = "ShowingView";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ShowingId) <!-- Display name for ShowingId column -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date) <!-- Display name for Date column -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTime) <!-- Display name for StartTime column -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTime) <!-- Display name for EndTime column -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuditoriumId) <!-- Display name for AuditoriumId column -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieId) <!-- Display name for MovieId column -->
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) // Loop through each item in the Model
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShowingId) <!-- Display ShowingId value for the current item -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date) <!-- Display Date value for the current item -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime) <!-- Display StartTime value for the current item -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime) <!-- Display EndTime value for the current item -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AuditoriumId) <!-- Display AuditoriumId value for the current item -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieId) <!-- Display MovieId value for the current item -->
+                </td>
+                <td>
+                    @Html.ActionLink("Book", "Index", "Showing", new { ShowingId = item.ShowingId }) <!-- Link to the SeatView action with the current ShowingId as a parameter -->
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+

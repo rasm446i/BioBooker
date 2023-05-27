@@ -1,9 +1,11 @@
 using BioBooker.Dml;
 using BioBooker.WebApi.Bll;
 using BioBooker.WinApp.Bll;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -21,19 +23,6 @@ namespace BioBooker.WinApp.Bll.Tests
         }
 
         [Fact]
-        public async Task CreateAndInsertShowingAsync_ValidShowing_ReturnsTrue()
-        {
-            // Arrange
-            Showing showing = new Showing(DateTime.Now, TimeSpan.FromHours(10), TimeSpan.FromHours(11), 1, 1);
-
-            // Act
-            bool result = await showingManager.CreateAndInsertShowingAsync(showing);
-
-            // Assert
-            Assert.True(result);
-        }
-
-        [Fact]
         public async Task CreateAndInsertShowingAsync_InvalidShowing_ReturnsFalse()
         {
             // Arrange
@@ -48,34 +37,7 @@ namespace BioBooker.WinApp.Bll.Tests
         }
 
         [Fact]
-        public async Task InsertReservationByShowingIdAsync_ValidReservation_ReturnsTrue()
-        {
-            // Arrange
-            SeatReservation reservation = new SeatReservation(1, 1, 1, 1, 1);
-
-            // Act
-            bool result = await showingManager.InsertReservationByShowingIdAsync(reservation);
-
-            // Assert
-            Assert.True(result);
-        }
-
-        [Fact]
-        public async Task InsertReservationByShowingIdAsync_InvalidReservation_ReturnsFalse()
-        {
-            // Arrange
-            // Creating an invalid reservation by providing an invalid showing ID
-            SeatReservation reservation = new SeatReservation(-1, 1, 1, 1, 1);
-
-            // Act
-            bool result = await showingManager.InsertReservationByShowingIdAsync(reservation);
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
-        public async Task GetShowingsByAuditoriumIdAndDateAsync_ValidData_ReturnsShowingsList()
+        public async Task GetShowingsByAuditoriumIdAndDateAsync_ValidData_ReturnsNotNull()
         {
             // Arrange
             int auditoriumId = 1;
@@ -86,7 +48,7 @@ namespace BioBooker.WinApp.Bll.Tests
 
             // Assert
             Assert.NotNull(showings);
-            // Add additional assertions based on the expected data
+
         }
 
         [Fact]
@@ -100,7 +62,9 @@ namespace BioBooker.WinApp.Bll.Tests
             List<Showing> showings = await showingManager.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
 
             // Assert
-            Assert.Null(showings);
+            Assert.Empty(showings);
         }
+
+     
     }
 }

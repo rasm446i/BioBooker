@@ -52,14 +52,23 @@ namespace BioBooker.WinApp.Bll
                     inserted = await _showingService.InsertShowingAsync(createdShowing);
                 }
             }
-            catch
+            catch(Exception ex)
             {
                 inserted = false;
+                throw new Exception(ex.Message);
             }
 
             return inserted;
         }
 
+        /// <summary>
+        /// Checks if a showing exists in an auditorium for a specific start time, end time, and date asynchronously.
+        /// </summary>
+        /// <param name="auditoriumId">The ID of the auditorium.</param>
+        /// <param name="startTime">The start time of the showing.</param>
+        /// <param name="endTime">The end time of the showing.</param>
+        /// <param name="date">The date of the showing.</param>
+        /// <returns>Returns true if a showing with the specified start time, end time, and date exists in the auditorium, false otherwise.</returns>
         public async Task<bool> ShowingExists(int auditoriumId, TimeSpan startTime, TimeSpan endTime, DateTime date)
         {
             List<Showing> showings = await _showingService.GetShowingsByAuditoriumIdAndDateAsync(auditoriumId, date);
@@ -74,8 +83,6 @@ namespace BioBooker.WinApp.Bll
 
             return false;
         }
-
-
 
 
         /// <summary>
@@ -93,26 +100,15 @@ namespace BioBooker.WinApp.Bll
             }
 
 
-            // Validate movie ID
-            // Assume you have a method to check if the movie exists based on its ID
-  //      bool movieExists = await MovieExists(showing.MovieId);
-  //         throw new ArgumentException("Invalid movie ID. The specified movie does not exist.");
-  //    }
-
-
-          /*  // Validate movie ID
-
-            bool movieExists = await MovieExists(showing.MovieId);
-            if (!movieExists)
-            {
-                throw new ArgumentException("Invalid movie ID. The specified movie does not exist.");
-            }
-*/
-
             // Validate time range
             if (showing.EndTime < showing.StartTime)
             {
                 throw new ArgumentException("End time cannot be before start time.");
+            }
+
+            if (!await ValidateForDoubleBookingShowingsAsync(showing))
+            {
+                throw new ArgumentException("There is Already a showing playing at that time");
             }
 
             Showing newShowing = new Showing(showing.Date, showing.StartTime, showing.EndTime, showing.AuditoriumId, showing.MovieId);
@@ -164,7 +160,7 @@ namespace BioBooker.WinApp.Bll
         }
 
         /// <summary>
-        /// Retrieves a list of showings from the SQL database based on the auditorium ID and date.
+        /// Checks if the start or end time of the showing overlaps with an exsisting one.
         /// </summary>
         /// <param name="auditoriumId">The ID of the auditorium.</param>
         /// <param name="date">The date of the showings.</param>
@@ -182,6 +178,34 @@ namespace BioBooker.WinApp.Bll
             }
             return showings;
         }
+
+
+        /// <summary>
+        /// Retrieves a list of showings from the SQL database based on the auditorium ID and date from the showing.
+        /// </summary>
+        /// <param name="showing">showing you wish too see if overlaps an exsisting showing.</param>
+        /// <returns>A task representing the asynchronous operation. The task returns true if showing does not overlap with exsisting showing.</returns>
+        public async Task<bool> ValidateForDoubleBookingShowingsAsync(Showing showing)
+        {
+            List<Showing> showings = await GetShowingsByAuditoriumIdAndDateAsync(showing.AuditoriumId, showing.Date);
+
+            foreach (Showing existingShowing in showings)
+            {
+                // Check if the date is the same
+                if (existingShowing.Date == showing.Date)
+                {
+                    // Check if the start time or end time of the showing overlaps with an existing showing
+                    if (existingShowing.StartTime < showing.EndTime && existingShowing.EndTime > showing.StartTime)
+                    {
+                        return false; // Overlapping showing found
+                    }
+                }
+            }
+
+            return true; // No overlapping showings found
+        }
+
+
 
     }
 }

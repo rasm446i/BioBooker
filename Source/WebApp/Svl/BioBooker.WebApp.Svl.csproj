@@ -1,7 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+    <ItemGroup>
         <ProjectReference Include="..\..\Dml\BioBooker.Dml.csproj" />
-        <ProjectReference Include="..\Bll\BioBooker.WebApp.Bll.csproj" />
     </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
