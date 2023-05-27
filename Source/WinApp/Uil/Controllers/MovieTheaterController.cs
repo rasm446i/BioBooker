@@ -37,7 +37,7 @@ namespace BioBooker.WinApp.Uil.Controllers
         }
 
         /// <summary>
-        /// Generates a list of seats based on the specified number of rows and seats per row.
+        /// Gets the list of generated seats.
         /// </summary>
         /// <param name="amountOfRows">The number of rows in the auditorium.</param>
         /// <param name="seatsPerRow">The number of seats per row in the auditorium.</param>
