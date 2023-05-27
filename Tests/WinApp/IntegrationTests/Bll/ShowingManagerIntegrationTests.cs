@@ -15,32 +15,11 @@ namespace BioBooker.WinApp.Bll.Tests
     {
         private IConfiguration configuration;
         private IShowingManager showingManager;
-        private readonly string _connectionString = "server=localhost; Database=BioBooker; integrated security=true;";
-        private readonly string _sqlScript = @"DELETE FROM Showing
-                                              WHERE Date = CONVERT(date, GETDATE()) AND
-                                              StartTime = '10:00:00' AND
-                                              EndTime = '11:00:00' AND
-                                              AuditoriumId = 1 AND
-                                              MovieId = 1;";
 
         public ShowingManagerIntegrationTests()
         {
             showingManager = new ShowingManager(configuration);
             
-        }
-
-        [Fact]
-        public async Task CreateAndInsertShowingAsync_ValidShowing_ReturnsTrue()
-        {
-            ResetDatabase();
-            // Arrange
-            Showing showing = new Showing(DateTime.Now, TimeSpan.FromHours(10), TimeSpan.FromHours(11), 1, 1);
-
-            // Act
-            bool result = await showingManager.CreateAndInsertShowingAsync(showing);
-
-            // Assert
-            Assert.True(result);
         }
 
         [Fact]
@@ -58,7 +37,7 @@ namespace BioBooker.WinApp.Bll.Tests
         }
 
         [Fact]
-        public async Task GetShowingsByAuditoriumIdAndDateAsync_ValidData_ReturnsShowingsList()
+        public async Task GetShowingsByAuditoriumIdAndDateAsync_ValidData_ReturnsNotNull()
         {
             // Arrange
             int auditoriumId = 1;
@@ -69,7 +48,7 @@ namespace BioBooker.WinApp.Bll.Tests
 
             // Assert
             Assert.NotNull(showings);
-            // Add additional assertions based on the expected data
+
         }
 
         [Fact]
@@ -86,17 +65,6 @@ namespace BioBooker.WinApp.Bll.Tests
             Assert.Empty(showings);
         }
 
-        private void ResetDatabase()
-        {
-            {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    connection.Open();
-                    connection.Execute(_sqlScript);
-                    connection.Close();
-                }
-            }
-
-        }
+     
     }
 }

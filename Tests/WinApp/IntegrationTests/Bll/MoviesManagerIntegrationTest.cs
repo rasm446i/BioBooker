@@ -21,9 +21,6 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         private MoviesManager moviesManager;
         private Base64EncodedImage utl;
         private IConfiguration configuration;
-        private readonly string _connectionString = "server=localhost; Database=BioBooker; integrated security=true;";
-        private readonly string _sqlScript = @"DELETE FROM movies WHERE Title = 'Test Movie1' OR Title = 'Test Movie2'";
-
 
         public MoviesManagerIntegrationTest()
         {
@@ -34,7 +31,6 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         [Fact]
         public async Task CreateAndInsertMovieAsync_InsertsAndRetrievesMovie()
         {
-            ResetDatabase();
             var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
 
 
@@ -82,13 +78,14 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             Assert.Equal(movie.Poster.PosterTitle, retrievedMovie.Poster.PosterTitle);
             Assert.Equal(movie.Poster.ImageData, retrievedMovie.Poster.ImageData);
 
-            ResetDatabase();
+            // Delete test movie from database
+            await moviesManager.DeleteMovieByIdAsync(retrievedMovie.Id);
         }
 
         [Fact]
         public async Task CreateAndInsertMovieAsync_WithValidData_ReturnsTrue()
         {
-            ResetDatabase();
+
             var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
 
             var imageData = utl.GenerateImageData(imagePath);
@@ -122,7 +119,10 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 
             // Assert
             Assert.True(result);
-            ResetDatabase();
+
+            // Delete test movie from database
+            Movie retrievedMovie = await moviesManager.GetMovieByTitleAsync(movie.Title);
+            await moviesManager.DeleteMovieByIdAsync(retrievedMovie.Id);
         }
 
         [Fact]
@@ -144,14 +144,41 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         public async Task GetMovieByTitleAsync_WithExistingTitle_ReturnsMovie()
         {
             // Arrange
-            string title = "wowIE";
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
+            var imageData = utl.GenerateImageData(imagePath);
+
+            var movie = new Movie
+            {
+                Title = "Test Movie1",
+                Genre = "Action",
+                Actors = "Actor 1, Actor 2",
+                Director = "Director Name",
+                Language = "English",
+                ReleaseYear = "2023-01-01",
+                Subtitles = 1,
+                SubtitlesLanguage = "English",
+                MPARating = "PG-13",
+                RuntimeMinutes = 120,
+                Poster = new Poster("Test Movie Poster", imageData)
+            };
+
+            var poster = new Poster
+            {
+                PosterTitle = "Test Movie Poster",
+                ImageData = imageData
+            };
 
             // Act
-            Movie movie = await moviesManager.GetMovieByTitleAsync(title);
+            bool insertResult = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
+            Movie retrievedMovie = await moviesManager.GetMovieByTitleAsync(movie.Title);
 
             // Assert
-            Assert.NotNull(movie);
-            Assert.Equal(title, movie.Title);
+            Assert.True(insertResult);
+            Assert.NotNull(retrievedMovie);
+            Assert.Equal(movie.Title, retrievedMovie.Title);
+
+            // Delete test movie from database
+            await moviesManager.DeleteMovieByIdAsync(retrievedMovie.Id);
         }
 
         [Fact]
@@ -163,19 +190,6 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             // Assert
             Assert.NotNull(movies);
             Assert.NotEmpty(movies);
-        }
-
-        private void ResetDatabase()
-        {
-            {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    connection.Open();
-                    connection.Execute(_sqlScript);
-                    connection.Close();
-                }
-            }
-
-        }
+        }    
     }
 }
