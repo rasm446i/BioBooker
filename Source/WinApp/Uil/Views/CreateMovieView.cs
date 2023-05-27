@@ -25,8 +25,12 @@ public partial class CreateMovieView : Form
     }
 
 
-    //open up ur file directionary so you can select a picture.
-    //only works with images of type JPG or PNG
+    /// <summary>
+    /// Event handler for the "Add Poster" button click event.
+    /// Allows the user to select an image file (in .jpg or .png format) and displays it in a PictureBox control.
+    /// </summary>
+    /// <param name="sender">The object that raises the event.</param>
+    /// <param name="e">The event data.</param>
     private void btnAddPoster_Click(object sender, EventArgs e)
     {
         openFileDialog1.Filter = "Select image(*.jpg; *.png;)|*.jpg; *.png;";
@@ -37,33 +41,35 @@ public partial class CreateMovieView : Form
         }
     }
 
-
-
-    //initializes the all comboxes
+    /// <summary>
+    /// Initializes the ComboBox controls for MPA Rating, genre, languages, and subtitles options.
+    /// </summary>
     private void InitializeComboBoxes()
     {
-        //initialize combobox MPA Rating
+        // Initialize combobox MPA Rating
         List<string> mpaRatings = new List<string> { "G", "PG", "PG-13", "R", "NC-17", "Not Rated" };
         comboBoxMpaRating.Items.AddRange(mpaRatings.ToArray());
         comboBoxMpaRating.DropDownStyle = ComboBoxStyle.DropDownList;
 
-        //initialize combobox genre
+        // Initialize combobox genre
         List<string> genres = new List<string> { "Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Thriller" };
         comboBoxGenre.Items.AddRange(genres.ToArray());
         comboBoxGenre.DropDownStyle = ComboBoxStyle.DropDownList;
 
-        //initialize combobox languages
+        // Initialize combobox languages
         List<string> languages = new List<string> { "English", "Danish", "German", "Chinese", "French", "Spanish" };
         comboBoxLanguage.Items.AddRange(languages.ToArray());
         comboBoxLanguage.DropDownStyle = ComboBoxStyle.DropDownList;
 
-        //initialize combobox comboBox where you press yes or no to the movie havings subtitles
+        // Initialize combobox comboBox where you press yes or no to the movie havings subtitles
         comboBoxSubtitlesYesNo.Items.Add("Yes");
         comboBoxSubtitlesYesNo.Items.Add("No");
         comboBoxSubtitlesYesNo.DropDownStyle = ComboBoxStyle.DropDownList;
     }
 
-    //initialzes the checkbox containing subtitles languages
+    /// <summary>
+    /// Initializes the CheckedListBox control for selecting subtitles options.
+    /// </summary>
     private void IntializeCheckedListBox()
     {
         List<string> Subtitles = new List<string> { "English", "Danish", "German", "Chinese", "French", "Spanish" };
@@ -72,8 +78,12 @@ public partial class CreateMovieView : Form
     }
 
 
-    //If there is selected NO subtitles then you can no longer check the subtitles languages
-    //And unselects all selected subtitles subtitles languages
+    /// <summary>
+    /// Event handler for the SelectedIndexChanged event of the comboBoxSubtitlesYesNo control.
+    /// Enables or disables the checkedListBox1 control based on the selected value.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">An EventArgs that contains the event data.</param>
     private void comboBoxSubtitlesYesNo_SelectedIndexChanged(object sender, EventArgs e)
     {
         if (comboBoxSubtitlesYesNo.SelectedItem.ToString() == "Yes")
@@ -84,7 +94,7 @@ public partial class CreateMovieView : Form
 
         {
             checkedListBox1.Enabled = false;
-            for(int i = 0; i < checkedListBox1.Items.Count; i++)
+            for(int i = 0; i < checkedListBox1.Items.Count; i++) // If subtitles is no, uncheck all items in listbox
             {
                 checkedListBox1.SetItemChecked(i, false);
             }
@@ -92,14 +102,20 @@ public partial class CreateMovieView : Form
         }
     }
 
-    //closes the window
+    /// <summary>
+    /// Closes the window
+    /// </summary>
     private void btnClose_Click(object sender, EventArgs e)
     {
         this.Close();
 
     }
 
-    //Submits the movie if all the validations goes through
+    /// <summary>
+    /// Event handler for the buttonSubmit click event. Submits a new movie by retrieving data from input fields, creating movie and poster objects, and inserting them into the database.
+    /// </summary>
+    /// <param name="sender">The sender object.</param>
+    /// <param name="e">The event arguments.</param>
     private async void buttonSubmit_Click(object sender, EventArgs e)
     {
         if (validateAll())
@@ -118,11 +134,9 @@ public partial class CreateMovieView : Form
             string subtitlesLanguage = getAllSubtitlesLanguages();
             byte subtitles = isThereSelectedSubtitles();
 
-
             Poster poster = new Poster(posterTitle, imageData);
 
             Movie movie = new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, poster);
-
 
             bool inserted = await moviesManager.CreateAndInsertMovieAsync(movie, poster);
             if(inserted)
@@ -139,8 +153,10 @@ public partial class CreateMovieView : Form
 
 
 
-    // return 1 if there is selected yes to the movie having subtitles.
-    // else returns 0.
+    /// <summary>
+    /// Checks whether subtitles are selected or not and returns a byte value indicating the presence of subtitles.
+    /// </summary>
+    /// <returns>A byte value representing the presence of subtitles. 1 indicates subtitles are selected, 0 indicates no subtitles.</returns>
     public byte isThereSelectedSubtitles()
     {
         byte subtitlesYesOrNo = 0;
@@ -153,8 +169,11 @@ public partial class CreateMovieView : Form
             return subtitlesYesOrNo;
     }
 
-    //gets all subtitles languages.
-    //if there is selected no subtitles. it returns a string saying there is none
+    /// <summary>
+    /// Retrieves the selected subtitles languages from the CheckedListBox and returns them as a concatenated string.
+    /// If subtitles are not selected, returns "No Subtitles".
+    /// </summary>
+    /// <returns>A string representing the selected subtitles languages, separated by commas. If no subtitles are selected, returns "No Subtitles".</returns>
     public string getAllSubtitlesLanguages()
     {
         string subtitlesLanguage = "";
@@ -168,8 +187,9 @@ public partial class CreateMovieView : Form
             {
                 selectedSubtitles.Add(item.ToString());
             }
-            subtitlesLanguage = string.Join(", ", selectedSubtitles);
-        }else
+            subtitlesLanguage = string.Join(", ", selectedSubtitles); // Concatenate the selected subtitles languages with a comma separator
+        }
+        else
         {
             subtitlesLanguage = "No Subtitles";
         }
@@ -177,7 +197,9 @@ public partial class CreateMovieView : Form
         return subtitlesLanguage;
     }
 
-    //Runs all the validations
+    /// <summary>
+    /// Runs all the validations
+    /// </summary>
     public bool validateAll()
     {
         bool wasOk = false;
@@ -189,8 +211,10 @@ public partial class CreateMovieView : Form
         return wasOk;
     }
 
-    //Checks if movie subtitles language was not selected. if it was selected that the movie has subtitles.
-    // also checks if subtitles language was selected. if it was selected that the movie does not have subtitles.
+    /// <summary>
+    /// Validates the selection of subtitles based on the chosen option and checked items.
+    /// </summary>
+    /// <returns>True if the selection is valid; otherwise, false.</returns>
     public bool validateSubs()
     {
         bool wasOk = false;
@@ -213,7 +237,9 @@ public partial class CreateMovieView : Form
     }
 
 
-    //checks if input in runtime contains anything else than whole numbers.
+    /// <summary>
+    /// Checks if input in runtime contains anything else than whole numbers.
+    /// </summary>
     public bool validateRuntime()
     {
         bool wasOk = true;
@@ -226,7 +252,10 @@ public partial class CreateMovieView : Form
         return wasOk;
     }
 
-    // checks if there is input in all the required fields to submit a movie
+    /// <summary>
+    /// Validates all the required inputs for creating a movie.
+    /// </summary>
+    /// <returns>True if all inputs are valid; otherwise, false.</returns>
     public bool validateAllRequiredInputs()
     {
         bool wasOk = true;
@@ -310,7 +339,9 @@ public partial class CreateMovieView : Form
 
     }
 
-    // Returns the image path of the poster
+    /// <summary>
+    /// Returns the image path of the poster
+    /// </summary>
     public string GetSelectedImagePath()
     {
         return selectedImagePath;

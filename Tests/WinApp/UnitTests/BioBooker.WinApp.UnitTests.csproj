@@ -1,5 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+      <Compile Remove="Svl\**" />
+      <EmbeddedResource Remove="Svl\**" />
+      <None Remove="Svl\**" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="3.2.0">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
@@ -22,9 +27,6 @@
       <None Update="TestPosters\TestPoster1.jpg">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Svl\" />
     </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>

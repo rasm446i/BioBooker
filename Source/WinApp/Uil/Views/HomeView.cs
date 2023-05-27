@@ -13,12 +13,6 @@ public partial class HomeView : Form
         this.configuration = configuration;
     }
 
-
-
-    private void BtnCloseClick(object sender, System.EventArgs e)
-    {
-      
-    }
     /// <summary>
     /// Event handler for the Click event of the buttonViewMovies button.
     /// Also opens the ViewMoviesView form to display a view of existing movies.
@@ -47,6 +41,14 @@ public partial class HomeView : Form
     {
         MovieTheaterView movieTheaterView = new MovieTheaterView();
         movieTheaterView.Show();
+    }
+
+    /// <summary>
+    /// Closes the window
+    /// </summary>
+    private void btnClose_Click(object sender, System.EventArgs e)
+    {
+        this.Close();
     }
 }
 
