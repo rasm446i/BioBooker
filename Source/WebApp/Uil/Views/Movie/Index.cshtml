@@ -1,0 +1,87 @@
+@model IEnumerable<BioBooker.Dml.Movie>
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h1>Movies</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title) <!-- Column header for the movie title -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Genre) <!-- Column header for the movie genre -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Actors) <!-- Column header for the movie actors -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Director) <!-- Column header for the movie director -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Language) <!-- Column header for the movie language -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReleaseYear) <!-- Column header for the movie release year -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SubtitlesLanguage) <!-- Column header for the movie subtitles language -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MPARating) <!-- Column header for the movie MPAA rating -->
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RuntimeMinutes) <!-- Column header for the movie runtime in minutes -->
+            </th>
+            <th>
+                Poster
+            </th>
+            <th>
+                Showings
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var movie in Model) // Iterate over each movie in the Model -->
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.Title) <!-- Display the movie title -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.Genre) <!-- Display the movie genre -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.Actors) <!-- Display the movie actors -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.Director) <!-- Display the movie director -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.Language) <!-- Display the movie language -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.ReleaseYear) <!-- Display the movie release year -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.SubtitlesLanguage) <!-- Display the movie subtitles language -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.MPARating) <!-- Display the movie MPAA rating -->
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => movie.RuntimeMinutes) <!-- Display the movie runtime in minutes -->
+                </td>
+                <td>
+                    <img src="data:image;base64,@Convert.ToBase64String(movie.Poster.ImageData)" alt="Image" style="width:100px; height:150px;" /> <!-- Display the movie poster as an image -->
+                </td>
+                <td>
+                    @Html.ActionLink("Showings", "ShowingView", new { movieId = movie.Id }) <!-- Create a link to the ShowingView action for the specific movie -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,7 +1,10 @@
+using BioBooker.WebApp.Uil.ViewModels;
+using BioBooker.WebApp.Uil.ViewModels.Home;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -46,5 +49,21 @@ public class HomeController : Controller
     public IActionResult Logout()
     {
         return SignOut("Cookies", "oidc");
+    }
+
+    /// <summary>
+    /// Redirects to the index action of the Movie controller to display the movies.
+    /// </summary>
+    /// <returns>A task representing the redirection to the Movie controller's index action.</returns>
+    public IActionResult Movies()
+    {
+        return RedirectToAction("Index", "Movie");
+    }
+
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

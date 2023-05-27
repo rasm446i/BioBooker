@@ -1,0 +1,144 @@
+@model BioBooker.WebApp.Uil.ViewModels.Home.SeatViewModel
+
+@{
+    ViewData["Title"] = "Seat view";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@using (Html.BeginForm("BookSeats", "Showing", FormMethod.Post, new { id = "bookSeatsForm" }))
+{
+    <!-- Hidden input field to store the ShowingId value -->
+    <input type="hidden" name="ShowingId" value="@Model.ShowingId" />
+
+    <!-- Hardcoded CustomerId -->
+    <input type="hidden" name="CustomerId" value="123" />
+
+    <div class="seat-grid">
+
+        @for (int row = 1; row <= Model.SeatRows; row++)
+        {
+            <div class="seat-row">
+                <!-- Display the row number -->
+                <div class="row-number">Row @row</div>
+                @for (int number = 1; number <= Model.SeatsPerRow; number++)
+                {
+                    <!-- Check if the seat is booked by comparing SeatRow and SeatNumber with SeatReservations -->
+                    var isBooked = Model.SeatReservations.Any(s => s.SeatRow == row && s.SeatNumber == number && s.CustomerId > 0);
+
+                    <!-- Check if the seat is selected (CustomerID is null) -->
+                    var isSelected = Model.SeatReservations.Any(s => s.SeatRow == row && s.SeatNumber == number && s.CustomerId == null);
+
+                    <!-- Determine the CSS class for the seat button based on its booking and selection status -->
+                    var seatButtonClass = isBooked ? "seat-button booked" : (isSelected ? "seat-button selected" : "seat-button");
+
+                    if (isBooked)
+                    {
+                        <!-- Display a disabled button for a booked seat -->
+                        <button id="seat-@row-@number" class="@seatButtonClass" disabled>Seat @number</button>
+                    }
+                    else
+                    {
+                        <!-- Calculate the index for the seat reservation based on its row and number -->
+                        int index = (row - 1) * Model.SeatsPerRow + (number - 1);
+
+                        <div>
+                            <!-- Hidden checkbox for selecting the seat. The "name" attribute uses "selectedSeats.Index" to bind it to a collection of selected seats -->
+                            <input type="checkbox" id="seat-@row-@number" class="seat-checkbox" name="selectedSeats.Index" value="@index" style="display: none;" @(isSelected ? "checked" : "") />
+
+                            <!-- Hidden input field to store the seat row value within the selectedSeats collection -->
+                            <input type="hidden" name="selectedSeats[@index].SeatRow" value="@row" />
+
+                            <!-- Hidden input field to store the seat number value within the selectedSeats collection -->
+                            <input type="hidden" name="selectedSeats[@index].SeatNumber" value="@number" />
+
+                            <!-- Hidden input field to store the ShowingId value within the selectedSeats collection -->
+                            <input type="hidden" name="selectedSeats[@index].ShowingId" value="@Model.ShowingId" />
+
+                            <!-- Display the seat label, associated with the hidden checkbox -->
+                            <label for="seat-@row-@number" class="@seatButtonClass">Seat @number</label>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Button to submit the selected seats for booking -->
+    <button id="bookButton" class="book-button" type="submit">Book selected seats</button>
+}
+
+<style>
+    .seat-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .seat-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .row-number {
+        width: 60px;
+        margin-right: 10px;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    .seat-button {
+        margin: 5px;
+        padding: 10px;
+        background-color: green;
+        color: black;
+        font-weight: bold;
+    }
+
+        .seat-button.booked {
+            background-color: red;
+        }
+
+        .seat-button.selected {
+            background-color: yellow;
+        }
+
+    .book-button {
+        margin-left: auto;
+        padding: 10px;
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+    }
+</style>
+
+<script>
+    // Wait for the DOM (Document Object Model) content to be fully loaded before executing the code
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Get all elements in the DOM with the class "seat-button"
+        var seatButtons = document.getElementsByClassName("seat-button");
+
+        // Iterate through each seat button element
+        for (var i = 0; i < seatButtons.length; i++) {
+            // Add a click event listener to the current seat button
+            seatButtons[i].addEventListener("click", function () {
+                // When the seat button is clicked, toggle the presence of the "selected" class on the button
+                // The "selected" class controls the visual styling of the seat button
+                this.classList.toggle("selected");
+            });
+        }
+
+        // Get the book button element by its ID
+        var bookButton = document.getElementById("bookButton");
+
+        // Add a click event listener to the book button
+        bookButton.addEventListener("click", function () {
+
+            // Submit the form with the ID "bookSeatsForm"
+            document.getElementById("bookSeatsForm").submit();
+        });
+    });
+</script>
