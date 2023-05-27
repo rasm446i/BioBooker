@@ -1,19 +1,19 @@
 /* Body */
 body {
     font-family: Arial, sans-serif;
-    margin: 0% 0% 0% 0%;
+    margin: 0;
+    padding: 0;
 }
 
-/*Header*/
+/* Header */
 header {
     border-bottom: 2px solid #000000;
-    padding-left: 0%;
-    padding-right: 0%;
+    padding: 0;
 }
 
 /* Main */
 main {
-    padding-left: 1%;
+    padding: 1%;
 }
 
 /* Nav Area*/
@@ -23,6 +23,8 @@ nav ul {
     margin: 0;
     overflow: hidden;
     padding: 0 0 0 10px;
+    width: 100%;
+    height: 60px; /* Adjust the height as needed */
 }
 
 nav li {
@@ -50,9 +52,7 @@ nav li a {
 
 /* Footer */
 .container.body-content {
-    height: 1%; /* Force Height on Body Element */
     position: relative;
-    clear: both;
 }
 
 #rendered-view-div {
@@ -62,29 +62,13 @@ nav li a {
 .footer {
     background-color: #FFFFFF;
     border-top: 2px solid #000000;
-    bottom: 0%;
     color: #808080;
-    height: 2.5%;
-    left: 0;
-    position: absolute;
-    right: 0;
     text-align: center;
-    width: 100%;
-}
-
-.footer p {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-right: -50%;
-    transform: translate(-50%, -50%);
-    color: #000000;
-    font-size: 20%;
+    padding: 10px;
 }
 
 .footer-left {
     float: left;
-    padding-inline-start: 8px;
 }
 
 .footer-right {
@@ -93,8 +77,39 @@ nav li a {
 
 .footer-right a {
     color: #808080;
-    display: inline;
     text-decoration: none;
-    padding: 0 0 0 20px;
-    padding-inline-end: 8px;
+    margin-left: 20px;
+}
+
+/* Movies Table */
+table {
+    width: 100%;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #e6e6e6;
+}
+
+.poster-image {
+    width: 100px;
+    height: 150px;
+}
+
+.showings-link {
+    color: #0000FF;
+    text-decoration: none;
 }

@@ -8,6 +8,8 @@
     <title>BioBooker - @ViewBag.Title</title>
     <!-- Ref CSS -->
     <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/seats.css" />
 </head>
 <body>
     <!-- Header -->
@@ -17,12 +19,9 @@
             <ul>
                 <li><img src="~/bb-logo.svg" scale="1.5" /></li>
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                <li><a asp-controller="Home" asp-action="Index">Movies</a></li>
                 <li><a asp-controller="Home" asp-action="Index">Movie Showings</a></li>
                 <li><a asp-controller="Home" asp-action="Index">Movie Theaters</a></li>
-                <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Movies</a>
-                        </li>
+                <li class="nav-item"><a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Movies">Movies</a></li>
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="right-li"><a asp-controller="Home" asp-action="Logout">Logout</a></li>
@@ -31,7 +30,7 @@
                 {
                     <li class="right-li"><a asp-controller="Home" asp-action="Contact">Login</a></li>
                 }
-                <li class="right-li"><a asp-controller="Home" asp-action="My BioBooker">My BioBooker</a></li>
+                <li class="right-li"><a asp-controller="Home" asp-action="MyBioBooker">My BioBooker</a></li>
             </ul>
         </nav>
     </header>
@@ -48,7 +47,7 @@
         <div class="container body-content">
             <div class="footer">
                 <div class="footer-left">
-                    Copyright &copy; 2023 BioBooker
+                    &copy; @DateTime.Now.Year BioBooker
                 </div>
                 <div class="footer-right">
                     <a asp-controller="Home" asp-action="Contact">Contact</a>
@@ -59,6 +58,9 @@
         </div>
     </footer>
     <!-- Ref JS -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
