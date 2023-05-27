@@ -29,14 +29,15 @@ namespace BioBooker.WebApi.Svl
             return await _showingRepository.AddShowingAsync(showing);
         }
 
-        public async Task<bool> InsertReservationByShowingId(SeatReservation reservation)
+        public async Task<bool> BookSeatForShowing(List<SeatReservation> seatReservations)
         {
-            return await _showingRepository.InsertReservationByShowingId(reservation);
+            return await _showingRepository.BookSeatForShowing(seatReservations);
         }
 
-        public async Task<bool> BookSeatForShowing(SeatReservation seatReservation, DateTime date, TimeSpan startTime, TimeSpan endTime)
+        public async Task<List<SeatReservation>> GetAllSeatReservationByShowingId(int showingId)
         {
-            return await _showingRepository.BookSeatForShowing(seatReservation, date, startTime, endTime);
+            return await _showingRepository.GetAllSeatReservationByShowingId(showingId);
         }
+
     }
 }

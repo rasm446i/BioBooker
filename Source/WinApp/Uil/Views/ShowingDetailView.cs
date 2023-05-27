@@ -24,6 +24,7 @@ namespace BioBooker.WinApp.Uil.Views
             this.auditorium = auditorium;
             Load += ShowingDetailView_Load;
             labelAuditorium.Text = auditorium.Name;
+            dateTimePicker1.ValueChanged += DateTimePicker1_ValueChanged;
         }
 
         private async void ShowingDetailView_Load(object sender, EventArgs e)
@@ -34,6 +35,12 @@ namespace BioBooker.WinApp.Uil.Views
             listView1.Columns.Add("Start Time").Width = 70;
             listView1.Columns.Add("End Time").Width = 70;
 
+            DateTime selectedDate = dateTimePicker1.Value;
+            await DisplayShowings(selectedDate);
+        }
+
+        private async void DateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
             DateTime selectedDate = dateTimePicker1.Value;
             await DisplayShowings(selectedDate);
         }
@@ -60,8 +67,7 @@ namespace BioBooker.WinApp.Uil.Views
 
         private async void buttonSearch_Click(object sender, EventArgs e)
         {
-            DateTime selectedDate = dateTimePicker1.Value;
-            await DisplayShowings(selectedDate);
+
         }
 
         private void buttonCreate_Click(object sender, EventArgs e)

@@ -17,6 +17,14 @@
         <ProjectReference Include="..\..\..\Source\WinApp\Bll\BioBooker.WinApp.Bll.csproj" />
         <ProjectReference Include="..\..\..\Source\WinApp\Svl\BioBooker.WinApp.Svl.csproj" />
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="TestPosters\" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Update="TestPosters\TestPoster1.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
     <PropertyGroup>
         <ImplicitUsings>disable</ImplicitUsings>
         <LangVersion>10.0</LangVersion>

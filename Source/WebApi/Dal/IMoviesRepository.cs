@@ -12,5 +12,6 @@ namespace BioBooker.WebApi.Dal
         public Task<Movie> GetMovieByIdAsync(int id);
         public Task<bool> DeleteMovieByIdAsync(int id);
         public Task<bool> UpdateMovieByIdAsync(int id, Movie updatedMovie);
+        public Task<List<Showing>> GetShowingsByMovieIdAsync(int movieId);
     }
 }

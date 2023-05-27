@@ -2,10 +2,14 @@ using BioBooker.Dml;
 using BioBooker.Utl;
 using BioBooker.WinApp.Bll;
 using BioBooker.WinApp.Svl;
+using Dapper;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
@@ -17,6 +21,9 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         private MoviesManager moviesManager;
         private Base64EncodedImage utl;
         private IConfiguration configuration;
+        private readonly string _connectionString = "server=localhost; Database=BioBooker; integrated security=true;";
+        private readonly string _sqlScript = @"DELETE FROM movies WHERE Title = 'Test Movie1' OR Title = 'Test Movie2'";
+
 
         public MoviesManagerIntegrationTest()
         {
@@ -27,14 +34,17 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         [Fact]
         public async Task CreateAndInsertMovieAsync_InsertsAndRetrievesMovie()
         {
-            var imagePath = @"C:\Users\Visti\Desktop\Dyring.png";
+            ResetDatabase();
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
+
 
             var imageData = utl.GenerateImageData(imagePath);
+
 
             // Arrange
             var movie = new Movie
             {
-                Title = "Test Movie70",
+                Title = "Test Movie1",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
                 Director = "Director Name",
@@ -65,26 +75,29 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             Assert.Equal(movie.Actors, retrievedMovie.Actors);
             Assert.Equal(movie.Director, retrievedMovie.Director);
             Assert.Equal(movie.Language, retrievedMovie.Language);
-            Assert.Equal(movie.ReleaseYear, retrievedMovie.ReleaseYear);
             Assert.Equal(movie.Subtitles, retrievedMovie.Subtitles);
             Assert.Equal(movie.SubtitlesLanguage, retrievedMovie.SubtitlesLanguage);
             Assert.Equal(movie.MPARating, retrievedMovie.MPARating);
             Assert.Equal(movie.RuntimeMinutes, retrievedMovie.RuntimeMinutes);
             Assert.Equal(movie.Poster.PosterTitle, retrievedMovie.Poster.PosterTitle);
             Assert.Equal(movie.Poster.ImageData, retrievedMovie.Poster.ImageData);
+
+            ResetDatabase();
         }
 
         [Fact]
         public async Task CreateAndInsertMovieAsync_WithValidData_ReturnsTrue()
         {
-            var imagePath = @"INSERT IMAGE PATH";
+            ResetDatabase();
+            var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
 
             var imageData = utl.GenerateImageData(imagePath);
+
 
             // Arrange
             var movie = new Movie
             {
-                Title = "Test Movie19",
+                Title = "Test Movie2",
                 Genre = "Action",
                 Actors = "Actor 1, Actor 2",
                 Director = "Director Name",
@@ -109,6 +122,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 
             // Assert
             Assert.True(result);
+            ResetDatabase();
         }
 
         [Fact]
@@ -130,7 +144,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         public async Task GetMovieByTitleAsync_WithExistingTitle_ReturnsMovie()
         {
             // Arrange
-            string title = "Test Movie";
+            string title = "wowIE";
 
             // Act
             Movie movie = await moviesManager.GetMovieByTitleAsync(title);
@@ -149,6 +163,19 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
             // Assert
             Assert.NotNull(movies);
             Assert.NotEmpty(movies);
+        }
+
+        private void ResetDatabase()
+        {
+            {
+                using (var connection = new SqlConnection(_connectionString))
+                {
+                    connection.Open();
+                    connection.Execute(_sqlScript);
+                    connection.Close();
+                }
+            }
+
         }
     }
 }

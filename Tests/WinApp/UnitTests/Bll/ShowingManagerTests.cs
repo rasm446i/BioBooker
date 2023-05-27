@@ -9,11 +9,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
+
 namespace BioBooker.WinApp.UnitTests.Bll
 {
     public class ShowingManagerTests
     {
-        private IShowingManager _showingManager;
+        private ShowingManager _showingManager;
         private IConfiguration _configuration;
 
         public ShowingManagerTests()
@@ -21,9 +22,8 @@ namespace BioBooker.WinApp.UnitTests.Bll
             _showingManager = new ShowingManager(_configuration);
         }
 
-
         [Fact]
-        public void CreateShowing_ValidData_ReturnsNewShowing()
+        public async void CreateShowing_ValidData_ReturnsNewShowing()
         {
             // Arrange
             DateTime date = DateTime.Now;
@@ -36,21 +36,20 @@ namespace BioBooker.WinApp.UnitTests.Bll
 
             // Act
 
-            /*Showing createdShowing = _showingManager.CreateShowing(expectedShowing);
+            Showing createdShowing = await _showingManager.CreateShowing(expectedShowing);
 
             // Assert
             Assert.Equal(expectedShowing.Date, createdShowing.Date);
             Assert.Equal(expectedShowing.StartTime, createdShowing.StartTime);
             Assert.Equal(expectedShowing.EndTime, createdShowing.EndTime);
             Assert.Equal(expectedShowing.AuditoriumId, createdShowing.AuditoriumId);
-            Assert.Equal(expectedShowing.MovieId, createdShowing.MovieId);*/
+            Assert.Equal(expectedShowing.MovieId, createdShowing.MovieId);
         }
 
         [Fact]
-        public void CreateShowing_InvalidShowing_ThrowsArgumentException()
+        public async void CreateShowing_InvalidShowing_ThrowsArgumentException()
         {
             // Arrange
-            IShowingManager showingManager = new ShowingManager(_configuration);
             DateTime date = DateTime.Now;
             TimeSpan startTime = TimeSpan.FromHours(10);
             TimeSpan endTime = TimeSpan.FromHours(8);  // Invalid: end time is before start time
@@ -59,11 +58,11 @@ namespace BioBooker.WinApp.UnitTests.Bll
             Showing showing = new Showing(date, startTime, endTime, auditoriumId, movieId);
 
             // Act and Assert
-           /* Assert.Throws<ArgumentException>(() =>
+            await Assert.ThrowsAsync<ArgumentException>(async () =>
             {
                 // This code should throw an ArgumentException
-                showingManager.CreateShowing(showing);
-            });*/
+                await _showingManager.CreateShowing(showing);
+            });
         }
 
     }

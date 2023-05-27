@@ -170,10 +170,10 @@ namespace BioBooker.WinApp.Uil.Views
             string subtitlesLanguage = getAllSubtitlesLanguages();
             string mpaRatingEnum = comboBoxMpaRating.Text;
             int runtimeHours = Int32.Parse(textBoxRunTime.Text);
-
+            byte[] version = preUpdatedMovie.Version;
             Poster updatedPoster = GetUpdatedPoster();
 
-            return new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, updatedPoster);
+            return new Movie(title, genre, actors, director, language, releaseYear, subtitles, subtitlesLanguage, mpaRatingEnum, runtimeHours, updatedPoster, version);
         }
 
         private Poster GetUpdatedPoster()

@@ -1,11 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
-using BioBooker.WebApi.Bll;
-using Microsoft.Extensions.Configuration;
 using BioBooker.Dml;
-using System.Threading.Tasks;
+using BioBooker.WebApi.Bll;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using BioBooker.WebApi.Dto;
+using System.Linq;
+using System.Security.AccessControl;
+
 
 namespace BioBooker.WebApi.Ctl.Controllers
 {
@@ -49,27 +53,6 @@ namespace BioBooker.WebApi.Ctl.Controllers
         }
 
         /// <summary>
-        /// Inserts a new seat reservation for a showing.
-        /// </summary>
-        /// <param name="reservation">The seat reservation to insert.</param>
-        /// <returns>An IActionResult representing the result of the operation.</returns>
-        [HttpPost("{showingId}/reservations")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Post([FromBody] SeatReservation reservation)
-        {
-            bool reserved = await _showingManager.InsertReservationByShowingId(reservation);
-
-            if (reserved)
-            {
-                return Ok();
-            }
-            else
-            {
-                return StatusCode(500);
-            }
-        }
-
-        /// <summary>
         /// Retrieves showings from the database based on the specified auditorium ID and date.
         /// </summary>
         /// <param name="auditoriumId">The ID of the auditorium.</param>
@@ -89,45 +72,58 @@ namespace BioBooker.WebApi.Ctl.Controllers
             return Ok(showings);
         }
 
-        //This is just for testing
-        [HttpGet("{id}/reservations")]
+        //gets all Seats in SeatResevations by showing id
+        [HttpGet("{showingId}/reservations")]
         [AllowAnonymous]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int showingId)
         {
-            List<SeatReservation> seatReservations = new List<SeatReservation>();
-            int reservationId = 1;
-            int auditoriumId = 1;
-            int showingId = 1;
-            int? customerId = null;
+            List<SeatReservation> seatReservations = await _showingManager.GetAllSeatReservationsByShowingId(showingId);
 
-            int numRows = 5;
-            int numSeatsPerRow = 7;
-
-            for (int row = 1; row <= numRows; row++)
-            {
-                for (int seatNumber = 1; seatNumber <= numSeatsPerRow; seatNumber++)
+            if (seatReservations == null || seatReservations.Count == 0)
                 {
-                    SeatReservation reservation = new SeatReservation(auditoriumId, row, seatNumber, showingId, customerId);
-                    reservation.ReservationId = reservationId++;
-                    seatReservations.Add(reservation);
+                    return NotFound();
                 }
+
+                return Ok(seatReservations);
+        }
+
+        [HttpGet("{showingId}/seatView")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetSeatView([FromRoute]int showingId)
+        {
+            List<SeatReservation> seatReservations = await _showingManager.GetAllSeatReservationsByShowingId(showingId);
+
+            if (seatReservations == null || seatReservations.Count == 0)
+            {
+                return NotFound();
             }
 
-            return Ok(seatReservations);
+            SeatViewDto seatViewDto = new SeatViewDto();
+
+               
+                seatViewDto.SeatReservations = seatReservations;
+                seatViewDto.ShowingId = showingId;
+                seatViewDto.SeatRows = seatViewDto.SeatReservations.Max(s => s.SeatRow);
+                seatViewDto.SeatsPerRow = seatViewDto.SeatReservations.Max(s => s.SeatNumber);
+
+                return Ok(seatViewDto);
         }
+
+
 
 
 
         [HttpPut("{showingId}/reservations")]
         [AllowAnonymous]
-        public async Task<IActionResult> Put([FromBody] SeatReservation seatReservation, DateTime date, TimeSpan startTime, TimeSpan endTime)
+        public async Task<IActionResult> Put(int showingId, [FromBody] List<SeatReservation> seatReservations)
         {
             IActionResult foundReturn;
-            bool wasUpdated = await _showingManager.BookSeatForShowing(seatReservation, date, startTime, endTime);
-            if(wasUpdated)
+            bool wasUpdated = await _showingManager.BookSeatForShowing(seatReservations);
+
+            if (wasUpdated)
             {
                 foundReturn = Ok();
-            } 
+            }
             else
             {
                 foundReturn = new StatusCodeResult(500);

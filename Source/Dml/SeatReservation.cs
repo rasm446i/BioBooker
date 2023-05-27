@@ -8,21 +8,36 @@ namespace BioBooker.Dml
 {
     public class SeatReservation
     {
-        public byte[] Version { get; set; }
+        public byte[]? Version { get; set; }
         public int ReservationId { get; set; }
-        public int AuditoriumId { get; set; }
+        public int? AuditoriumId { get; set; }
         public int SeatRow { get; set; }
         public int SeatNumber { get; set; }
         public int ShowingId { get; set; }
         public int? CustomerId { get; set; }
 
-        public SeatReservation(int auditoriumId, int seatRow, int seatNumber, int showingId, int? customerId)
+        public SeatReservation()
         {
-            AuditoriumId = auditoriumId;
+
+        }
+
+        //Without versioning. Used for inserting seats in SeatResevation when a showing is made.
+        public SeatReservation(int seatRow, int seatNumber, int showingId, int? customerId)
+        {
             SeatRow = seatRow;
             SeatNumber = seatNumber;
             ShowingId = showingId;
-            CustomerId = customerId;    
+            CustomerId = customerId;
+        }
+
+        // With Versioning. Used for booking seats, to check if the seat is already booked.
+        public SeatReservation(int seatRow, int seatNumber, int showingId, int? customerId, byte[] version)
+        {
+            SeatRow = seatRow;
+            SeatNumber = seatNumber;
+            ShowingId = showingId;
+            CustomerId = customerId;
+            Version = version;
         }
     }
 }
