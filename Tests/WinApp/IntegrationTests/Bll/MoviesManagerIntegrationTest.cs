@@ -184,9 +184,6 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
         [Fact]
         public async Task GetAllMoviesAsync_ReturnsListOfMovies()
         {
-            [Fact]
-            public async Task GetAllMoviesAsync_ReturnsListOfMovies()
-            {
                 // Arrange
                 var imagePath = Directory.GetCurrentDirectory() + "\\TestPosters\\TestPoster1.jpg";
                 var imageData = utl.GenerateImageData(imagePath);
@@ -222,7 +219,7 @@ namespace BioBooker.WinApp.IntegrationTests.Bll
 
                 // Delete test movie from database
                 await moviesManager.DeleteMovieByIdAsync(movie.Id);
-            }
+            
         }    
     }
 }
